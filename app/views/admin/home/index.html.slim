@@ -1,0 +1,10 @@
+container.mx-auto.px-4
+  section.hero.py-16.text-center
+    h1.text-4xl.font-bold.mb-4
+      | 管理画面
+    p.text-lg.text-gray-700
+      | 管理する項目を選択してください
+      
+  section.cards.grid.gap-6.max-w-2xl.mx-auto
+    = render 'shard/card', title: '問題一覧', description: '', url: '#'
+    = render 'shard/card', title: 'カテゴリー一覧', description: '', url: '#'
