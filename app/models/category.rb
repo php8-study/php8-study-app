@@ -3,6 +3,5 @@
 class Category < ApplicationRecord
   validates :name, presence: true
   validates :chapter_number, presence: true, numericality: { only_integer: true }
-  validates :weight, numericality: true, allow_nil: true
+  validates :weight, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_nil: true
 end
-

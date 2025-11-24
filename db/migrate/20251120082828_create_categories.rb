@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCategories < ActiveRecord::Migration[8.0]
   def change
     create_table :categories do |t|
@@ -7,5 +9,7 @@ class CreateCategories < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
+    add_index :categories, :chapter_number, unique: true
+    add_check_constraint :categories, "weight >= 0.0 AND weight <= 100.0", name: "weight_check"
   end
 end

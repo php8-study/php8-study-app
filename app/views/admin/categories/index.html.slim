@@ -1,2 +1,23 @@
-h1
-  | categories
+.container.mx-auto.px-4.py-16.max-w-5xl
+  .flex.justify-between.items-end.mb-6
+    div
+      h1.text-2xl.font-bold.text-slate-800 カテゴリー管理
+      p.text-slate-500.text-sm.mt-1 カテゴリーの追加・編集・削除が行えます
+
+    = link_to new_admin_category_path, class: "flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-all shadow-sm hover:shadow-md" do
+      svg.w-5.h-5 fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"
+      span 新規作成
+
+  .bg-white.shadow-sm.border.border-slate-200.rounded-xl.overflow-hidden
+
+    .grid.text-slate-500.text-sm.font-semibold.px-4.h-12.items-center.bg-slate-50.border-b.border-slate-200 class="grid-cols-[50px_350px_1fr_150px_120px]"
+      span.text-center.pl-2 章番号
+      span.pl-20 タイトル
+      / レイアウトのためのダミーspan
+      span
+      span.text-center.pl-4 出題割合
+      span.text-center.pl-10 操作
+
+    .divide-y.divide-slate-200
+    = render @categories
