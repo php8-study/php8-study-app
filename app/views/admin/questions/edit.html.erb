@@ -1,0 +1,10 @@
+<div class="max-w-4xl mx-auto py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-slate-900 mb-0">問題編集</h1>
+
+    <%= link_to "問題一覧へ戻る", admin_questions_path,
+        class: "inline-flex items-center text-sm font-semibold text-gray-700 bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors" %>
+  </div>
+
+  <%= render "form", question: @question %>
+</div>
