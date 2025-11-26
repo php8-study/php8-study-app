@@ -22,4 +22,11 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :questions, only: [:show] do
+    get 'random', on: :collection
+    member do
+      get "solution"
+    end
+  end
 end
