@@ -23,7 +23,8 @@ class Admin::CategoriesController < ::ApplicationController
     @category.destroy
 
     respond_to do |format|
-      format.turbo_stream
+      format.html { redirect_to admin_categories_url, notice: "問題が削除されました。" }
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@category) }
     end
   end
 

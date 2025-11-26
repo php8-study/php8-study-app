@@ -4,10 +4,10 @@
       h1.text-2xl.font-bold.text-slate-800 カテゴリー管理
       p.text-slate-500.text-sm.mt-1 カテゴリーの追加・編集・削除が行えます
 
-    = link_to new_admin_category_path, class: "flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-all shadow-sm hover:shadow-md" do
-      svg.w-5.h-5 fill="none" stroke="currentColor" viewBox="0 0 24 24"
-        path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"
-      span 新規作成
+    .flex.space-x-4
+      = link_to "管理画面へ戻る", admin_path, class: "bg-slate-200 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-300 text-sm font-semibold transition-colors"
+
+      = link_to "新規作成", new_admin_question_path, class: "bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 text-sm font-semibold transition-colors"
 
   .bg-white.shadow-sm.border.border-slate-200.rounded-xl.overflow-hidden
 

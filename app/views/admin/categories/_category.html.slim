@@ -7,8 +7,7 @@
 
     span.text-sm.font-medium.text-slate-900.pl-16
       = category.name
-
-    / レイアウトのためのダミーdiv
+    / レイアウトのためのダミー
     div
 
     .flex.items-center.gap-2.justify-end
@@ -19,6 +18,6 @@
         .h-full.bg-blue-600.rounded-full(style="width: #{category.weight}%")
 
     .flex.items-center.gap-3.justify-end
-      = link_to "編集", edit_admin_category_path(category), data: { turbo_frame: dom_id(category) }, class: "text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors"
+      = link_to "編集", edit_admin_category_path(category), data: { turbo_frame: dom_id(category) }, class: "text-indigo-600 hover:text-indigo-800 font-medium mr-3"
 
-      = link_to "削除", admin_category_path(category), data: { turbo_method: :delete, turbo_confirm: "削除しますか？" }, class: "text-sm font-medium text-red-600 hover:text-red-700 px-2 py-1"
+      = link_to "削除", admin_category_path(category), data: { turbo_method: :delete, turbo_confirm: "削除しますか？" }, class: "text-red-600 hover:text-red-800 font-medium"

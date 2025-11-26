@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get "/", to: "home#index"
+    resources :questions
     resources :categories do
       member do
         get :render_row
