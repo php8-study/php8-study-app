@@ -1,18 +1,19 @@
 doctype html
 html
   head
-    link[rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"]
-    title Php8Study
-    meta[name="viewport" content="width=device-width,initial-scale=1"]
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
+
   body.min-h-screen.flex.flex-col.bg-gradient-to-b.from-slate-100.to-slate-200
     - if current_user
       = render "layouts/header"
 
-    main.flex-1.max-w-screen-xl.mx-auto.w-full
+    .max-w-screen-xl.mx-auto.w-full
+      = render "layouts/flash"
+
+    main.flex-1.w-full
       = yield
 
     - if current_user

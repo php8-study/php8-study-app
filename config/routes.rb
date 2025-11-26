@@ -2,7 +2,6 @@
 
 Rails.application.routes.draw do
   root "home#index"
-  get "home/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -13,4 +12,14 @@ Rails.application.routes.draw do
   # root "posts#index"
   get "/auth/github/callback", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
+
+  namespace :admin do
+    get "/", to: "home#index"
+    resources :questions
+    resources :categories do
+      member do
+        get :render_row
+      end
+    end
+  end
 end
