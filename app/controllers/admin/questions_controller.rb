@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 class Admin::QuestionsController < ApplicationController
-  before_action :set_question, only: [:edit, :update, :destroy]
+  before_action :set_question, only: [:new, :edit, :update, :destroy]
 
   def index
     @questions = Question.all
   end
 
   def new
-    @question = Question.new
     4.times { @question.question_choices.build }
   end
 
@@ -22,11 +21,9 @@ class Admin::QuestionsController < ApplicationController
   end
 
   def edit
-    @question = Question.find(params[:id])
   end
 
   def update
-    @question = Question.find(params[:id])
     if @question.update(question_params)
       redirect_to admin_questions_path
     else
@@ -35,7 +32,6 @@ class Admin::QuestionsController < ApplicationController
   end
 
   def destroy
-    @question = Question.find(params[:id])
     @question.destroy
 
     respond_to do |format|
