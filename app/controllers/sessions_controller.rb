@@ -10,15 +10,15 @@ class SessionsController < ApplicationController
     session[:user_id] = user.id
     session[:github_info] = auth.info.slice(:nickname, :image)
 
-    redirect_to root_path, notice: "ログインしました"
+    redirect_to root_path
   rescue => e
     Rails.logger.error("GitHub OAuth Error: #{e.message}")
-    redirect_to root_path, alert: "ログインに失敗しました"
+    redirect_to root_path
   end
 
   def destroy
     reset_session
     @current_user = nil
-    redirect_to root_path, notice: "ログアウトしました"
+    redirect_to root_path
   end
 end
