@@ -14,11 +14,11 @@ class QuestionsController < ApplicationController
     @user_answer_ids = params[:user_answer_ids].to_a.map(&:to_i)
     @correct_answer_ids = @question.question_choices.where(correct: true).pluck(:id)
 
-    @is_correct = (@user_answer_ids.sort == @correct_answer_ids.sort) 
+    @is_correct = (@user_answer_ids.sort == @correct_answer_ids.sort)
   end
-  private
 
-  def set_question
-    @question = Question.find(params[:id])
-  end
+  private
+    def set_question
+      @question = Question.find(params[:id])
+    end
 end
