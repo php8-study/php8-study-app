@@ -15,6 +15,10 @@ class ExamQuestion < ApplicationRecord
     correct_choices == user_choices
   end
 
+  def previous_question
+    exam.exam_questions.order(:position).find_by(position: position - 1)
+  end
+
   def next_question
     exam.exam_questions.order(:position).find_by(position: position + 1)
   end

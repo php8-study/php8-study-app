@@ -12,7 +12,15 @@ class ExamQuestionsController < ApplicationController
     @exam = current_user.exams.find(params[:exam_id])
     @exam_question = @exam.exam_questions.find(params[:id])
 
-    @exam_question.exam_answers.create!(answer_params)
+    choice_ids = answer_params[:question_choice_ids] || []
+
+    ExamAnswer.transaction do
+      @exam_question.exam_answers.destroy_all
+
+      choice_ids.each do |choice_id|
+        @exam_question.exam_answers.create!(question_choice_id: choice_id)
+      end
+    end
 
     next_question = @exam_question.next_question
 
@@ -36,6 +44,6 @@ class ExamQuestionsController < ApplicationController
     end
 
     def answer_params
-      params.require(:answer_form).permit(question_choice_ids: [])
+      params.permit(question_choice_ids: [])
     end
 end

@@ -30,4 +30,9 @@ class ExamsController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     redirect_to root_path
   end
+
+  def review
+    @exam = current_user.exams.find(params[:id])
+    @exam_questions = @exam.exam_questions.includes(:exam_answers).order(position: :asc)
+  end
 end

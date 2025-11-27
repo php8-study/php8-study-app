@@ -32,12 +32,12 @@ Rails.application.routes.draw do
 
   resources :exams, only: [:create, :index] do
     post "submissions", to: "exams#submit", on: :member
+    get "review", on: :member
     get "check", on: :collection
 
     resources :submissions, only: [:create]
 
     resources :exam_questions, only: [:show] do
-      get "review", on: :member
       post "answer", on: :member
     end
   end
