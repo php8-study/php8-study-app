@@ -24,9 +24,22 @@ Rails.application.routes.draw do
   end
 
   resources :questions, only: [:show] do
-    get 'random', on: :collection
+    get "random", on: :collection
     member do
       get "solution"
+    end
+  end
+
+  resources :exams, only: [:create, :index, :show] do
+    post "submissions", to: "exams#submit", on: :member
+    get "review", on: :member
+    get "check", on: :collection
+
+    resources :submissions, only: [:create]
+
+    resources :exam_questions, only: [:show] do
+      post "answer", on: :member
+      get "solution", on: :member
     end
   end
 end

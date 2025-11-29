@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class Admin::QuestionsController < ApplicationController
-  before_action :set_question, only: [:new, :edit, :update, :destroy]
+  before_action :set_question, only: [:edit, :update, :destroy]
 
   def index
-    @questions = Question.all
+    @questions = Question.includes(:category).all
   end
 
   def new
+    @question = Question.new
     4.times { @question.question_choices.build }
   end
 

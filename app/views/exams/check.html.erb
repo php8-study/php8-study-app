@@ -1,0 +1,21 @@
+<div class="max-w-xl mx-auto py-8">
+  <h1 class="text-3xl font-bold text-red-600 mb-6">⚠️ 回答中の試験があります</h1>
+
+  <div class="bg-white p-6 shadow-lg rounded-xl mb-8">
+    <p class="text-xl text-gray-800 mb-6">
+      未完了の模擬試験（開始: <%= @active_exam.created_at.to_formatted_s(:short) %>）があります。
+      どうされますか？
+    </p>
+
+    <div class="space-y-4">
+      <% target_exam_question = @active_exam.exam_questions.first %>
+      
+      <%= link_to "続きから回答する", 
+          exam_exam_question_path(@active_exam, target_exam_question),
+          class: "w-full text-center bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors block" %>
+          
+      <%= button_to "破棄して新しい試験を開始する", exams_path, method: :post,
+          class: "w-full bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors mt-2" %>
+    </div>
+  </div>
+</div>

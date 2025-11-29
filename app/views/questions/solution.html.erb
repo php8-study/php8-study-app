@@ -1,13 +1,15 @@
-<% result_class = @is_correct ? "bg-green-100 border-green-500 text-green-700" : "bg-red-100 border-red-500 text-red-700" %>
+<% result_class = @is_correct ? "bg-green-50 border-green-500 text-green-800" : "bg-red-50 border-red-500 text-red-800" %>
 <% result_icon = @is_correct ? "✅ 正解！" : "❌ 不正解" %>
 
 <div class="max-w-xl mx-auto py-8">
   <h1 class="text-3xl font-bold text-gray-900 mb-6">解答と参照情報</h1>
 
-  <div class="p-6 border-l-4 <%= result_class %> rounded-r-lg shadow-md mb-8">
-    <div class="text-2xl font-extrabold"><%= result_icon %></div>
+  <div class="p-6 border-l-4 <%= result_class %> rounded-r-lg shadow-sm mb-8">
+    <div class="text-2xl font-extrabold flex items-center gap-2">
+      <%= result_icon %>
+    </div>
     <% unless @is_correct %>
-      <p class="mt-2 text-lg">もう一度確認してみましょう。</p>
+      <p class="mt-2 text-lg opacity-90">もう一度確認してみましょう。</p>
     <% end %>
   </div>
 
@@ -24,27 +26,34 @@
       
           choice_class = ""
           if is_user_selected && is_correct_choice
-            choice_class = "bg-green-50 border-green-400"
+            choice_class = "bg-white border-2 border-green-500 shadow-sm"
           elsif is_user_selected && !is_correct_choice
-            choice_class = "bg-red-50 border-red-400"
+            choice_class = "bg-white border-2 border-red-500 shadow-sm"
           elsif !is_user_selected && is_correct_choice
-            choice_class = "bg-yellow-50 border-yellow-400"
+            choice_class = "bg-white border-2 border-yellow-400 border-dashed"
           else
-            choice_class = "bg-gray-50 border-gray-200"
+            choice_class = "bg-gray-50 border border-gray-200"
           end
         %>
         
-        <div class="p-3 rounded-lg border <%= choice_class %> flex justify-between items-center transition-colors">
+        <div class="p-3 rounded-lg <%= choice_class %> flex justify-between items-center transition-colors">
           <span class="text-md text-gray-700 font-medium">
             <%= choice.content %>
           </span>
 
           <div class="text-sm font-semibold whitespace-nowrap">
             <% if is_correct_choice %>
-              <span class="text-green-600">【正解】</span>
+              <span class="text-green-600 flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                正解
+              </span>
             <% end %>
             <% if is_user_selected %>
-              <span class="ml-2 text-indigo-600">（あなたが選択）</span>
+              <span class="ml-2 text-indigo-600 text-xs bg-indigo-50 px-2 py-1 rounded-full">
+                あなたの回答
+              </span>
             <% end %>
           </div>
         </div>
