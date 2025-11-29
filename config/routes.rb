@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :exams, only: [:create, :index] do
+  resources :exams, only: [:create, :index, :show] do
     post "submissions", to: "exams#submit", on: :member
     get "review", on: :member
     get "check", on: :collection
@@ -39,6 +39,7 @@ Rails.application.routes.draw do
 
     resources :exam_questions, only: [:show] do
       post "answer", on: :member
+      get "solution", on: :member
     end
   end
 end

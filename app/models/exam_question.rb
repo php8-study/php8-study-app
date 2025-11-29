@@ -1,25 +1,42 @@
 # frozen_string_literal: true
 
 class ExamQuestion < ApplicationRecord
-  belongs_to :exam
-  belongs_to :question
-  has_many :exam_answers, dependent: :destroy
+  belongs_to :exam, inverse_of: :exam_questions
+  belongs_to :question, inverse_of: :exam_questions
+  has_many :exam_answers, inverse_of: :exam_question, dependent: :destroy
 
-  def answered?
-    exam_answers.exists?
-  end
+  def save_answers!(choice_ids)
+      target_choice_ids = Array(choice_ids).map(&:to_i).uniq
+      current_time = Time.current
 
-  def correct?
-    correct_choices = question.question_choices.where(correct: true).pluck(:id).to_set
-    user_choices = exam_answers.map(&:question_choice_id).to_set
-    correct_choices == user_choices
+      transaction do
+        exam_answers.delete_all
+        return if target_choice_ids.empty?
+
+        answers = target_choice_ids.map do |choice_id|
+          {
+            exam_question_id: id,
+            question_choice_id: choice_id,
+            created_at: current_time,
+            updated_at: current_time
+          }
+        end
+        ExamAnswer.insert_all!(answers)
+      end
+    end
+
+  def next_question
+    exam.exam_questions.order(:position).find_by("position > ?", position)
   end
 
   def previous_question
-    exam.exam_questions.order(:position).find_by(position: position - 1)
+    exam.exam_questions.order(:position).find_by("position < ?", position)
   end
 
-  def next_question
-    exam.exam_questions.order(:position).find_by(position: position + 1)
+  def correct?
+    correct_ids = question.question_choices.select(&:correct?).map(&:id).sort
+    student_ids = exam_answers.map(&:question_choice_id).sort
+    
+    correct_ids == student_ids
   end
 end

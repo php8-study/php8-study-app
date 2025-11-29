@@ -3,5 +3,6 @@
 class Question < ApplicationRecord
   belongs_to :category
   has_many :question_choices, dependent: :destroy
+  has_many :exam_questions
   accepts_nested_attributes_for :question_choices, allow_destroy: true, reject_if: :all_blank
 end

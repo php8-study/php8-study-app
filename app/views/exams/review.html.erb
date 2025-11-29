@@ -13,7 +13,7 @@
 
     <div class="grid grid-cols-5 md:grid-cols-8 gap-3 py-2">
       <% @exam_questions.each do |exam_question| %>
-        <% answered = exam_question.exam_answers.exists? %>
+        <% answered = exam_question.exam_answers.any? %>
 
         <%= link_to(
               exam_exam_question_path(@exam, exam_question),

@@ -1,31 +1,23 @@
 # frozen_string_literal: true
 
 class ExamQuestionsController < ApplicationController
-  before_action :set_exam_question, only: [:show, :answer]
+  before_action :set_exam
+  before_action :set_exam_question
 
   def show
-    @exam_answers = @exam_question.exam_answers.to_a
-    @question = @exam_question.question
+  end
+
+  def solution
+    respond_to do |format|
+      format.turbo_stream { render :solution }
+    end
   end
 
   def answer
-    @exam = current_user.exams.find(params[:exam_id])
-    @exam_question = @exam.exam_questions.find(params[:id])
+    @exam_question.save_answers!(answer_params[:question_choice_ids])
 
-    choice_ids = answer_params[:question_choice_ids] || []
-
-    ExamAnswer.transaction do
-      @exam_question.exam_answers.destroy_all
-
-      choice_ids.each do |choice_id|
-        @exam_question.exam_answers.create!(question_choice_id: choice_id)
-      end
-    end
-
-    next_question = @exam_question.next_question
-
-    if next_question.present?
-      redirect_to exam_exam_question_path(@exam, next_question)
+    if (next_q = @exam_question.next_question)
+      redirect_to exam_exam_question_path(@exam, next_q)
     else
       redirect_to review_exam_path(@exam)
     end
@@ -36,8 +28,13 @@ class ExamQuestionsController < ApplicationController
   end
 
   private
-    def set_exam_question
+    def set_exam
       @exam = current_user.exams.find(params[:exam_id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to root_path, alert: "指定された試験または問題は見つかりませんでした。"
+    end
+
+    def set_exam_question
       @exam_question = @exam.exam_questions.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to root_path, alert: "指定された試験または問題は見つかりませんでした。"

@@ -6,6 +6,8 @@ class Exam < ApplicationRecord
   has_many :exam_questions, -> { order(position: :asc) }, dependent: :destroy
   has_many :exam_answers, through: :exam_questions
 
+  PASSING_SCORE_PERCENTAGE = 70.0
+
   def attach_questions!(question_ids)
     exam_questions_data = question_ids.each_with_index.map do |q_id, index|
       {
@@ -27,11 +29,22 @@ class Exam < ApplicationRecord
     update!(completed_at: Time.current) unless completed_at.present?
   end
 
-  def score
-    questions_with_answers = exam_questions.includes(
-      :exam_answers,
-      exam_answers: :question_choice
-    ).all
-    questions_with_answers.count(&:correct?)
+  def total_questions
+    exam_questions.count
+  end
+
+  def correct_count
+    exam_questions.count(&:correct?)
+  end
+
+  def score_percentage
+    total = exam_questions.size
+    return 0.0 if total.zero?
+
+    (correct_count.to_f / total * 100).round(1)
+  end
+
+  def passed?
+    score_percentage >= PASSING_SCORE_PERCENTAGE
   end
 end
