@@ -7,7 +7,7 @@ html
     = javascript_importmap_tags
 
   body.min-h-screen.flex.flex-col
-    
+
     .page-content-wrapper.flex-1.flex.flex-col.bg-gradient-to-b.from-slate-100.to-slate-200 id="page-content"
 
       - if current_user
@@ -22,6 +22,6 @@ html
             = yield
 
       - if current_user
-        = render "layouts/footer" 
-    
+        = render "layouts/footer"
+
     div id="modal-frame"

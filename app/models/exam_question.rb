@@ -6,23 +6,23 @@ class ExamQuestion < ApplicationRecord
   has_many :exam_answers, inverse_of: :exam_question, dependent: :destroy
 
   def save_answers!(choice_ids)
-      target_choice_ids = Array(choice_ids).map(&:to_i).uniq
-      current_time = Time.current
+    target_choice_ids = Array(choice_ids).map(&:to_i).uniq
+    current_time = Time.current
 
-      transaction do
-        exam_answers.delete_all
-        return if target_choice_ids.empty?
+    transaction do
+      exam_answers.delete_all
+      return if target_choice_ids.empty?
 
-        answers = target_choice_ids.map do |choice_id|
-          {
-            exam_question_id: id,
-            question_choice_id: choice_id,
-            created_at: current_time,
-            updated_at: current_time
-          }
-        end
-        ExamAnswer.insert_all!(answers)
+      answers = target_choice_ids.map do |choice_id|
+        {
+          exam_question_id: id,
+          question_choice_id: choice_id,
+          created_at: current_time,
+          updated_at: current_time
+        }
       end
+      ExamAnswer.insert_all!(answers)
+    end
     end
 
   def next_question
@@ -34,9 +34,9 @@ class ExamQuestion < ApplicationRecord
   end
 
   def correct?
-    correct_ids = question.question_choices.select(&:correct?).map(&:id).sort
+    correct_ids = question.question_choices.filter_map { |choice| choice.id if choice.correct? }.sort
     student_ids = exam_answers.map(&:question_choice_id).sort
-    
+
     correct_ids == student_ids
   end
 end

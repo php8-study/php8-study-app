@@ -51,10 +51,9 @@ class ExamsController < ApplicationController
   end
 
   private
-
-  def set_exam
-    @exam = current_user.exams
-                        .includes(exam_questions: [{ question: :question_choices }, :exam_answers])
-                        .find(params[:id])
-  end
+    def set_exam
+      @exam = current_user.exams
+                          .includes(exam_questions: [{ question: :question_choices }, :exam_answers])
+                          .find(params[:id])
+    end
 end
