@@ -34,34 +34,36 @@ class Exam::QuestionSelector
       selected_ids = selected_questions.map(&:id)
       remaining_count = TOTAL_QUESTIONS - selected_ids.count
       return selected_questions if remaining_count <= 0
-
       extra_questions = Question.where.not(id: selected_ids)
-                                .joins(:category)
-                                .select("questions.id, categories.chapter_number")
-                                .sample(remaining_count)
-                                .map { |q| ExamQuestionData.new(q.id, q.chapter_number) }
+                                    .joins(:category)
+                                    .select("questions.id", "categories.chapter_number")
+                                    .order("RANDOM()")
+                                    .limit(remaining_count)
 
-      selected_questions.concat(extra_questions)
+      extras = extra_questions.map { |q| build_data(q.id, q.chapter_number) }
+      selected_questions.concat(extras)
     end
 
     def sample_based_on_weight(categories, total_weight)
-      selected_questions = []
-      return selected_questions if total_weight.zero?
+      return [] if total_weight.zero?
 
-      categories.each do |category|
+      categories.each_with_object([]) do |category, result|
         count = (TOTAL_QUESTIONS * category.weight / total_weight).floor
         next if count <= 0
 
         question_ids = category.questions.order("RANDOM()").limit(count).pluck(:id)
+
         question_ids.each do |q_id|
-          selected_questions << ExamQuestionData.new(q_id, category.chapter_number)
+          result << build_data(q_id, category.chapter_number)
         end
       end
-
-      selected_questions
     end
 
     def total_weight(categories)
       categories.sum(&:weight).to_f
+    end
+
+    def build_data(id, chapter)
+      ExamQuestionData.new(id: id, chapter: chapter)
     end
 end

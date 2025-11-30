@@ -6,25 +6,25 @@ class ExamQuestion < ApplicationRecord
   has_many :exam_answers, inverse_of: :exam_question, dependent: :destroy
 
   def save_answers!(choice_ids)
-      input_ids = Array(choice_ids).map(&:to_i).uniq
-      valid_choice_ids = question.question_choices.map(&:id)
-      target_choice_ids = input_ids & valid_choice_ids
-      current_time = Time.current
+    input_ids = Array(choice_ids).map(&:to_i).uniq
+    valid_choice_ids = question.question_choices.map(&:id)
+    target_choice_ids = input_ids & valid_choice_ids
+    current_time = Time.current
 
-      transaction do
-        exam_answers.delete_all
-        return if target_choice_ids.empty?
+    transaction do
+      exam_answers.delete_all
+      return if target_choice_ids.empty?
 
-        answers = target_choice_ids.map do |choice_id|
-          {
-            exam_question_id: id,
-            question_choice_id: choice_id,
-            created_at: current_time,
-            updated_at: current_time
-          }
-        end
-        ExamAnswer.insert_all!(answers)
+      answers = target_choice_ids.map do |choice_id|
+        {
+          exam_question_id: id,
+          question_choice_id: choice_id,
+          created_at: current_time,
+          updated_at: current_time
+        }
       end
+      ExamAnswer.insert_all!(answers)
+    end
   end
 
   def next_question
