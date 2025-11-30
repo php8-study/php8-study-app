@@ -8,14 +8,12 @@ fi
 
 echo "Lint mode: $MODE"
 
-
 echo "Running Rubocop..."
 if [[ "$MODE" == "fix" ]]; then
   bundle exec rubocop -A
 else
   bundle exec rubocop
 fi
-
 
 echo "Running Prettier..."
 if [[ "$MODE" == "fix" ]]; then
@@ -24,12 +22,11 @@ else
   yarn prettier --check '**/*.{js,ts,jsx,tsx,css,scss}'
 fi
 
-
 echo "Running ERB-Lint..."
 if [[ "$MODE" == "fix" ]]; then
-  bundle exec erblint --lint-all --autocorrect
+  bundle exec erb_lint --lint-all --autocorrect
 else
-  bundle exec erblint --lint-all
+  bundle exec erb_lint --lint-all
 fi
 
 echo "Linting complete!"
