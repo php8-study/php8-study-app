@@ -1,0 +1,11 @@
+language: "ja-JP"
+
+reviews:
+  instructions: |
+    ## アーキテクチャの方針
+    - 原則として `app/services/` などの「サービスクラス（Service Objects）」の作成は避けてください。
+    - ビジネスロジックは可能な限りモデル（ActiveRecord）内、もしくは `app/models/` 配下のドメインごとのディレクトリ（例: `app/models/exam/`）に配置する PORO (Plain Old Ruby Object) に凝集させてください。
+    - コントローラーにビジネスロジックを持たせるのは避け（Skinny Controller）、ロジックはモデルやPOROに委譲してください。
+
+    ## テストの方針
+    - System Test において、非同期処理の待機などで `sleep` を使うことは原則禁止です。Capybaraの待機マッチャなどを適切に使用してください。
