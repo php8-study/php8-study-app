@@ -3,14 +3,10 @@
   <head>
     <title>Php8Study</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags
- %>
-    <%= csp_meta_tag
- %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload"
- %>
-    <%= javascript_importmap_tags
- %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body class="min-h-screen flex flex-col">
@@ -18,27 +14,23 @@
     <div id="page-content" class="page-content-wrapper flex-1 flex flex-col bg-gradient-to-b from-slate-100 to-slate-200">
 
       <% if current_user %>
-        <%= render "layouts/header"
- %>
+        <%= render "layouts/header" %>
       <% end %>
 
       <div class="max-w-screen-xl mx-auto w-full">
-        <%= render "layouts/flash"
- %>
+        <%= render "layouts/flash" %>
       </div>
 
       <div class="main-content-wrapper flex-1 w-full">
 
         <% if content_for?(:full_width) %>
           <main>
-            <%= yield
- %>
+            <%= yield %>
           </main>
         <% else %>
           <div class="max-w-screen-xl mx-auto w-full">
             <main>
-              <%= yield
- %>
+              <%= yield %>
             </main>
           </div>
         <% end %>
@@ -46,8 +38,7 @@
       </div>
 
       <% if current_user %>
-        <%= render "layouts/footer"
- %>
+        <%= render "layouts/footer" %>
       <% end %>
 
     </div>

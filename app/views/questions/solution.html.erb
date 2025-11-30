@@ -6,11 +6,9 @@
 <div class="max-w-xl mx-auto py-8">
   <h1 class="text-3xl font-bold text-gray-900 mb-6">解答と参照情報</h1>
 
-  <div class="p-6 border-l-4 <%= result_class
- %> rounded-r-lg shadow-sm mb-8">
+  <div class="p-6 border-l-4 <%= result_class %> rounded-r-lg shadow-sm mb-8">
     <div class="text-2xl font-extrabold flex items-center gap-2">
-      <%= result_icon
- %>
+      <%= result_icon %>
     </div>
     <% unless @is_correct %>
       <p class="mt-2 text-lg opacity-90">もう一度確認してみましょう。</p>
@@ -18,18 +16,15 @@
   </div>
 
   <div class="bg-white p-6 shadow-lg rounded-xl mb-8">
-    <h2 class="text-xl font-semibold text-indigo-700 mb-4">問題 <%= @question.id
- %></h2>
-    <p class="text-lg text-gray-800 whitespace-pre-wrap mb-6"><%= @question.content
- %></p>
+    <h2 class="text-xl font-semibold text-indigo-700 mb-4">問題 <%= @question.id %></h2>
+    <p class="text-lg text-gray-800 whitespace-pre-wrap mb-6"><%= @question.content %></p>
 
     <h3 class="text-lg font-bold text-gray-900 mb-3 border-b pb-1">選択肢の正誤</h3>
     <div class="space-y-3">
       <%= render partial: "exam_questions/choice_result_row",
                  collection: @question.question_choices,
                  as: :choice,
-                 locals: { user_answer_ids: @user_answer_ids }
- %>
+                 locals: { user_answer_ids: @user_answer_ids } %>
     </div>
   </div>
 
@@ -38,8 +33,7 @@
     <% if @question.official_page.present? %>
       <p class="text-gray-700">公式テキストの参照箇所は以下の通りです。</p>
       <p class="mt-2 text-xl font-semibold text-indigo-700">
-        ページ: <%= @question.official_page
- %>
+        ページ: <%= @question.official_page %>
       </p>
     <% else %>
       <p class="text-gray-500">この問題には参照情報が設定されていません。</p>
@@ -48,11 +42,9 @@
 
   <div class="flex justify-between gap-4">
     <%= link_to "トップへ戻る", root_path,
-        class: "flex-1 text-center text-gray-700 bg-gray-200 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
- %>
+        class: "flex-1 text-center text-gray-700 bg-gray-200 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors" %>
 
     <%= link_to "次の問題へ", random_questions_path,
-        class: "flex-1 text-center bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
- %>
+        class: "flex-1 text-center bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors" %>
   </div>
 </div>

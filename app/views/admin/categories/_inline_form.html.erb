@@ -1,48 +1,31 @@
-<%= turbo_frame_tag category
+<%= turbo_frame_tag category do %>
+  <%= form_with(model: [:admin, category], class: "contents") do |f| %>
 
+    <%= render "shared/error_messages", object: category, class: "col-span-5" %>
 
- do %>
-  <%= form_with(model: [:admin, category], class: "contents")
-
-
-
-
-
-
- do |f| %>
-
-    <%= render "shared/error_messages", object: category, class: "col-span-5"
- %>
-
-    <div class="grid items-center px-4 py-4 rounded border-2 border-blue-400 shadow-md <%= category_grid_cols
- %>">
+    <div class="grid items-center px-4 py-4 rounded border-2 border-blue-400 shadow-md <%= category_grid_cols %>">
 
       <span class="ml-2">
-        <%= f.number_field :chapter_number, class: admin_inline_input_class(align: :center), required: true
- %>
+        <%= f.number_field :chapter_number, class: admin_inline_input_class(align: :center), required: true %>
       </span>
 
       <span class="pl-2">
-        <%= f.text_field :name, class: admin_inline_input_class, required: true
- %>
+        <%= f.text_field :name, class: admin_inline_input_class, required: true %>
       </span>
 
       <div></div>
 
       <div class="flex items-center gap-4 justify-end">
-        <%= f.number_field :weight, class: "border border-slate-300 rounded p-1 w-16 text-right text-sm", min: 0, max: 100, step: 0.1
- %>
+        <%= f.number_field :weight, class: "border border-slate-300 rounded p-1 w-16 text-right text-sm", min: 0, max: 100, step: 0.1 %>
         <span class="text-sm text-slate-600 pr-2">%</span>
       </div>
 
       <div class="flex items-center gap-3 justify-center">
-        <%= f.submit "保存", class: "text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded cursor-pointer"
- %>
+        <%= f.submit "保存", class: "text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded cursor-pointer" %>
 
         <%= link_to "キャンセル", render_row_admin_category_path(category),
             data: { turbo_frame: dom_id(category) },
-            class: "text-sm font-medium border border-red-400 text-red-600 hover:bg-red-50 hover:text-red-700 py-1 rounded transition-colors"
- %>
+            class: "text-sm font-medium border border-red-400 text-red-600 hover:bg-red-50 hover:text-red-700 py-1 rounded transition-colors" %>
       </div>
     </div>
   <% end %>

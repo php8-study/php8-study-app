@@ -6,16 +6,13 @@
     </div>
 
     <div class="flex space-x-4">
-      <%= link_to "管理画面へ戻る", admin_root_path, class: "bg-slate-200 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-300 text-sm font-semibold transition-colors"
- %>
-      <%= link_to "新規作成", new_admin_category_path, class: "bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 text-sm font-semibold transition-colors"
- %>
+      <%= link_to "管理画面へ戻る", admin_root_path, class: "bg-slate-200 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-300 text-sm font-semibold transition-colors" %>
+      <%= link_to "新規作成", new_admin_category_path, class: "bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 text-sm font-semibold transition-colors" %>
     </div>
   </div>
 
   <div class="bg-white shadow-sm border border-slate-200 rounded-xl overflow-hidden">
-    <div class="grid text-slate-500 text-sm font-semibold px-4 h-12 items-center bg-slate-50 border-b border-slate-200 <%= category_grid_cols
- %>">
+    <div class="grid text-slate-500 text-sm font-semibold px-4 h-12 items-center bg-slate-50 border-b border-slate-200 <%= category_grid_cols %>">
       <span class="text-center pl-2">章番号</span>
       <span class="pl-20">タイトル</span>
       <span></span>
@@ -24,8 +21,7 @@
     </div>
 
     <div class="divide-y divide-slate-200">
-      <%= render @categories
- %>
+      <%= render @categories %>
     </div>
   </div>
 </div>

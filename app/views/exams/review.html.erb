@@ -12,12 +12,8 @@
     </h2>
 
     <div class="grid grid-cols-5 md:grid-cols-8 gap-3 py-2">
-      <% @exam_questions.each
-
-
- do |exam_question| %>
-        <% exam_question.exam_answers.any?
- %>
+      <% @exam_questions.each do |exam_question| %>
+        <% exam_question.exam_answers.any? %>
 
         <%= link_to(
               exam_exam_question_path(@exam, exam_question),
@@ -29,16 +25,8 @@
                     "bg-yellow-100 border-yellow-500 text-yellow-800 hover:bg-yellow-200"
                 ].join(" ")
               )
-            )
-
-
-
-
-
-
- do %>
-          <%= exam_question.position
- %>
+            ) do %>
+          <%= exam_question.position %>
         <% end %>
       <% end %>
     </div>
@@ -60,7 +48,6 @@
             turbo_method: :post,
             turbo_confirm: "一度提出すると回答は変更できません。よろしいですか？"
           },
-          class: "w-full bg-red-600 text-white px-6 py-3 rounded-lg font-semibold text-xl hover:bg-red-700 transition-colors block text-center shadow-lg"
- %>
+          class: "w-full bg-red-600 text-white px-6 py-3 rounded-lg font-semibold text-xl hover:bg-red-700 transition-colors block text-center shadow-lg" %>
   </div>
 </div>

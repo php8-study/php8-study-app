@@ -4,12 +4,10 @@
 
     <div class="flex gap-3">
       <%= link_to "管理画面へ戻る", admin_root_path,
-          class: "inline-flex items-center text-sm font-semibold text-gray-700 bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors"
- %>
+          class: "inline-flex items-center text-sm font-semibold text-gray-700 bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors" %>
 
       <%= link_to "新規作成", new_admin_question_path,
-          class: "bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 text-sm font-semibold transition-colors"
- %>
+          class: "bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 text-sm font-semibold transition-colors" %>
     </div>
   </div>
 
@@ -26,8 +24,7 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200">
-        <%= render @questions
- %>
+        <%= render @questions %>
       </tbody>
     </table>
   </div>

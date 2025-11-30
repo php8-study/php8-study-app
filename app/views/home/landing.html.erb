@@ -1,5 +1,4 @@
-<% content_for :full_width, true
- %>
+<% content_for :full_width, true %>
 <div class="min-h-screen bg-gray-200 flex flex-col items-center justify-start">
   <div class="flex flex-col items-center justify-center text-center pt-10 h-150">
     <h1 class="text-6xl font-bold text-blue-600">
@@ -9,10 +8,7 @@
       効率的な学習で、合格を目指そう。
     </h2>
 
-    <%= link_to "/auth/github", class: "mt-10 flex items-center gap-2 bg-gray-600 text-white font-semibold py-2.5 px-10 rounded-lg shadow-sm hover:bg-gray-700 hover:shadow-md active:scale-95 transition-all duration-150"
-
-
- do %>
+    <%= link_to "/auth/github", class: "mt-10 flex items-center gap-2 bg-gray-600 text-white font-semibold py-2.5 px-10 rounded-lg shadow-sm hover:bg-gray-700 hover:shadow-md active:scale-95 transition-all duration-150" do %>
       <i class="fab fa-github text-xl"></i>
       <span>GitHubでログイン</span>
     <% end %>
@@ -21,7 +17,6 @@
   <hr class="w-full border-t-2 border-gray-400 my-10">
 
   <div class="w-11/12 md:w-4/5 flex flex-col md:flex-row justify-between items-stretch text-center md:text-left space-y-8 md:space-y-0 md:space-x-10 pb-16">
-    <%= render partial: "feature_card", collection: landing_features, as: :feature
- %>
+    <%= render partial: "feature_card", collection: landing_features, as: :feature %>
   </div>
 </div>

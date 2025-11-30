@@ -17,34 +17,26 @@
         </thead>
 
         <tbody class="bg-white divide-y divide-gray-200">
-          <% @exams.each
-
-
- do |exam| %>
+          <% @exams.each do |exam| %>
             <tr>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm font-medium text-gray-900">
-                  <%= exam.completed_at.strftime("%Y年 %m月%d日 %H時%M分")
- %>
+                  <%= exam.completed_at.strftime("%Y年 %m月%d日 %H時%M分") %>
                 </div>
               </td>
 
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-lg font-bold <%= exam.passed? ? "text-green-600" : "text-red-600"
- %>">
-                  <%= "#{exam.score_percentage}%"
- %>
+                <div class="text-lg font-bold <%= exam.passed? ? "text-green-600" : "text-red-600" %>">
+                  <%= "#{exam.score_percentage}%" %>
                 </div>
               </td>
 
               <td class="px-6 py-4">
-                <%= render "progress_bar", exam: exam, animate: false
- %>
+                <%= render "progress_bar", exam: exam, animate: false %>
               </td>
 
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <%= link_to "詳細を見る", exam_path(exam), class: "text-indigo-600 hover:text-indigo-900"
- %>
+                <%= link_to "詳細を見る", exam_path(exam), class: "text-indigo-600 hover:text-indigo-900" %>
               </td>
             </tr>
           <% end %>
@@ -55,8 +47,7 @@
   <% else %>
     <div class="text-center p-10 bg-white rounded-lg shadow-md">
       <p class="text-gray-500 text-lg mb-4">まだ模擬試験の結果がありません。</p>
-      <%= link_to "ランダム問題を解く", root_path, class: "text-indigo-600 hover:text-indigo-500 font-medium"
- %>
+      <%= link_to "ランダム問題を解く", root_path, class: "text-indigo-600 hover:text-indigo-500 font-medium" %>
     </div>
   <% end %>
 

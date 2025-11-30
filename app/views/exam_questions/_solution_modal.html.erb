@@ -1,7 +1,5 @@
-<% exam_question.question
- %>
-<% exam_question.exam_answers.pluck(:question_choice_id)
- %>
+<% exam_question.question %>
+<% exam_question.exam_answers.pluck(:question_choice_id) %>
 
 <div data-controller="modal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
   <div class="absolute inset-0 bg-black/50" data-action="click->modal#close"></div>
@@ -9,8 +7,7 @@
        data-action="click->modal#stop">
 
     <div class="sticky top-0 p-4 border-b bg-white flex justify-between items-center z-20">
-      <h1 class="text-xl font-bold text-gray-900 mr-4">問題 <%= question.id
- %> の解説</h1>
+      <h1 class="text-xl font-bold text-gray-900 mr-4">問題 <%= question.id %> の解説</h1>
       <button type="button" data-action="click->modal#close" class="text-gray-400 hover:text-gray-600">
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></svg>
       </button>
@@ -19,8 +16,7 @@
     <div class="p-6">
       <div class="mb-6 pb-4 border-b">
         <h2 class="text-lg font-semibold text-indigo-700 mb-2">問題文</h2>
-        <p class="text-lg text-gray-800 whitespace-pre-wrap"><%= question.content
- %></p>
+        <p class="text-lg text-gray-800 whitespace-pre-wrap"><%= question.content %></p>
       </div>
 
       <div class="mb-6">
@@ -29,18 +25,15 @@
           <%= render partial: "exam_questions/choice_result_row",
                      collection: question.question_choices,
                      as: :choice,
-                     locals: { user_answer_ids: user_answer_ids }
- %>
+                     locals: { user_answer_ids: user_answer_ids } %>
         </div>
       </div>
 
-      <div class="p-4 rounded-xl <%= question.official_page.present? ? "bg-indigo-50 border border-indigo-200" : "bg-gray-50 border border-gray-200"
- %>">
+      <div class="p-4 rounded-xl <%= question.official_page.present? ? "bg-indigo-50 border border-indigo-200" : "bg-gray-50 border border-gray-200" %>">
         <h3 class="text-lg font-bold text-gray-900 mb-2">参照情報</h3>
         <% if question.official_page.present? %>
           <p class="text-gray-700">公式テキストの参照箇所：</p>
-          <p class="mt-1 text-xl font-extrabold text-indigo-700">ページ: <%= question.official_page
- %></p>
+          <p class="mt-1 text-xl font-extrabold text-indigo-700">ページ: <%= question.official_page %></p>
         <% else %>
           <p class="text-gray-500">この問題には参照情報が設定されていません。</p>
         <% end %>
