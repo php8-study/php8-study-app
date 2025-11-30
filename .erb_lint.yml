@@ -16,3 +16,8 @@ linters:
         Enabled: false
       Layout/TrailingEmptyLines:
         Enabled: false
+      Lint/UselessAssignment:
+        Enabled: false
+      Layout/TrailingWhitespace:
+        Enabled: false
+
