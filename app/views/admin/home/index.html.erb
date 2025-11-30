@@ -1,0 +1,11 @@
+<div class="container mx-auto px-4">
+  <section class="hero py-16 text-center">
+    <h1 class="text-4xl font-bold mb-4">管理画面</h1>
+    <p class="text-lg text-gray-700">管理する項目を選択してください</p>
+  </section>
+
+  <section class="cards grid gap-6 max-w-2xl mx-auto">
+    <%= render "shared/card", title: "問題一覧", description: "", url: admin_questions_path %>
+    <%= render "shared/card", title: "カテゴリー一覧", description: "", url: admin_categories_path %>
+  </section>
+</div>
