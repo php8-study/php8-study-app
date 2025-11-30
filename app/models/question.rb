@@ -19,7 +19,7 @@ class Question < ApplicationRecord
 
   def answer_correct?(input_choice_ids)
     user_ids = Array(input_choice_ids).map(&:to_i).sort
-    
+
     user_ids == correct_choice_ids
   end
 end

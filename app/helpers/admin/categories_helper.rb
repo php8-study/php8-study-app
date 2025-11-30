@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin::CategoriesHelper
   def category_grid_cols
     "grid-cols-[50px_350px_1fr_150px_120px]"
