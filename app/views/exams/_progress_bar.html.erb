@@ -1,23 +1,27 @@
-<%
+
   score = exam.score_percentage
   is_passed = exam.passed?
 
-  final_bar_color = is_passed ? 'bg-indigo-500' : 'bg-red-500'
-  display_bar_color = animate ? 'bg-gray-400' : final_bar_color
-  display_width = animate ? 'width: 0%;' : "width: #{score > 100 ? 100 : score}%;"
-  transition_class = animate ? 'transition-all duration-3000 ease-out' : ''
-  stamp_class = animate ? 'opacity-0 transition-opacity duration-300' : ''
+  final_bar_color = is_passed ? "bg-indigo-500" : "bg-red-500"
+  animate ? 'bg-gray-400' : final_bar_color
+  animate ? 'width: 0%;' : "width: #{score > 100 ? 100 : score}%;"
+  animate ? 'transition-all duration-3000 ease-out' : ''
+  animate ? 'opacity-0 transition-opacity duration-300' : ''
 %>
 
 <div class="flex items-center space-x-2 w-full">
   <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-    <div class="h-full <%= display_bar_color %> <%= transition_class %>" 
-         data-result-reveal-target="bar" 
-         style="<%= display_width %>"> 
+    <div class="h-full <%= display_bar_color
+ %> <%= transition_class
+ %>"
+         data-result-reveal-target="bar"
+         style="<%= display_width
+ %>">
     </div>
   </div>
 
-  <div class="whitespace-nowrap w-20 flex justify-center <%= stamp_class %>"
+  <div class="whitespace-nowrap w-20 flex justify-center <%= stamp_class
+ %>"
        data-result-reveal-target="stamp">
     <% if is_passed %>
       <span class="text-xl font-extrabold text-green-600 transform rotate-6 origin-center shadow-lg px-2 py-1 border-2 border-green-600 rounded-lg">
