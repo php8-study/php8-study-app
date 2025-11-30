@@ -11,10 +11,9 @@ class QuestionsController < ApplicationController
   end
 
   def solution
-    @user_answer_ids = params[:user_answer_ids].to_a.map(&:to_i)
-    @correct_answer_ids = @question.question_choices.where(correct: true).pluck(:id)
-
-    @is_correct = (@user_answer_ids.sort == @correct_answer_ids.sort)
+    user_answer_ids = params[:user_answer_ids]
+    @is_correct = @question.answer_correct?(user_answer_ids)
+    @user_answer_ids = Array(user_answer_ids).map(&:to_i)
   end
 
   private
