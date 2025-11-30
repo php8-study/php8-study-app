@@ -10,7 +10,7 @@
     <%= render "shared/card", title: "今までの模擬試験を振り返る", description: "学習の成果を確認", url: exams_path %>
     
     <% if current_user.admin? %>
-      <%= render "shared/card", title: "管理画面", description: "", url: admin_path %>
+      <%= render "shared/card", title: "管理画面", description: "", url: admin_root_path %>
     <% end %>
   </section>
 </div>
