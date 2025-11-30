@@ -1,43 +1,32 @@
 #!/usr/bin/env bash
 
-# デフォルトはチェックモード
 MODE="check"
 
-# 引数で指定があれば切り替え
 if [[ "$1" == "fix" ]]; then
   MODE="fix"
 fi
 
 echo "Lint mode: $MODE"
 
-# ---------------------
-# Rubocop
-# ---------------------
 echo "Running Rubocop..."
 if [[ "$MODE" == "fix" ]]; then
-  bundle exec rubocop -a
+  bundle exec rubocop -A
 else
   bundle exec rubocop
 fi
 
-# ---------------------
-# Prettier
-# ---------------------
 echo "Running Prettier..."
 if [[ "$MODE" == "fix" ]]; then
-  yarn prettier --write '**/*.{js,ts,jsx,tsx,css,scss,html}'
+  yarn prettier --write '**/*.{js,ts,jsx,tsx,css,scss}'
 else
-  yarn prettier --check '**/*.{js,ts,jsx,tsx,css,scss,html}'
+  yarn prettier --check '**/*.{js,ts,jsx,tsx,css,scss}'
 fi
 
-# ---------------------
-# Slim-Lint
-# ---------------------
-echo "Running Slim-Lint..."
+echo "Running ERB-Lint..."
 if [[ "$MODE" == "fix" ]]; then
-  bundle exec slim-lint app/views
+  bundle exec erb_lint --lint-all --autocorrect
 else
-  bundle exec slim-lint app/views
+  bundle exec erb_lint --lint-all
 fi
 
 echo "Linting complete!"

@@ -1,14 +1,19 @@
 <div class="nested-form-wrapper border border-gray-200 rounded-lg p-3 mb-3 hover:shadow-sm transition-shadow bg-gray-50">
   <div class="flex items-center gap-4">
-    <%= f.hidden_field :id %>
-    <%= f.hidden_field :_destroy %>
+    <%= f.hidden_field :id
+ %>
+    <%= f.hidden_field :_destroy
+ %>
 
     <div class="flex items-center">
-      <%= f.check_box :correct, class: "w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer" %>
-      <%= f.label :correct, "正解", class: "ml-2 text-sm text-slate-700 font-medium cursor-pointer" %>
+      <%= f.check_box :correct, class: "w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
+ %>
+      <%= f.label :correct, "正解", class: "ml-2 text-sm text-slate-700 font-medium cursor-pointer"
+ %>
     </div>
 
-    <%= f.text_field :content, class: "flex-grow border border-gray-300 rounded-lg p-2 text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors", placeholder: "選択肢を入力" %>
+    <%= f.text_field :content, class: "flex-grow border border-gray-300 rounded-lg p-2 text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors", placeholder: "選択肢を入力"
+ %>
 
     <button type="button" data-action="nested-form#remove" class="text-sm text-red-600 hover:text-red-700 p-1 hover:bg-red-50 rounded-lg transition-colors">
       削除

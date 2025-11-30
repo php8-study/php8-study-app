@@ -69,9 +69,8 @@ group :development do
   # gem "spring"
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
-  gem "slim_lint", require: false
   gem "rubocop-rails_config", require: false
-  gem "html2slim", require: false
+  gem "erb_lint", require: false
 end
 
 group :test do

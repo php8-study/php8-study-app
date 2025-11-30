@@ -1,16 +1,21 @@
-<header class="bg-gray-100 shadow-sm <%= container_class %>">
+<header class="bg-gray-100 shadow-sm <%= container_class
+ %>">
   <div class="px-6 py-4 flex items-center justify-between">
     <div class="text-lg font-bold text-gray-800">
-      <%= link_to "PHP8技術者認定初級試験スタディ", root_path %>
+      <%= link_to "PHP8技術者認定初級試験スタディ", root_path
+ %>
     </div>
-    
+
     <div class="flex items-center gap-4">
       <div class="flex flex-col text-right text-sm">
-        <span><%= session.dig(:github_info, "nickname") %></span>
-        <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "text-red-500 hover:underline" %>
+        <span><%= session.dig(:github_info, "nickname")
+ %></span>
+        <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "text-red-500 hover:underline"
+ %>
       </div>
       <% if session.dig(:github_info, "image") %>
-        <%= image_tag session[:github_info]["image"], class: "w-10 h-10 rounded-full" %>
+        <%= image_tag session[:github_info]["image"], class: "w-10 h-10 rounded-full"
+ %>
       <% end %>
     </div>
   </div>

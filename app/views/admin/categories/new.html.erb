@@ -1,12 +1,18 @@
 <div class="container mx-auto px-4 pt-16 max-w-2xl">
   <h1 class="text-3xl font-bold text-slate-800 mb-8">カテゴリーの新規作成</h1>
 
-  <%= form_with model: @category, url: admin_categories_path, class: "space-y-6" do |f| %>
-    <%= render "form", f: f %>
+  <%= form_with model: @category, url: admin_categories_path, class: "space-y-6"
+
+
+ do |f| %>
+    <%= render "form", f: f
+ %>
 
     <div class="flex justify-end gap-3 mt-6">
-      <%= link_to "戻る", admin_categories_path, class: "px-4 py-2 rounded-lg bg-slate-200 hover:bg-slate-300" %>
-      <%= f.submit "作成する", class: "px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 cursor-pointer" %>
+      <%= link_to "戻る", admin_categories_path, class: "px-4 py-2 rounded-lg bg-slate-200 hover:bg-slate-300"
+ %>
+      <%= f.submit "作成する", class: "px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+ %>
     </div>
   <% end %>
 </div>
