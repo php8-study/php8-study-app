@@ -1,0 +1,9 @@
+language: "ja-JP"
+
+reviews:
+  instructions: |
+    ## アーキテクチャの方針
+    - 原則として `app/services/` などの「サービスクラス（Service Objects）」の作成は避けてください。
+    - ビジネスロジックの実装には、POROを利用した **interactorパターン** を優先してください。
+    - 各interactorは単一のビジネスユースケース（操作）に責任を持たせ、`app/models/` 配下のドメインごとのディレクトリ（例: `app/models/exam/`）に配置してください。
+    - コントローラーにビジネスロジックを持たせるのは避け（Skinny Controller）、ロジックはモデルやinteractorに委譲してください。
