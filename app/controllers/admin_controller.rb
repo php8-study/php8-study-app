@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AdminController < ActionController::Base
+class AdminController < ApplicationController
   before_action :require_admin
 
   private

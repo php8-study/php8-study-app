@@ -5,4 +5,11 @@ class Question < ApplicationRecord
   has_many :question_choices, dependent: :destroy
   has_many :exam_questions
   accepts_nested_attributes_for :question_choices, allow_destroy: true, reject_if: :all_blank
+
+  DEFAULT_CHOICES_COUNT = 4
+
+  def build_default_choices
+    return if question_choices.present?
+    DEFAULT_CHOICES_COUNT.times { question_choices.build }
+  end
 end
