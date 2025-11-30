@@ -6,7 +6,9 @@ class ExamQuestion < ApplicationRecord
   has_many :exam_answers, inverse_of: :exam_question, dependent: :destroy
 
   def save_answers!(choice_ids)
-    target_choice_ids = Array(choice_ids).map(&:to_i).uniq
+    input_ids = Array(choice_ids).map(&:to_i).uniq
+    valid_choice_ids = question.question_choices.map(&:id)
+    target_choice_ids = input_ids & valid_choice_ids
     current_time = Time.current
 
     transaction do
@@ -23,7 +25,7 @@ class ExamQuestion < ApplicationRecord
       end
       ExamAnswer.insert_all!(answers)
     end
-    end
+  end
 
   def next_question
     exam.exam_questions.order(:position).find_by("position > ?", position)

@@ -2,20 +2,17 @@
 
 Rails.application.routes.draw do
   root "home#index"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
-  # root "posts#index"
   get "/auth/github/callback", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
   namespace :admin do
-    get "/", to: "home#index"
+    root to: "home#index"
+
     resources :questions
+
     resources :categories do
       member do
         get :render_row
@@ -24,22 +21,30 @@ Rails.application.routes.draw do
   end
 
   resources :questions, only: [:show] do
-    get "random", on: :collection
+    collection do
+      get :random
+    end
+
     member do
-      get "solution"
+      get :solution
     end
   end
 
-  resources :exams, only: [:create, :index, :show] do
-    post "submissions", to: "exams#submit", on: :member
-    get "review", on: :member
-    get "check", on: :collection
+  resources :exams, only: [:index, :show, :create] do
+    collection do
+      get :check
+    end
 
-    resources :submissions, only: [:create]
+    member do
+      get :review
+      post :submissions, to: "exams#submit"
+    end
 
     resources :exam_questions, only: [:show] do
-      post "answer", on: :member
-      get "solution", on: :member
+      member do
+        post :answer
+        get :solution
+      end
     end
   end
 end

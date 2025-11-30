@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class Admin::CategoriesController < ::ApplicationController
+class Admin::CategoriesController < ::AdminController
   before_action :set_category, only: [:edit, :update, :destroy, :render_row]
   def index
-    @categories = Category.all.order(:chapter_number)
+    @categories = Category.order(:chapter_number)
   end
 
   def new
@@ -13,23 +13,10 @@ class Admin::CategoriesController < ::ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to admin_categories_path
+      redirect_to admin_categories_path, notice: "カテゴリーを作成しました"
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def destroy
-    @category.destroy
-
-    respond_to do |format|
-      format.html { redirect_to admin_categories_url, notice: "問題が削除されました。" }
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(@category) }
-    end
-  end
-
-  def edit
-    render :edit, layout: false
   end
 
   def update
@@ -38,6 +25,18 @@ class Admin::CategoriesController < ::ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @category.destroy
+
+    respond_to do |format|
+      format.html { redirect_to admin_categories_url, notice: "カテゴリーが削除されました。" }
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@category) }
+    end
+  end
+
+  def edit
   end
 
   def render_row

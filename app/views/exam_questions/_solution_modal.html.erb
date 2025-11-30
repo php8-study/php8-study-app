@@ -22,29 +22,10 @@
       <div class="mb-6">
         <h3 class="text-lg font-bold text-gray-900 mb-3 border-b pb-1">選択肢の正誤とあなたの選択</h3>
         <div class="space-y-3">
-          <% question.question_choices.each do |choice| %>
-            <% 
-              is_user_selected = user_answer_ids.include?(choice.id)
-              is_correct_choice = choice.correct?
-              choice_class =
-                if is_user_selected && is_correct_choice
-                  "bg-green-50 border-green-500 shadow-md"
-                elsif is_user_selected && !is_correct_choice
-                  "bg-red-50 border-red-500 shadow-md"
-                elsif !is_user_selected && is_correct_choice
-                  "bg-yellow-50 border-yellow-500"
-                else
-                  "bg-gray-50 border-gray-200"
-                end
-            %>
-            <div class="p-3 rounded-lg border-2 <%= choice_class %> flex justify-between items-start transition-colors">
-              <span class="text-md text-gray-700 font-medium mr-4"><%= choice.content %></span>
-              <div class="text-sm font-semibold whitespace-nowrap text-right">
-                <% if is_correct_choice %><span class="block text-green-600">【正解】</span><% end %>
-                <% if is_user_selected %><span class="block text-indigo-600 mt-0.5">（あなたの選択）</span><% end %>
-              </div>
-            </div>
-          <% end %>
+          <%= render partial: "exam_questions/choice_result_row", 
+                     collection: question.question_choices, 
+                     as: :choice, 
+                     locals: { user_answer_ids: user_answer_ids } %>
         </div>
       </div>
 

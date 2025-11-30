@@ -1,9 +1,0 @@
-header.bg-gray-100.shadow-sm.max-w-screen-xl.mx-auto.w-full
-  .px-6.py-4.flex.items-center.justify-between
-    .text-lg.font-bold.text-gray-800
-      = link_to "PHP8技術者認定初級試験スタディ", root_path
-    .flex.items-center.gap-4
-      .flex.flex-col.text-right.text-sl
-        span = session[:github_info]["nickname"]
-        = link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "text-red-500 hover:underline"
-      = image_tag session[:github_info]["image"], class: "w-10 h-10 rounded-full"

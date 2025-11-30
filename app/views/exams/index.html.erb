@@ -15,50 +15,24 @@
             </th>
           </tr>
         </thead>
-
+        
         <tbody class="bg-white divide-y divide-gray-200">
           <% @exams.each do |exam| %>
-            <%
-              score = exam.score_percentage
-              is_passed = exam.passed?
-              
-              bar_color = is_passed ? 'bg-indigo-500' : 'bg-red-500'
-              bar_width = "width: #{score > 100 ? 100 : score}%;" 
-            %>
-
             <tr>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm font-medium text-gray-900">
                   <%= exam.completed_at.strftime("%Y年 %m月%d日 %H時%M分") %>
                 </div>
               </td>
-
+              
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-lg font-bold <%= is_passed ? 'text-green-600' : 'text-red-600' %>">
-                  <%= "#{score}%" %>
+                <div class="text-lg font-bold <%= exam.passed? ? 'text-green-600' : 'text-red-600' %>">
+                  <%= "#{exam.score_percentage}%" %>
                 </div>
               </td>
 
               <td class="px-6 py-4">
-                <div class="flex items-center space-x-2">
-                  <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div class="h-full <%= bar_color %>" 
-                         style="<%= bar_width %>"> 
-                    </div>
-                  </div>
-
-                  <div class="whitespace-nowrap w-20 flex justify-center">
-                    <% if is_passed %>
-                      <span class="text-xl font-extrabold text-green-600 transform rotate-6 origin-center shadow-lg px-2 py-1 border-2 border-green-600 rounded-lg">
-                        合格!
-                      </span>
-                    <% else %>
-                      <span class="text-xl font-extrabold text-red-600 transform rotate-6 origin-center shadow-lg px-2 py-1 border-2 border-red-600 rounded-lg">
-                        不合格
-                      </span>
-                    <% end %>
-                  </div>
-                </div>
+                <%= render "progress_bar", exam: exam, animate: false %>
               </td>
 
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

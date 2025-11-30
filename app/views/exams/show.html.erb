@@ -9,17 +9,13 @@
     
     <%
       reveal_class = @needs_reveal_animation ? 'opacity-0' : ''
-      bar_width = "width: #{@exam.score_percentage > 100 ? 100 : @exam.score_percentage}%;"
       
       summary_bg_class = @exam.passed? ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500'
       summary_text_class = @exam.passed? ? 'text-green-700' : 'text-red-700'
       
       initial_summary_class = @needs_reveal_animation ? 'bg-gray-50 border-gray-500' : summary_bg_class
-      initial_bar_color = @needs_reveal_animation ? 'bg-gray-400' : (@exam.passed? ? 'bg-indigo-500' : 'bg-red-500')
-      
-      transition_class = @needs_reveal_animation ? 'transition-all duration-3000 ease-out' : ''
     %>
-
+    
     <div data-result-reveal-target="summary" 
          class="p-6 rounded-xl shadow-xl mb-8 transition-colors duration-500 border-2 <%= initial_summary_class %>">
       
@@ -30,12 +26,7 @@
       
       <div class="my-4">
         <h3 class="text-sm font-medium text-gray-600 mb-1">達成度</h3>
-        <div class="h-4 bg-gray-200 rounded-full overflow-hidden">
-          <div data-result-reveal-target="bar" 
-               class="h-full <%= initial_bar_color %> <%= transition_class %>" 
-               style="<%= @needs_reveal_animation ? 'width: 0%;' : bar_width %>">
-          </div>
-        </div>
+        <%= render "progress_bar", exam: @exam, animate: @needs_reveal_animation %>
       </div>
 
       <p class="text-lg text-gray-800 transition-opacity duration-500 <%= reveal_class %>" data-result-reveal-target="scoreDetail">

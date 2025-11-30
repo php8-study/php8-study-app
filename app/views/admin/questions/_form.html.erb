@@ -7,23 +7,23 @@
   </template>
 
   <div class="space-y-2">
-    <%= f.label :content, "問題文", class: "block text-sm font-medium text-slate-700" %>
-    <%= f.text_area :content, rows: 4, class: "w-full border border-gray-300 rounded-lg p-2 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" %>
+    <%= f.label :content, "問題文", class: admin_form_label_class %>
+    <%= f.text_area :content, rows: 4, class: admin_form_text_area_class %>
   </div>
 
   <div class="space-y-2">
-    <%= f.label :official_page, "参照ページ", class: "block text-sm font-medium text-slate-700" %>
-    <%= f.text_field :official_page, class: "w-full border border-gray-300 rounded-lg p-2 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors", placeholder: "例: 152ページ, P.25-28" %>
+    <%= f.label :official_page, "参照ページ", class: admin_form_label_class %>
+    <%= f.text_field :official_page, class: admin_form_text_area_class, placeholder: "例: 152ページ, P.25-28" %>
   </div>
 
   <div class="space-y-2">
-    <%= f.label :category_id, "カテゴリー", class: "block text-sm font-medium text-slate-700" %>
-    <%= f.collection_select :category_id, Category.all, :id, :name, {}, class: "border border-gray-300 rounded-lg p-2 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" %>
+    <%= f.label :category_id, "カテゴリー", class: admin_form_label_class %>
+    <%= f.collection_select :category_id, Category.all, :id, :name, {}, class: admin_form_text_area_class %>
   </div>
 
   <div class="space-y-2">
-    <%= f.label :explanation, "解説", class: "block text-sm font-medium text-slate-700" %>
-    <%= f.text_area :explanation, rows: 6, class: "w-full border border-gray-300 rounded-lg p-2 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors", placeholder: "将来的に実装予定なので、現在は無記入を許可" %>
+    <%= f.label :explanation, "解説", class: admin_form_label_class %>
+    <%= f.text_area :explanation, rows: 6, class: admin_form_text_area_class, placeholder: "将来的に実装予定なので、現在は無記入を許可" %>
   </div>
 
   <div class="border-t border-slate-200 pt-6 mt-6">

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Admin::QuestionsController < ApplicationController
+class Admin::QuestionsController < AdminController
   before_action :set_question, only: [:edit, :update, :destroy]
 
   def index
@@ -9,13 +9,13 @@ class Admin::QuestionsController < ApplicationController
 
   def new
     @question = Question.new
-    4.times { @question.question_choices.build }
+    @question.build_default_choices
   end
 
   def create
     @question = Question.new(question_params)
     if @question.save
-      redirect_to admin_questions_path
+      redirect_to admin_questions_path, notice: "問題を作成しました"
     else
       render :new, status: :unprocessable_entity
     end
@@ -26,7 +26,7 @@ class Admin::QuestionsController < ApplicationController
 
   def update
     if @question.update(question_params)
-      redirect_to admin_questions_path
+      redirect_to admin_questions_path, notice: "問題を更新しました"
     else
       render :edit, status: :unprocessable_entity
     end

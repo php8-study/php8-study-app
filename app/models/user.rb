@@ -9,10 +9,10 @@ class User < ApplicationRecord
   end
 
   def discard_active_exam
-    if active_exam
-      active_exam.destroy!
+    if target_exam = active_exam
+      target_exam.destroy!
     end
-  rescue => e
-    Rails.logger.error("Failed to discard active exam for User #{self.id}: #{e.message}")
+  rescue ActiveRecord::ActiveRecordError => e
+    Rails.logger.error("Failed to discard active exam for User #{id}: #{e.message}")
   end
 end

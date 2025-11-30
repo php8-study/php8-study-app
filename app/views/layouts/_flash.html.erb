@@ -1,0 +1,9 @@
+<% if flash.any? %>
+  <div class="flex justify-end">
+    <% flash.each do |type, message| %>
+      <div class="<%= flash_class(type) %>">
+        <%= message %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -30,7 +30,7 @@ class Exam < ApplicationRecord
   end
 
   def total_questions
-    exam_questions.count
+    exam_questions.size
   end
 
   def correct_count

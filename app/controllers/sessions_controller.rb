@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  skip_before_action :require_login, only: [:create, :destroy]
+
   def create
     auth = request.env["omniauth.auth"]
     Rails.logger.debug(auth.inspect)
