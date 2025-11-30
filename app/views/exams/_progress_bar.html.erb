@@ -1,4 +1,4 @@
-
+<%
   score = exam.score_percentage
   is_passed = exam.passed?
 
@@ -11,17 +11,13 @@
 
 <div class="flex items-center space-x-2 w-full">
   <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-    <div class="h-full <%= display_bar_color
- %> <%= transition_class
- %>"
+    <div class="h-full <%= display_bar_color %> <%= transition_class %>"
          data-result-reveal-target="bar"
-         style="<%= display_width
- %>">
+         style="<%= display_width %>">
     </div>
   </div>
 
-  <div class="whitespace-nowrap w-20 flex justify-center <%= stamp_class
- %>"
+  <div class="whitespace-nowrap w-20 flex justify-center <%= stamp_class %>"
        data-result-reveal-target="stamp">
     <% if is_passed %>
       <span class="text-xl font-extrabold text-green-600 transform rotate-6 origin-center shadow-lg px-2 py-1 border-2 border-green-600 rounded-lg">

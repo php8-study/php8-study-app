@@ -1,44 +1,34 @@
-<%= turbo_frame_tag category
-
-
- do %>
-  <div class="grid items-center hover:bg-slate-50 transition-colors duration-150 px-2 py-4 rounded <%= category_grid_cols
- %>">
+<%= turbo_frame_tag category do %>
+  <div class="grid items-center hover:bg-slate-50 transition-colors duration-150 px-2 py-4 rounded <%= category_grid_cols %>">
 
     <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-slate-600 text-sm font-bold mx-6">
-      <%= category.chapter_number
- %>
+      <%= category.chapter_number %>
     </span>
 
     <span class="text-sm font-medium text-slate-900 pl-16">
-      <%= category.name
- %>
+      <%= category.name %>
     </span>
 
     <div></div>
 
     <div class="flex items-center gap-2 justify-end">
       <span class="text-sm text-slate-600 font-mono tabular-nums">
-        <%= "#{category.weight}%"
- %>
+        <%= "#{category.weight}%" %>
       </span>
 
       <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
-        <div class="h-full bg-blue-600 rounded-full" style="<%= progress_bar_style(category.weight)
- %>"></div>
+        <div class="h-full bg-blue-600 rounded-full" style="<%= progress_bar_style(category.weight) %>"></div>
       </div>
     </div>
 
     <div class="flex items-center gap-3 justify-end">
       <%= link_to "編集", edit_admin_category_path(category),
           data: { turbo_frame: dom_id(category) },
-          class: "text-indigo-600 hover:text-indigo-800 font-medium mr-3"
- %>
+          class: "text-indigo-600 hover:text-indigo-800 font-medium mr-3" %>
 
       <%= link_to "削除", admin_category_path(category),
           data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
-          class: "text-red-600 hover:text-red-800 font-medium"
- %>
+          class: "text-red-600 hover:text-red-800 font-medium" %>
     </div>
   </div>
 <% end %>
