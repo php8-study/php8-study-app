@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Admin::QuestionsController < ApplicationController
+class Admin::QuestionsController < AdminController
   before_action :set_question, only: [:edit, :update, :destroy]
 
   def index

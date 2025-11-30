@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Admin::CategoriesController < ::ApplicationController
+class Admin::CategoriesController < ::AdminController
   before_action :set_category, only: [:edit, :update, :destroy, :render_row]
   def index
     @categories = Category.all.order(:chapter_number)
