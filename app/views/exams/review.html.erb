@@ -13,14 +13,12 @@
 
     <div class="grid grid-cols-5 md:grid-cols-8 gap-3 py-2">
       <% @exam_questions.each do |exam_question| %>
-        <% exam_question.exam_answers.any? %>
-
         <%= link_to(
               exam_exam_question_path(@exam, exam_question),
               class: (
                 [
                   "flex items-center justify-center w-10 h-10 rounded-lg shadow-md transition-all text-lg font-bold border-2",
-                  answered ?
+                  exam_question.answered? ?
                     "bg-green-100 border-green-500 text-green-800 hover:bg-green-200" :
                     "bg-yellow-100 border-yellow-500 text-yellow-800 hover:bg-yellow-200"
                 ].join(" ")
@@ -43,7 +41,7 @@
 
   <div class="mt-8">
     <%= link_to "試験を提出する",
-          exam_submissions_path(@exam),
+          submissions_exam_path(@exam),
           data: {
             turbo_method: :post,
             turbo_confirm: "一度提出すると回答は変更できません。よろしいですか？"

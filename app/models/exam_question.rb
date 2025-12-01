@@ -27,6 +27,10 @@ class ExamQuestion < ApplicationRecord
     end
   end
 
+  def answered?
+    exam_answers.present?
+  end
+
   def next_question
     exam.exam_questions.order(:position).find_by("position > ?", position)
   end

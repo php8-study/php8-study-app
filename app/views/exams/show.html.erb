@@ -8,11 +8,9 @@
 
   <%
     reveal_class = @needs_reveal_animation ? "opacity-0" : ""
-    bar_width = "width: #{@exam.score_percentage > 100 ? 100 : @exam.score_percentage}%;"
     summary_bg_class = @exam.passed? ? "bg-green-50 border-green-500" : "bg-red-50 border-red-500"
     summary_text_class = @exam.passed? ? "text-green-700" : "text-red-700"
     initial_summary_class = @needs_reveal_animation ? "bg-gray-50 border-gray-500" : summary_bg_class
-    initial_bar_color = @needs_reveal_animation ? "bg-gray-400" : (@exam.passed? ? "bg-indigo-500" : "bg-red-500")
     transition_class = @needs_reveal_animation ? "transition-all duration-3000 ease-out" : ""
   %>
 
