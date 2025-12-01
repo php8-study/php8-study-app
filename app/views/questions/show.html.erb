@@ -2,7 +2,7 @@
   <h1 class="text-3xl font-bold text-gray-900 mb-6">ランダム問題</h1>
 
   <div class="bg-white p-6 shadow-lg rounded-xl mb-6">
-    <h2 class="text-lg font-semibold text-indigo-700 mb-4">問題 <%= @question.id %></h2>
+    <h2 class="text-lg font-semibold text-indigo-700 mb-4">問題</h2>
     <p class="text-xl text-gray-800 whitespace-pre-wrap mb-6"><%= @question.content %></p>
 
     <%= form_with url: solution_question_path(@question), method: :get, local: true, class: "space-y-4" do %>

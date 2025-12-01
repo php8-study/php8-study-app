@@ -27,6 +27,10 @@ class ExamQuestion < ApplicationRecord
     end
   end
 
+  def answered?
+    exam_answers.present?
+  end
+
   def next_question
     exam.exam_questions.order(:position).find_by("position > ?", position)
   end
@@ -35,10 +39,13 @@ class ExamQuestion < ApplicationRecord
     exam.exam_questions.order(:position).find_by("position < ?", position)
   end
 
+  def user_choice_ids
+    exam_answers.map(&:question_choice_id).sort
+  end
+
   def correct?
     correct_ids = question.question_choices.filter_map { |choice| choice.id if choice.correct? }.sort
-    student_ids = exam_answers.map(&:question_choice_id).sort
 
-    correct_ids == student_ids
+    correct_ids == user_choice_ids
   end
 end

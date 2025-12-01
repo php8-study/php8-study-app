@@ -6,13 +6,13 @@
   data-result-reveal-score-value="<%= @exam.score_percentage %>"
   data-result-reveal-passed-value="<%= @exam.passed? %>">
 
-      @needs_reveal_animation ? 'opacity-0' : ''
-
-      summary_bg_class = @exam.passed? ? "bg-green-50 border-green-500" : "bg-red-50 border-red-500"
-      @exam.passed? ? 'text-green-700' : 'text-red-700'
-
-      @needs_reveal_animation ? 'bg-gray-50 border-gray-500' : summary_bg_class
-    %>
+  <%
+    reveal_class = @needs_reveal_animation ? "opacity-0" : ""
+    summary_bg_class = @exam.passed? ? "bg-green-50 border-green-500" : "bg-red-50 border-red-500"
+    summary_text_class = @exam.passed? ? "text-green-700" : "text-red-700"
+    initial_summary_class = @needs_reveal_animation ? "bg-gray-50 border-gray-500" : summary_bg_class
+    transition_class = @needs_reveal_animation ? "transition-all duration-3000 ease-out" : ""
+  %>
 
     <div data-result-reveal-target="summary"
          class="p-6 rounded-xl shadow-xl mb-8 transition-colors duration-500 border-2 <%= initial_summary_class %>">

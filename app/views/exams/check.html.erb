@@ -8,10 +8,8 @@
     </p>
 
     <div class="space-y-4">
-      <% @active_exam.exam_questions.first %>
-
       <%= link_to "続きから回答する",
-          exam_exam_question_path(@active_exam, target_exam_question),
+          review_exam_path(@active_exam),
           class: "w-full text-center bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors block" %>
 
       <%= button_to "破棄して新しい試験を開始する", exams_path, method: :post,

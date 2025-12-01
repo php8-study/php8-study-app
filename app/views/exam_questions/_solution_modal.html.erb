@@ -1,13 +1,12 @@
-<% exam_question.question %>
-<% exam_question.exam_answers.pluck(:question_choice_id) %>
+<% question = exam_question.question %>
 
-<div data-controller="modal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+<div data-controller="modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-auto">
   <div class="absolute inset-0 bg-black/50" data-action="click->modal#close"></div>
   <div class="relative z-10 w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-2xl"
        data-action="click->modal#stop">
 
     <div class="sticky top-0 p-4 border-b bg-white flex justify-between items-center z-20">
-      <h1 class="text-xl font-bold text-gray-900 mr-4">問題 <%= question.id %> の解説</h1>
+      <h1 class="text-xl font-bold text-gray-900 mr-4">問題 <%= exam_question.position %> の解説</h1>
       <button type="button" data-action="click->modal#close" class="text-gray-400 hover:text-gray-600">
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></svg>
       </button>
@@ -22,10 +21,10 @@
       <div class="mb-6">
         <h3 class="text-lg font-bold text-gray-900 mb-3 border-b pb-1">選択肢の正誤とあなたの選択</h3>
         <div class="space-y-3">
-          <%= render partial: "exam_questions/choice_result_row",
+          <%= render partial: "shared/choice_result_row",
                      collection: question.question_choices,
                      as: :choice,
-                     locals: { user_answer_ids: user_answer_ids } %>
+                     locals: { user_choice_ids: exam_question.user_choice_ids } %>
         </div>
       </div>
 
