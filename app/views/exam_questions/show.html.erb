@@ -12,9 +12,7 @@
 
     <%= form_with url: answer_exam_exam_question_path(@exam, @exam_question), method: :post, local: true, class: "space-y-4" do %>
 
-      <% current_answers = @exam_question.exam_answers
-      selected_choice_ids = current_answers.map(&:question_choice_id) %>
-      
+      <% selected_choice_ids = @exam_question.user_choice_ids %>
       <div class="space-y-3">
         <% @exam_question.question.question_choices.each do |choice| %>
           <% is_selected = selected_choice_ids.include?(choice.id) %>
@@ -33,7 +31,7 @@
 
       <div class="pt-4">
         <button type="submit" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
-          <%= current_answers.present? ? "回答を更新する" : "回答を送信" %>
+          <%= @exam_question.answered? ? "回答を更新する" : "回答を送信" %>
         </button>
       </div>
     <% end %>
