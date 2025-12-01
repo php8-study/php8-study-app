@@ -12,12 +12,9 @@
 
     <%= form_with url: answer_exam_exam_question_path(@exam, @exam_question), method: :post, local: true, class: "space-y-4" do %>
 
-      <%
-        current_answers = @exam_question.exam_answers
-        selected_choice_ids = current_answers.map(&:question_choice_id)
-      %>
-      <% current_answers.map(&:question_choice_id) %>
-
+      <% current_answers = @exam_question.exam_answers
+      selected_choice_ids = current_answers.map(&:question_choice_id) %>
+      
       <div class="space-y-3">
         <% @exam_question.question.question_choices.each do |choice| %>
           <% is_selected = selected_choice_ids.include?(choice.id) %>
