@@ -8,6 +8,7 @@ class ExamQuestionsController < ApplicationController
   end
 
   def solution
+    @question = @exam_question.question
     respond_to do |format|
       format.turbo_stream { render :solution }
     end

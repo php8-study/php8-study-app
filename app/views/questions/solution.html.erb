@@ -1,6 +1,6 @@
-
-  @is_correct ? "bg-green-50 border-green-500 text-green-800" : "bg-red-50 border-red-500 text-red-800"
-  @is_correct ? "✅ 正解！" : "❌ 不正解"
+<%
+  result_class = @is_correct ? "bg-green-50 border-green-500 text-green-800" : "bg-red-50 border-red-500 text-red-800"
+  result_icon  = @is_correct ? "✅ 正解！" : "❌ 不正解"
 %>
 
 <div class="max-w-xl mx-auto py-8">
@@ -16,15 +16,15 @@
   </div>
 
   <div class="bg-white p-6 shadow-lg rounded-xl mb-8">
-    <h2 class="text-xl font-semibold text-indigo-700 mb-4">問題 <%= @question.id %></h2>
+    <h2 class="text-xl font-semibold text-indigo-700 mb-4">問題 </h2>
     <p class="text-lg text-gray-800 whitespace-pre-wrap mb-6"><%= @question.content %></p>
 
     <h3 class="text-lg font-bold text-gray-900 mb-3 border-b pb-1">選択肢の正誤</h3>
     <div class="space-y-3">
-      <%= render partial: "exam_questions/choice_result_row",
+      <%= render partial: "shared/choice_result_row",
                  collection: @question.question_choices,
                  as: :choice,
-                 locals: { user_answer_ids: @user_answer_ids } %>
+                 locals: { user_choice_ids: @user_answer_ids } %>
     </div>
   </div>
 
