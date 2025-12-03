@@ -30,6 +30,17 @@ RSpec.describe ExamQuestion, type: :model do
         exam_question.save_answers!([])
         expect(exam_question.exam_answers.reload).to be_empty
       end
+
+      context "不正な選択肢IDが含まれている場合" do
+        let(:other_question) { create(:question, :with_choices) }
+        let(:invalid_choice) { other_question.question_choices.first }
+
+        it "不正なIDは無視され、正しいIDのみが保存されること" do
+          exam_question.save_answers!([correct_choice.id, invalid_choice.id])
+
+          expect(exam_question.exam_answers.reload.pluck(:question_choice_id)).to eq([correct_choice.id])
+        end
+      end
     end
   end
 
