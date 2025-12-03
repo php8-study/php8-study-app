@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+FactoryBot.define do
+  factory :category do
+    sequence(:name) { |n| "カテゴリー#{n}" }
+    sequence(:chapter_number) { |n| n }
+    weight { 10.0 }
+  end
+end

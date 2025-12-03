@@ -32,11 +32,11 @@ class ExamQuestion < ApplicationRecord
   end
 
   def next_question
-    exam.exam_questions.order(:position).find_by("position > ?", position)
+    exam.exam_questions.find_by(position: position + 1)
   end
 
   def previous_question
-    exam.exam_questions.order(:position).find_by("position < ?", position)
+    exam.exam_questions.find_by(position: position - 1)
   end
 
   def user_choice_ids
