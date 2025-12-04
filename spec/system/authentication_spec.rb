@@ -20,6 +20,12 @@ RSpec.describe "Authentication", type: :system do
       expect(page).to have_content("test_user")
       expect(page).to have_selector("img[src='http://example.com/dummy.jpg']")
     end
+
+    it "ログインが必要なページにアクセスすると、トップページにリダイレクトされること" do
+      visit exams_path
+
+      expect(current_path).to eq root_path
+    end
   end
 
   context "ログイン済みの場合" do
