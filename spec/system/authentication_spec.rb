@@ -23,7 +23,7 @@ RSpec.describe "Authentication", type: :system do
     it "ログインが必要なページにアクセスすると、トップページにリダイレクトされること" do
       visit exams_path
 
-      expect(current_path).to eq root_path
+      expect(page).to have_current_path(root_path)
     end
   end
 
