@@ -1,1 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Playfair+Display:wght@700&display=swap");
+
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-serif: "Playfair Display", serif;
+}
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .hero-terminal-card {
+    transform: rotateY(-12deg) rotateZ(2deg);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hero-terminal-card:hover {
+    transform: rotateY(6deg) rotateZ(1deg) scale(1.05);
+  }
+}

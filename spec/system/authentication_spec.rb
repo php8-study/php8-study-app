@@ -34,6 +34,7 @@ RSpec.describe "Authentication", type: :system do
       mock_github_auth(user)
       visit root_path
       click_button "GitHubでログイン"
+      expect(page).to have_link("ログアウト")
     end
 
     it "ログアウトできること" do
