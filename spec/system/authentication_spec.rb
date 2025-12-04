@@ -42,5 +42,11 @@ RSpec.describe "Authentication", type: :system do
       expect(page).to have_button("GitHubでログイン")
       expect(page).not_to have_link("ログアウト")
     end
+
+    it "保護されたページにアクセスできること" do
+      visit exams_path
+
+      expect(page).to have_current_path(exams_path)
+    end
   end
 end
