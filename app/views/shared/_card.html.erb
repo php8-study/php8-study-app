@@ -1,6 +1,6 @@
 <%
   theme_color ||= "indigo"
-  icon_path ||= "M13 10V3L4 14h7v7l9-11h-7z" 
+  icon_path ||= "M13 10V3L4 14h7v7l9-11h-7z"
 
   colors = {
     "blue"    => { bg: "bg-blue-500",    text: "text-blue-600",    border: "group-hover:border-blue-500" },
@@ -13,7 +13,7 @@
 %>
 
 <%= link_to url, class: "group flex items-center bg-white rounded-xl p-6 shadow-sm border border-slate-100 #{c[:border]} hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ease-out" do %>
-  
+
   <div class="flex-shrink-0 mr-6">
     <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-white to-slate-50 border border-slate-100 flex items-center justify-center shadow-inner group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-white transition-colors">
       <svg class="w-8 h-8 <%= c[:text] %> drop-shadow-sm group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

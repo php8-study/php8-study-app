@@ -1,7 +1,7 @@
 <header class="bg-white/90 backdrop-blur-sm sticky top-0 z-50 border-b border-slate-200">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
-      
+
       <div class="flex-shrink-0">
         <%= link_to root_path, class: "flex items-center gap-0.5 hover:opacity-80 transition-opacity" do %>
           <span class="text-slate-900 font-black text-2xl tracking-tighter">PHP8</span>
@@ -14,7 +14,7 @@
           <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Logged in</div>
           <div class="text-sm font-bold text-slate-700 leading-none"><%= session.dig(:github_info, "nickname") %></div>
         </div>
-        
+
         <% if session.dig(:github_info, "image") %>
           <%= image_tag session[:github_info]["image"], class: "w-9 h-9 rounded-full border border-slate-200 shadow-sm" %>
         <% end %>
