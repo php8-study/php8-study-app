@@ -27,7 +27,7 @@
   <%= form_with url: "/auth/github", method: :post, data: { turbo: false }, class: "w-full sm:w-auto" do |f| %>
     <%= button_tag type: "submit", class: "group inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 active:scale-95 shadow-md hover:shadow-lg" do %>
       <i class="fab fa-github text-2xl mr-3"></i>
-      <span>GitHubで今すぐ始める</span>
+      <span>GitHubでログイン</span>
       <svg class="w-5 h-5 ml-3 -mr-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
     <% end %>
   <% end %>
