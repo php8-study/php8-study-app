@@ -13,11 +13,11 @@
   }
 
   .hero-terminal-card {
-    transform: rotateY(-12deg) rotateZ(-3deg);
-    transition: transform 0.3s ease-out;
+    transform: rotateY(-12deg) rotateZ(2deg);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)
   }
 
   .hero-terminal-card:hover {
-    transform: rotateY(-6deg) rotateZ(-1.5deg) scale(1.05);
+    transform: rotateY(6deg) rotateZ(1deg) scale(1.05);
   }
 }
