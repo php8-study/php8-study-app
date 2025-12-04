@@ -11,7 +11,13 @@
   .perspective-1000 {
     perspective: 1000px;
   }
-  .rotate-y-12 {
+
+  .hero-card-tilt {
     transform: rotateY(-12deg) rotateZ(-3deg);
+    transition: transform 0.3s ease-out
+  }
+
+  .hero-card-tilt:hover {
+    transform: rotateY(-6deg) rotateZ(-1.5deg) scale(1.05);
   }
 }
