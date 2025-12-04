@@ -3,9 +3,9 @@
 require "rails_helper"
 
 RSpec.describe "Authentication", type: :system do
-  # before do
-  #   OmniAuth.config.mock_auth[:github] = nil
-  # end
+  before do
+    OmniAuth.config.mock_auth[:github] = nil
+  end
 
   context "未ログインの場合" do
     it "トップページからGitHub認証でログインできること" do
