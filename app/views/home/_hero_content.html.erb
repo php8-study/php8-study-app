@@ -1,0 +1,34 @@
+<div class="w-full lg:w-1/2 flex flex-col items-start text-left">
+
+  <h1 class="text-4xl lg:text-6xl font-extrabold text-slate-900 leading-[1.1] tracking-tight mb-6">
+    最短距離で掴む、<br>
+    <span class="text-blue-600">初級認定試験</span>の合格。
+  </h1>
+
+  <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-xl">
+    PHP8技術者認定初級試験スタディは、本番形式の模試とランダム出題で、あなたの合格を強力にサポートします。効率的な学習で、確かな実践力を身につけましょう。
+  </p>
+
+  <ul class="mb-10 space-y-3 text-slate-700 font-medium">
+    <li class="flex items-center">
+      <svg class="w-6 h-6 text-blue-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      公式出題範囲に完全準拠
+    </li>
+    <li class="flex items-center">
+      <svg class="w-6 h-6 text-blue-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      本番比率の模擬試験モード搭載
+    </li>
+    <li class="flex items-center">
+      <svg class="w-6 h-6 text-blue-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      アカウント作成から利用まで完全無料
+    </li>
+  </ul>
+
+  <%= form_with url: "/auth/github", method: :post, data: { turbo: false }, class: "w-full sm:w-auto" do |f| %>
+    <%= button_tag type: "submit", class: "group inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 active:scale-95 shadow-md hover:shadow-lg" do %>
+      <i class="fab fa-github text-2xl mr-3"></i>
+      <span>GitHubで今すぐ始める</span>
+      <svg class="w-5 h-5 ml-3 -mr-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+    <% end %>
+  <% end %>
+</div>
