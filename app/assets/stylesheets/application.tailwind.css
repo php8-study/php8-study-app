@@ -12,12 +12,12 @@
     perspective: 1000px;
   }
 
-  .hero-card-tilt {
+  .hero-terminal-card {
     transform: rotateY(-12deg) rotateZ(-3deg);
-    transition: transform 0.3s ease-out
+    transition: transform 0.3s ease-out;
   }
 
-  .hero-card-tilt:hover {
+  .hero-terminal-card:hover {
     transform: rotateY(-6deg) rotateZ(-1.5deg) scale(1.05);
   }
 }
