@@ -2,7 +2,7 @@
 
 module CardHelper
   def card_theme_classes(theme_color)
-    theme = theme_color.presence || "indigo"
+    theme = theme_color.presence || "default"
 
     colors = {
       "blue" => {
