@@ -1,6 +1,6 @@
 <%# locals: (exam:) %>
 
-<% heme = exam_status_theme(exam)% >
+<% theme = exam_status_theme(exam) %>
 
 <%= link_to exam_path(exam), class: "group block bg-white rounded-xl p-5 border shadow-sm hover:shadow-md transition-all duration-200 border-l-[6px] #{theme[:accent_border]} #{theme[:wrapper_class]} hover:-translate-y-0.5" do %>
   <div class="flex items-center justify-between">
