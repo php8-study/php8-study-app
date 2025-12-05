@@ -25,6 +25,9 @@ export default class extends Controller {
     if (this.confettiFrameId) {
       cancelAnimationFrame(this.confettiFrameId);
     }
+    if (this.numberFrameId) {
+      cancelAnimationFrame(this.numberFrameId);
+    }
   }
 
   connect() {
@@ -114,10 +117,10 @@ export default class extends Controller {
       this.scoreTextTarget.innerText = currentScore;
 
       if (progress < 1) {
-        window.requestAnimationFrame(step);
+        this.numberFrameId = requestAnimationFrame(step);
       }
     };
-    window.requestAnimationFrame(step);
+    this.numberFrameId = requestAnimationFrame(step);
   }
 
   showNextElements() {
