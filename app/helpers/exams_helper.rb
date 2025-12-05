@@ -77,7 +77,7 @@ module ExamsHelper
 
   def review_card_classes(is_answered)
     base_classes = "flex flex-col items-center justify-center h-20 rounded-2xl transition-all duration-200 relative group"
-    
+
     status_classes = if is_answered
       "bg-indigo-50 border border-indigo-100 text-indigo-700 hover:bg-indigo-100 hover:border-indigo-200 hover:-translate-y-1 shadow-sm"
     else
