@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6">
   <div class="max-w-3xl mx-auto space-y-8">
-    
+
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="p-2 bg-indigo-100 rounded-lg text-indigo-600">
@@ -8,7 +8,7 @@
         </div>
         <h1 class="text-2xl font-bold text-slate-900 tracking-tight">模擬試験</h1>
       </div>
-      
+
       <div class="flex items-center gap-2">
         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Question</span>
         <span class="text-xl font-black text-indigo-600"><%= @exam_question.position %></span>
@@ -16,22 +16,20 @@
       </div>
     </div>
 
-    <%= render "shared/terminal_display", 
+    <%= render "shared/terminal_display",
         content: @exam_question.question.content,
-        label: "ExamQuestion_#{@exam_question.position}.php" 
-    %>
+        label: "ExamQuestion_#{@exam_question.position}.php" %>
 
-    <%= render "shared/answer_form", 
-        question: @exam_question.question, 
-        url: answer_exam_exam_question_path(@exam, @exam_question), 
+    <%= render "shared/answer_form",
+        question: @exam_question.question,
+        url: answer_exam_exam_question_path(@exam, @exam_question),
         method: :post,
         button_text: @exam_question.answered? ? "回答を更新する" : "回答を保存する",
-        input_name: "question_choice_ids[]", 
-        selected_choice_ids: @exam_question.user_choice_ids
-    %>
+        input_name: "question_choice_ids[]",
+        selected_choice_ids: @exam_question.user_choice_ids %>
 
     <div class="pt-8 border-t border-slate-200 grid grid-cols-2 sm:grid-cols-3 gap-4">
-      
+
       <% prev_q = @exam_question.previous_question %>
       <% if prev_q %>
         <%= link_to exam_exam_question_path(@exam, prev_q), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-slate-600 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-colors" do %>
