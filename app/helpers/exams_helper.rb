@@ -49,7 +49,7 @@ module ExamsHelper
       {
         initial_color: color_class,
         style: "stroke-dasharray: #{circumference}, #{circumference}; stroke-dashoffset: #{offset};",
-        initial_score: percentage.to_i
+        initial_score: percentage
       }
     end
   end
