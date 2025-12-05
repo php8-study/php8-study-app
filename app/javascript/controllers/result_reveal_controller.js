@@ -13,6 +13,14 @@ export default class extends Controller {
   ];
   static values = { score: Number, passed: Boolean };
 
+  static TIMINGS = {
+    INITIAL_REVEAL: 100,
+    CHART_START: 600,
+    ANIMATION_DURATION: 1000,
+    SCALE_EFFECT: 200,
+    NEXT_ELEMENTS_DELAY: 500
+  };
+
   disconnect() {
     if (this.confettiFrameId) {
       cancelAnimationFrame(this.confettiFrameId);
@@ -22,17 +30,17 @@ export default class extends Controller {
   connect() {
     setTimeout(() => {
       this.summaryTarget.classList.remove("opacity-0", "translate-y-4");
-    }, 100);
+    }, this.constructor.TIMINGS.INITIAL_REVEAL);
 
     setTimeout(() => {
       this.animateChart();
-    }, 600);
+    }, this.constructor.TIMINGS.CHART_START);
   }
 
   animateChart() {
     const score = this.scoreValue;
     const passed = this.passedValue;
-    const duration = 1000;
+    const duration = this.constructor.TIMINGS.ANIMATION_DURATION;
 
     const circumference = 283;
     const offset = circumference - (score / 100) * circumference;
@@ -46,7 +54,7 @@ export default class extends Controller {
       this.revealResultColor(passed);
     }, duration);
 
-    setTimeout(() => this.showNextElements(), duration + 500);
+    setTimeout(() => this.showNextElements(), duration + this.constructor.TIMINGS.NEXT_ELEMENTS_DELAY);
   }
 
   revealResultColor(passed) {
@@ -62,7 +70,7 @@ export default class extends Controller {
     this.barTarget.style.transform = "scale(1.05)";
     setTimeout(() => {
       this.barTarget.style.transform = "scale(1)";
-    }, 200);
+    }, this.constructor.TIMINGS.SCALE_EFFECT);
   }
 
   fireConfetti() {
