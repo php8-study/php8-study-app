@@ -30,7 +30,7 @@
 
     <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-8 gap-3 sm:gap-4">
       <% @exam_questions.each do |exam_question| %>
-        <%= link_to exam_exam_question_path(@exam, exam_question, source: "review"),
+        <%= link_to exam_exam_question_path(@exam, exam_question),
                     class: review_card_classes(exam_question.answered?) do %>
 
           <span class="text-xs font-bold uppercase tracking-wider opacity-60 mb-1">Q</span>
