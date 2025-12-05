@@ -1,80 +1,125 @@
 import { Controller } from "@hotwired/stimulus";
+import confetti from "canvas-confetti";
 
 export default class extends Controller {
   static targets = [
     "bar",
+    "scoreText",
+    "summary",
     "message",
     "scoreDetail",
-    "detailHeader",
     "detailTable",
-    "summary",
     "actionButtons",
   ];
   static values = { score: Number, passed: Boolean };
 
   connect() {
-    const animationDuration = 3000;
     setTimeout(() => {
-      this.animateBar();
-    }, 1000);
+      this.summaryTarget.classList.remove("opacity-0", "translate-y-4");
+    }, 100);
 
-    setTimeout(
-      () => {
-        this.showMessageAndScore();
-      },
-      1000 + animationDuration + 500,
-    );
-
-    setTimeout(
-      () => {
-        this.showDetails();
-      },
-      1000 + animationDuration + 1500,
-    );
-
-    setTimeout(
-      () => {
-        this.showActionButtons();
-      },
-      1000 + animationDuration + 2000,
-    );
+    setTimeout(() => {
+      this.animateChart();
+    }, 600);
   }
 
-  animateBar() {
+  animateChart() {
     const score = this.scoreValue;
-    const finalBarColor = this.passedValue ? "bg-indigo-500" : "bg-red-500";
-    this.barTarget.classList.remove("bg-gray-400");
-    this.barTarget.classList.add(finalBarColor);
+    const passed = this.passedValue;
+    const duration = 1000;
+
+    const circumference = 283;
+    const offset = circumference - (score / 100) * circumference;
+
+    this.barTarget.style.strokeDasharray = `${circumference} ${circumference}`;
+    this.barTarget.style.strokeDashoffset = offset;
+
+    this.animateNumber(0, score, duration);
 
     setTimeout(() => {
-      this.barTarget.style.width = `${score > 100 ? 100 : score}%`;
-    }, 50);
+      this.revealResultColor(passed);
+    }, duration);
+
+    setTimeout(() => this.showNextElements(), duration + 500);
   }
 
-  showMessageAndScore() {
-    if (this.passedValue) {
-      this.summaryTarget.classList.remove("bg-gray-50", "border-gray-500");
-      this.summaryTarget.classList.add("bg-green-50", "border-green-500");
-      this.messageTarget.classList.add("text-green-700");
+  revealResultColor(passed) {
+    this.barTarget.classList.remove("text-slate-200");
+
+    if (passed) {
+      this.barTarget.classList.add("text-emerald-500");
+      this.fireConfetti();
     } else {
-      this.summaryTarget.classList.remove("bg-gray-50", "border-gray-500");
-      this.summaryTarget.classList.add("bg-red-50", "border-red-500");
-      this.messageTarget.classList.add("text-red-700");
+      this.barTarget.classList.add("text-red-500");
     }
-    this.messageTarget.classList.remove("opacity-0");
-    this.scoreDetailTargets.forEach((el) => {
-      el.classList.remove("opacity-0");
-    });
+
+    this.barTarget.style.transform = "scale(1.05)";
+    setTimeout(() => {
+      this.barTarget.style.transform = "scale(1)";
+    }, 200);
   }
 
-  showDetails() {
-    this.detailHeaderTarget.classList.remove("opacity-0");
-    this.detailTableTarget.classList.remove("opacity-0");
+  fireConfetti() {
+    const duration = 3000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+      confetti({
+        particleCount: 5,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: ["#34D399", "#60A5FA", "#FBBF24"],
+      });
+      confetti({
+        particleCount: 5,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: ["#34D399", "#60A5FA", "#FBBF24"],
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    })();
   }
 
-  showActionButtons() {
-    if (this.hasActionButtonsTarget) {
-      this.actionButtonsTarget.classList.remove("opacity-0");
-    }
+  animateNumber(start, end, duration) {
+    if (!this.hasScoreTextTarget) return;
+
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const currentScore = Math.floor(progress * (end - start) + start);
+
+      this.scoreTextTarget.innerText = currentScore;
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }
+
+  showNextElements() {
+    if (this.hasMessageTarget) this.messageTarget.classList.remove("opacity-0");
+
+    setTimeout(() => {
+      if (this.hasScoreDetailTarget)
+        this.scoreDetailTarget.classList.remove("opacity-0");
+    }, 300);
+
+    setTimeout(() => {
+      if (this.hasActionButtonsTarget) {
+        this.actionButtonsTarget.classList.remove("opacity-0", "translate-y-2");
+      }
+    }, 600);
+
+    setTimeout(() => {
+      if (this.hasDetailTableTarget)
+        this.detailTableTarget.classList.remove("opacity-0");
+    }, 900);
   }
 }

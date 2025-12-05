@@ -1,95 +1,152 @@
-<div class="max-w-4xl mx-auto py-8">
-  <h1 class="text-3xl font-bold text-gray-900 mb-6">試験結果</h1>
+<div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 font-sans">
+  <div class="max-w-4xl mx-auto">
 
-  <div
-  data-controller="<%= @needs_reveal_animation ? "result-reveal" : nil %>"
-  data-result-reveal-score-value="<%= @exam.score_percentage %>"
-  data-result-reveal-passed-value="<%= @exam.passed? %>">
+    <div class="text-center mb-10">
+      <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">試験結果</h1>
+      <p class="text-slate-500 mt-2">お疲れ様でした。今回の成績を確認しましょう。</p>
+    </div>
 
-  <%
-    reveal_class = @needs_reveal_animation ? "opacity-0" : ""
-    summary_bg_class = @exam.passed? ? "bg-green-50 border-green-500" : "bg-red-50 border-red-500"
-    summary_text_class = @exam.passed? ? "text-green-700" : "text-red-700"
-    initial_summary_class = @needs_reveal_animation ? "bg-gray-50 border-gray-500" : summary_bg_class
-    transition_class = @needs_reveal_animation ? "transition-all duration-3000 ease-out" : ""
-  %>
+    <%
+      initial_hidden = @needs_reveal_animation ? "opacity-0 translate-y-4" : ""
+      initial_hidden_simple = @needs_reveal_animation ? "opacity-0" : ""
+    %>
 
-    <div data-result-reveal-target="summary"
-         class="p-6 rounded-xl shadow-xl mb-8 transition-colors duration-500 border-2 <%= initial_summary_class %>">
+    <div data-controller="<%= @needs_reveal_animation ? "result-reveal" : nil %>"
+         data-result-reveal-score-value="<%= @exam.score_percentage %>"
+         data-result-reveal-passed-value="<%= @exam.passed? %>"
+         class="relative">
 
-      <h2 data-result-reveal-target="message"
-          class="text-2xl font-bold mb-2 transition-opacity duration-500 <%= reveal_class %> <%= @needs_reveal_animation ? "" : summary_text_class %>">
-        <%= @exam.passed? ? "🎉 合格です！" : "😢 不合格" %>
-      </h2>
+      <div data-result-reveal-target="summary"
+           class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100 mb-12 transition-all duration-700 ease-out <%= initial_hidden %>">
 
-      <div class="my-4">
-        <h3 class="text-sm font-medium text-gray-600 mb-1">達成度</h3>
-        <%= render "progress_bar", exam: @exam, animate: @needs_reveal_animation %>
+        <div class="p-8 md:p-12 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+
+          <div class="relative w-48 h-48 md:w-56 md:h-56">
+            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="45" fill="none" stroke="#f1f5f9" stroke-width="8"></circle>
+
+              <%
+                circumference = 283 # 2 * PI * 45 ≈ 282.7
+                offset = circumference - (@exam.score_percentage / 100.0 * circumference)
+
+                if @needs_reveal_animation
+                  initial_color = "text-slate-200"
+                  initial_style = "stroke-dasharray: 0, 283;"
+                else
+                  initial_color = @exam.passed? ? "text-emerald-500" : "text-red-500"
+                  initial_style = "stroke-dasharray: 283, 283; stroke-dashoffset: #{offset};"
+                end
+              %>
+              <circle data-result-reveal-target="bar"
+                      cx="50" cy="50" r="45" fill="none"
+                      stroke="currentColor" stroke-width="8" stroke-linecap="round"
+                      class="transition-all duration-1000 ease-out <%= initial_color %>"
+                      style="<%= initial_style %>"></circle>
+            </svg>
+
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Score</span>
+              <div class="flex items-baseline">
+                <span data-result-reveal-target="scoreText" class="text-5xl md:text-6xl font-black text-slate-800">
+                  <%= @needs_reveal_animation ? "0" : @exam.score_percentage.to_i %>
+                </span>
+                <span class="text-2xl font-bold text-slate-400 ml-1">%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center md:text-left">
+            <div data-result-reveal-target="message" class="transition-opacity duration-500 delay-300 <%= initial_hidden_simple %>">
+              <% if @exam.passed? %>
+                <h2 class="text-4xl font-black text-emerald-500 mb-2 tracking-tight">PASSED!</h2>
+                <p class="text-lg text-slate-600 font-medium">おめでとうございます！<br>合格ラインを突破しました。</p>
+              <% else %>
+                <h2 class="text-4xl font-black text-red-500 mb-2 tracking-tight">FAILED...</h2>
+                <p class="text-lg text-slate-600 font-medium">残念ながら不合格です。<br>復習して再挑戦しましょう。</p>
+              <% end %>
+            </div>
+
+            <div data-result-reveal-target="scoreDetail" class="mt-6 flex items-center justify-center md:justify-start gap-6 transition-opacity duration-500 delay-500 <%= initial_hidden_simple %>">
+              <div class="text-center">
+                <div class="text-xs font-bold text-slate-400 uppercase">Correct</div>
+                <div class="text-xl font-black text-slate-700">
+                  <%= @exam.correct_count %><span class="text-sm text-slate-400 font-medium mx-1">/</span><%= @exam.total_questions %>
+                </div>
+              </div>
+              <div class="w-px h-8 bg-slate-200"></div>
+              <div class="text-center">
+                <div class="text-xs font-bold text-slate-400 uppercase">Required</div>
+                <div class="text-xl font-black text-slate-700"><%= Exam::PASSING_SCORE_PERCENTAGE %>%</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
 
-      <p class="text-lg text-gray-800 transition-opacity duration-500 <%= reveal_class %>" data-result-reveal-target="scoreDetail">
-        正答率: <span class="font-extrabold text-xl"><%= @exam.score_percentage %>%</span> (合格基準: <%= Exam::PASSING_SCORE_PERCENTAGE %>%)
-      </p>
-      <p class="text-lg text-gray-800 transition-opacity duration-500 <%= reveal_class %>" data-result-reveal-target="scoreDetail">
-        正解数: <span class="font-extrabold text-xl"><%= @exam.correct_count %>問</span> / <%= @exam.total_questions %>問中
-      </p>
-    </div>
+      <div data-result-reveal-target="actionButtons" class="flex flex-col sm:flex-row justify-center gap-4 mb-16 transition-all duration-500 delay-700 <%= initial_hidden %>">
+        <%= link_to root_path, class: "px-8 py-4 bg-white border border-slate-200 text-slate-600 font-bold rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm" do %>
+          トップへ戻る
+        <% end %>
+        <%= link_to exams_path, class: "px-8 py-4 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 transition-all shadow-md flex items-center justify-center" do %>
+          <span>履歴一覧へ</span>
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+        <% end %>
+      </div>
 
-    <h2 data-result-reveal-target="detailHeader" class="text-2xl font-bold text-gray-900 mb-4 transition-opacity duration-500 <%= reveal_class %>">
-      問題ごとの詳細
-    </h2>
+      <div data-result-reveal-target="detailTable" class="transition-opacity duration-700 delay-1000 <%= initial_hidden_simple %>">
+        <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+          <div class="flex-shrink-0 p-1 bg-indigo-50 rounded-lg">
+            <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+            </svg>
+          </div>
+          <span>回答詳細</span>
+        </h3>
 
-    <div data-result-reveal-target="detailTable" class="bg-white shadow-lg rounded-xl overflow-hidden transition-opacity duration-500 <%= reveal_class %>">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">No.</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-5/12">問題概要</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-2/12">カテゴリー</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-2/12">判定</th>
-            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-2/12">詳細</th>
-          </tr>
-        </thead>
-
-        <tbody class="bg-white divide-y divide-gray-200">
+        <div class="space-y-4">
           <% @exam_questions.each do |eq| %>
-            <tr class="<%= eq.correct? ? "hover:bg-green-50" : "hover:bg-red-50" %> cursor-pointer"
-                data-question-content="<%= eq.question.content.truncate(50) %>"
-                data-question-id="<%= eq.question.id %>">
+            <%= link_to solution_exam_exam_question_path(@exam, eq),
+                        class: "block group bg-white rounded-xl p-5 shadow-sm border border-slate-100 hover:border-indigo-200 hover:shadow-md transition-all duration-200 cursor-pointer",
+                        data: { turbo_stream: true } do %>
 
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                <%= eq.position %>
-              </td>
-              <td class="px-6 py-4 text-sm text-gray-700">
-                <%= eq.question.content.truncate(70) %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                <%= eq.question.category&.name %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold">
-                <%= eq.correct? ?
-                    '<span class="text-green-600">正解</span>'.html_safe :
-                    '<span class="text-red-600">不正解</span>'.html_safe %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
-                <%= link_to "詳細を見る", solution_exam_exam_question_path(@exam, eq),
-                      data: { turbo_stream: true },
-                      class: "text-indigo-600 hover:text-indigo-900 font-medium" %>
-              </td>
-            </tr>
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 mt-1">
+                  <% if eq.correct? %>
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                  <% else %>
+                    <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </div>
+                  <% end %>
+                </div>
+
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Q.<%= eq.position %></span>
+                    <% if eq.question.category %>
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
+                        <%= eq.question.category.name %>
+                      </span>
+                    <% end %>
+                  </div>
+                  <p class="text-sm text-slate-700 font-medium line-clamp-2 leading-relaxed">
+                    <%= eq.question.content.truncate(100) %>
+                  </p>
+                </div>
+
+                <div class="flex-shrink-0 self-center">
+                  <div class="w-8 h-8 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                  </div>
+                </div>
+              </div>
+            <% end %>
           <% end %>
-        </tbody>
-      </table>
-    </div>
-
-    <div data-result-reveal-target="actionButtons"
-         class="mt-8 flex justify-center space-x-4 transition-opacity duration-500 <%= reveal_class %>">
-
-      <%= link_to "トップページへ戻る", root_path,
-          class: "bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-150" %>
-
-      <%= link_to "履歴一覧へ戻る", exams_path,
-          class: "bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-150" %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
