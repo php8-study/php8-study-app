@@ -1,0 +1,33 @@
+<%
+  theme = is_correct ? {
+    bg: "bg-emerald-50",
+    border: "border-emerald-200",
+    icon_bg: "bg-emerald-100",
+    text: "text-emerald-800",
+    sub_text: "text-emerald-600",
+    label: "正解！",
+    message: "素晴らしい！この調子で進めましょう。",
+    icon_path: "M5 13l4 4L19 7" # Check
+  } : {
+    bg: "bg-red-50",
+    border: "border-red-200",
+    icon_bg: "bg-red-100",
+    text: "text-red-800",
+    sub_text: "text-red-600",
+    label: "不正解...",
+    message: "解説を読んで復習しましょう。",
+    icon_path: "M6 18L18 6M6 6l12 12" # X mark
+  }
+%>
+
+<div class="rounded-2xl border <%= theme[:border] %> <%= theme[:bg] %> p-6 flex items-center gap-5 shadow-sm">
+  <div class="flex-shrink-0 w-14 h-14 rounded-full <%= theme[:icon_bg] %> flex items-center justify-center">
+    <svg class="w-8 h-8 <%= theme[:sub_text] %>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="<%= theme[:icon_path] %>"></path>
+    </svg>
+  </div>
+  <div>
+    <h2 class="text-2xl font-black <%= theme[:text] %> tracking-tight"><%= theme[:label] %></h2>
+    <p class="text-sm font-bold <%= theme[:sub_text] %> mt-1"><%= theme[:message] %></p>
+  </div>
+</div>
