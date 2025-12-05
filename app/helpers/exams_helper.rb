@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ExamsHelper
   def exam_status_theme(exam)
     if exam.passed?
