@@ -1,0 +1,53 @@
+<div class="space-y-4">
+  <div class="flex items-center gap-2 mb-2">
+    <div class="w-1 h-6 bg-indigo-500 rounded-full"></div>
+    <h3 class="text-lg font-bold text-slate-800">選択肢の正誤</h3>
+  </div>
+
+  <div class="space-y-3">
+    <% question.question_choices.each do |choice| %>
+      <%
+        is_selected = user_choice_ids.map(&:to_i).include?(choice.id)
+        is_correct  = choice.correct
+
+        style_class = if is_correct
+          "bg-emerald-50 border-emerald-500 ring-1 ring-emerald-500"
+        elsif is_selected && !is_correct
+          "bg-red-50 border-red-400 border-dashed"
+        else
+          "bg-white border-slate-200 opacity-70"
+        end
+      %>
+
+      <div class="relative flex items-start p-4 rounded-xl border-2 <%= style_class %> transition-all">
+        <div class="flex-shrink-0 mt-0.5">
+          <% if is_correct %>
+            <div class="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+          <% elsif is_selected %>
+            <div class="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center text-red-500">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </div>
+          <% else %>
+            <div class="w-6 h-6 rounded-full border-2 border-slate-300"></div>
+          <% end %>
+        </div>
+
+        <div class="ml-4 flex-1">
+          <div class="flex flex-wrap items-center gap-2 mb-1">
+            <% if is_correct %>
+              <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 rounded-md">Correct Answer</span>
+            <% end %>
+            <% if is_selected %>
+              <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-slate-200 rounded-md">Your Choice</span>
+            <% end %>
+          </div>
+          <p class="text-slate-700 font-medium leading-relaxed <%= "text-emerald-900 font-bold" if is_correct %>">
+            <%= choice.content %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
