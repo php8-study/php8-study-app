@@ -75,14 +75,14 @@ export default class extends Controller {
         angle: 60,
         spread: 55,
         origin: { x: 0 },
-        colors: ['#34D399', '#60A5FA', '#FBBF24']
+        colors: ["#34D399", "#60A5FA", "#FBBF24"],
       });
       confetti({
         particleCount: 5,
         angle: 120,
         spread: 55,
         origin: { x: 1 },
-        colors: ['#34D399', '#60A5FA', '#FBBF24']
+        colors: ["#34D399", "#60A5FA", "#FBBF24"],
       });
 
       if (Date.now() < end) {
