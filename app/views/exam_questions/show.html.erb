@@ -24,7 +24,7 @@
         question: @exam_question.question,
         url: answer_exam_exam_question_path(@exam, @exam_question),
         method: :post,
-        button_text: @exam_question.answered? ? "回答を更新する" : "回答を保存する",
+        button_text: @exam_question.answered? ? "回答を変更する" : "回答する",
         input_name: "question_choice_ids[]",
         selected_choice_ids: @exam_question.user_choice_ids %>
 
@@ -47,12 +47,12 @@
       <% next_q = @exam_question.next_question %>
       <% if next_q %>
         <%= link_to exam_exam_question_path(@exam, next_q), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-xl hover:bg-indigo-100 transition-colors" do %>
-          次へ
+          後で回答する
           <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
         <% end %>
       <% else %>
         <%= link_to review_exam_path(@exam), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 shadow-md hover:shadow-lg transition-all" do %>
-          終了する
+          回答せずに確認画面へ
           <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
         <% end %>
       <% end %>
