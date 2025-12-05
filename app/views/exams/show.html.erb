@@ -1,70 +1,95 @@
-<div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6">
-  <div class="max-w-3xl mx-auto space-y-8">
+<div class="max-w-4xl mx-auto py-8">
+  <h1 class="text-3xl font-bold text-gray-900 mb-6">試験結果</h1>
 
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="p-2 bg-indigo-100 rounded-lg text-indigo-600">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
-        </div>
-        <h1 class="text-2xl font-bold text-slate-900 tracking-tight">模擬試験</h1>
+  <div
+  data-controller="<%= @needs_reveal_animation ? "result-reveal" : nil %>"
+  data-result-reveal-score-value="<%= @exam.score_percentage %>"
+  data-result-reveal-passed-value="<%= @exam.passed? %>">
+
+  <%
+    reveal_class = @needs_reveal_animation ? "opacity-0" : ""
+    summary_bg_class = @exam.passed? ? "bg-green-50 border-green-500" : "bg-red-50 border-red-500"
+    summary_text_class = @exam.passed? ? "text-green-700" : "text-red-700"
+    initial_summary_class = @needs_reveal_animation ? "bg-gray-50 border-gray-500" : summary_bg_class
+    transition_class = @needs_reveal_animation ? "transition-all duration-3000 ease-out" : ""
+  %>
+
+    <div data-result-reveal-target="summary"
+         class="p-6 rounded-xl shadow-xl mb-8 transition-colors duration-500 border-2 <%= initial_summary_class %>">
+
+      <h2 data-result-reveal-target="message"
+          class="text-2xl font-bold mb-2 transition-opacity duration-500 <%= reveal_class %> <%= @needs_reveal_animation ? "" : summary_text_class %>">
+        <%= @exam.passed? ? "🎉 合格です！" : "😢 不合格" %>
+      </h2>
+
+      <div class="my-4">
+        <h3 class="text-sm font-medium text-gray-600 mb-1">達成度</h3>
+        <%= render "progress_bar", exam: @exam, animate: @needs_reveal_animation %>
       </div>
 
-      <div class="flex items-center gap-2">
-        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Question</span>
-        <span class="text-xl font-black text-indigo-600"><%= @exam_question.position %></span>
-        <span class="text-sm text-slate-400 font-medium">/ <%= @exam.exam_questions.size %></span>
-      </div>
+      <p class="text-lg text-gray-800 transition-opacity duration-500 <%= reveal_class %>" data-result-reveal-target="scoreDetail">
+        正答率: <span class="font-extrabold text-xl"><%= @exam.score_percentage %>%</span> (合格基準: <%= Exam::PASSING_SCORE_PERCENTAGE %>%)
+      </p>
+      <p class="text-lg text-gray-800 transition-opacity duration-500 <%= reveal_class %>" data-result-reveal-target="scoreDetail">
+        正解数: <span class="font-extrabold text-xl"><%= @exam.correct_count %>問</span> / <%= @exam.total_questions %>問中
+      </p>
     </div>
 
-      <div class="flex items-center gap-2">
-        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Question</span>
-        <span class="text-xl font-black text-indigo-600"><%= @exam_question.position %></span>
-        <span class="text-sm text-slate-400 font-medium">/ <%= @exam.exam_questions.size %></span>
-      </div>
+    <h2 data-result-reveal-target="detailHeader" class="text-2xl font-bold text-gray-900 mb-4 transition-opacity duration-500 <%= reveal_class %>">
+      問題ごとの詳細
+    </h2>
+
+    <div data-result-reveal-target="detailTable" class="bg-white shadow-lg rounded-xl overflow-hidden transition-opacity duration-500 <%= reveal_class %>">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">No.</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-5/12">問題概要</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-2/12">カテゴリー</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-2/12">判定</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-2/12">詳細</th>
+          </tr>
+        </thead>
+
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @exam_questions.each do |eq| %>
+            <tr class="<%= eq.correct? ? "hover:bg-green-50" : "hover:bg-red-50" %> cursor-pointer"
+                data-question-content="<%= eq.question.content.truncate(50) %>"
+                data-question-id="<%= eq.question.id %>">
+
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <%= eq.position %>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-700">
+                <%= eq.question.content.truncate(70) %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                <%= eq.question.category&.name %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold">
+                <%= eq.correct? ?
+                    '<span class="text-green-600">正解</span>'.html_safe :
+                    '<span class="text-red-600">不正解</span>'.html_safe %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                <%= link_to "詳細を見る", solution_exam_exam_question_path(@exam, eq),
+                      data: { turbo_stream: true },
+                      class: "text-indigo-600 hover:text-indigo-900 font-medium" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
 
-    <%= render "shared/terminal_display",
-        content: @exam_question.question.content,
-        label: "ExamQuestion_#{@exam_question.position}.php" %>
+    <div data-result-reveal-target="actionButtons"
+         class="mt-8 flex justify-center space-x-4 transition-opacity duration-500 <%= reveal_class %>">
 
-    <%= render "shared/answer_form",
-        question: @exam_question.question,
-        url: answer_exam_exam_question_path(@exam, @exam_question),
-        method: :post,
-        button_text: @exam_question.answered? ? "回答を更新する" : "回答を保存する",
-        input_name: "question_choice_ids[]",
-        selected_choice_ids: @exam_question.user_choice_ids %>
+      <%= link_to "トップページへ戻る", root_path,
+          class: "bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-150" %>
 
-    <div class="pt-8 border-t border-slate-200 grid grid-cols-2 sm:grid-cols-3 gap-4">
-
-      <% prev_q = @exam_question.previous_question %>
-      <% if prev_q %>
-        <%= link_to exam_exam_question_path(@exam, prev_q), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-slate-600 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-colors" do %>
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-          前へ
-        <% end %>
-      <% else %>
-        <div class="invisible"></div> <% end %>
-
-      <%= link_to review_exam_path(@exam), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-slate-600 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors" do %>
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
-        一覧へ
-      <% end %>
-
-      <% next_q = @exam_question.next_question %>
-      <% if next_q %>
-        <%= link_to exam_exam_question_path(@exam, next_q), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-xl hover:bg-indigo-100 transition-colors" do %>
-          次へ
-          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-        <% end %>
-      <% else %>
-        <%= link_to review_exam_path(@exam), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 shadow-md hover:shadow-lg transition-all" do %>
-          終了する
-          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-        <% end %>
-      <% end %>
-
+      <%= link_to "履歴一覧へ戻る", exams_path,
+          class: "bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-150" %>
     </div>
-
   </div>
 </div>
