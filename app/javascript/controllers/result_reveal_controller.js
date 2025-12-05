@@ -74,9 +74,9 @@ export default class extends Controller {
       this.barTarget.classList.add("text-red-500");
     }
 
-    this.barTarget.style.transform = "scale(105)";
+    this.barTarget.classList.add("scale-105");
     setTimeout(() => {
-      this.barTarget.style.transform = "scale(105)";
+      this.barTarget.classList.remove("scale-105");
     }, this.constructor.TIMINGS.SCALE_EFFECT);
   }
 
