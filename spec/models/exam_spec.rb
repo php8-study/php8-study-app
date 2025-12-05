@@ -100,6 +100,12 @@ RSpec.describe Exam, type: :model do
       end
     end
 
+    describe "#answered_count" do
+      it "回答数を正しくカウントすること" do
+        expect(exam.answered_count).to eq(4)
+      end
+    end
+
     describe "#score_percentage" do
       it "正答率を計算すること (3/4 = 75.0%)" do
         expect(exam.score_percentage).to eq(75.0)
