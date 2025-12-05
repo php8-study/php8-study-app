@@ -1,80 +1,150 @@
 import { Controller } from "@hotwired/stimulus";
+import confetti from "canvas-confetti";
 
 export default class extends Controller {
   static targets = [
     "bar",
+    "scoreText",
+    "summary",
     "message",
     "scoreDetail",
-    "detailHeader",
     "detailTable",
-    "summary",
     "actionButtons",
   ];
   static values = { score: Number, passed: Boolean };
 
+  static TIMINGS = {
+    INITIAL_REVEAL: 100,
+    CHART_START: 600,
+    ANIMATION_DURATION: 1000,
+    SCALE_EFFECT: 200,
+    NEXT_ELEMENTS_DELAY: 500,
+    STAGGER: 300,
+  };
+
+  disconnect() {
+    if (this.confettiFrameId) {
+      cancelAnimationFrame(this.confettiFrameId);
+    }
+    if (this.numberFrameId) {
+      cancelAnimationFrame(this.numberFrameId);
+    }
+  }
+
   connect() {
-    const animationDuration = 3000;
     setTimeout(() => {
-      this.animateBar();
-    }, 1000);
+      this.summaryTarget.classList.remove("opacity-0", "translate-y-4");
+    }, this.constructor.TIMINGS.INITIAL_REVEAL);
 
-    setTimeout(
-      () => {
-        this.showMessageAndScore();
-      },
-      1000 + animationDuration + 500,
-    );
-
-    setTimeout(
-      () => {
-        this.showDetails();
-      },
-      1000 + animationDuration + 1500,
-    );
-
-    setTimeout(
-      () => {
-        this.showActionButtons();
-      },
-      1000 + animationDuration + 2000,
-    );
+    setTimeout(() => {
+      this.animateChart();
+    }, this.constructor.TIMINGS.CHART_START);
   }
 
-  animateBar() {
+  animateChart() {
     const score = this.scoreValue;
-    const finalBarColor = this.passedValue ? "bg-indigo-500" : "bg-red-500";
-    this.barTarget.classList.remove("bg-gray-400");
-    this.barTarget.classList.add(finalBarColor);
+    const passed = this.passedValue;
+    const duration = this.constructor.TIMINGS.ANIMATION_DURATION;
+
+    const radius = parseFloat(this.barTarget.getAttribute("r")) || 45; // default 45
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (score / 100) * circumference;
+
+    this.barTarget.style.strokeDasharray = `${circumference} ${circumference}`;
+    this.barTarget.style.strokeDashoffset = offset;
+
+    this.animateNumber(0, score, duration);
 
     setTimeout(() => {
-      this.barTarget.style.width = `${score > 100 ? 100 : score}%`;
-    }, 50);
+      this.revealResultColor(passed);
+    }, duration);
+
+    setTimeout(
+      () => this.showNextElements(),
+      duration + this.constructor.TIMINGS.NEXT_ELEMENTS_DELAY,
+    );
   }
 
-  showMessageAndScore() {
-    if (this.passedValue) {
-      this.summaryTarget.classList.remove("bg-gray-50", "border-gray-500");
-      this.summaryTarget.classList.add("bg-green-50", "border-green-500");
-      this.messageTarget.classList.add("text-green-700");
+  revealResultColor(passed) {
+    this.barTarget.classList.remove("text-slate-200");
+
+    if (passed) {
+      this.barTarget.classList.add("text-emerald-500");
+      this.fireConfetti();
     } else {
-      this.summaryTarget.classList.remove("bg-gray-50", "border-gray-500");
-      this.summaryTarget.classList.add("bg-red-50", "border-red-500");
-      this.messageTarget.classList.add("text-red-700");
+      this.barTarget.classList.add("text-red-500");
     }
-    this.messageTarget.classList.remove("opacity-0");
-    this.scoreDetailTargets.forEach((el) => {
-      el.classList.remove("opacity-0");
-    });
+
+    this.barTarget.classList.add("scale-105");
+    setTimeout(() => {
+      this.barTarget.classList.remove("scale-105");
+    }, this.constructor.TIMINGS.SCALE_EFFECT);
   }
 
-  showDetails() {
-    this.detailHeaderTarget.classList.remove("opacity-0");
-    this.detailTableTarget.classList.remove("opacity-0");
+  fireConfetti() {
+    const duration = 3000;
+    const end = Date.now() + duration;
+
+    const frame = () => {
+      confetti({
+        particleCount: 5,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: ["#34D399", "#60A5FA", "#FBBF24"],
+      });
+      confetti({
+        particleCount: 5,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: ["#34D399", "#60A5FA", "#FBBF24"],
+      });
+
+      if (Date.now() < end) {
+        this.confettiFrameId = requestAnimationFrame(frame);
+      }
+    };
+
+    frame();
   }
 
-  showActionButtons() {
-    if (this.hasActionButtonsTarget) {
-      this.actionButtonsTarget.classList.remove("opacity-0");
-    }
+  animateNumber(start, end, duration) {
+    if (!this.hasScoreTextTarget) return;
+
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const currentScore = Math.floor(progress * (end - start) + start);
+
+      this.scoreTextTarget.innerText = currentScore;
+
+      if (progress < 1) {
+        this.numberFrameId = requestAnimationFrame(step);
+      }
+    };
+    this.numberFrameId = requestAnimationFrame(step);
+  }
+
+  showNextElements() {
+    const stagger = this.constructor.TIMINGS.STAGGER;
+    if (this.hasMessageTarget) this.messageTarget.classList.remove("opacity-0");
+
+    setTimeout(() => {
+      if (this.hasScoreDetailTarget)
+        this.scoreDetailTarget.classList.remove("opacity-0");
+    }, stagger);
+
+    setTimeout(() => {
+      if (this.hasActionButtonsTarget) {
+        this.actionButtonsTarget.classList.remove("opacity-0", "translate-y-4");
+      }
+    }, stagger * 2);
+
+    setTimeout(() => {
+      if (this.hasDetailTableTarget)
+        this.detailTableTarget.classList.remove("opacity-0");
+    }, stagger * 3);
   }
 }
