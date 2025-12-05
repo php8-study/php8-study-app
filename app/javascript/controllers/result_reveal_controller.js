@@ -19,6 +19,7 @@ export default class extends Controller {
     ANIMATION_DURATION: 1000,
     SCALE_EFFECT: 200,
     NEXT_ELEMENTS_DELAY: 500,
+    STAGGER: 300,
   };
 
   disconnect() {
@@ -127,22 +128,23 @@ export default class extends Controller {
   }
 
   showNextElements() {
+    const stagger = this.constructor.TIMINGS.STAGGER;
     if (this.hasMessageTarget) this.messageTarget.classList.remove("opacity-0");
 
     setTimeout(() => {
       if (this.hasScoreDetailTarget)
         this.scoreDetailTarget.classList.remove("opacity-0");
-    }, 300);
+    }, stagger);
 
     setTimeout(() => {
       if (this.hasActionButtonsTarget) {
         this.actionButtonsTarget.classList.remove("opacity-0", "translate-y-4");
       }
-    }, 600);
+    }, stagger * 2);
 
     setTimeout(() => {
       if (this.hasDetailTableTarget)
         this.detailTableTarget.classList.remove("opacity-0");
-    }, 900);
+    }, stagger * 3);
   }
 }
