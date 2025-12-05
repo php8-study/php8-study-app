@@ -13,6 +13,12 @@ export default class extends Controller {
   ];
   static values = { score: Number, passed: Boolean };
 
+  disconnect() {
+    if (this.confettiFrameId) {
+      cancelAnimationFrame(this.confettiFrameId);
+    }
+  }
+
   connect() {
     setTimeout(() => {
       this.summaryTarget.classList.remove("opacity-0", "translate-y-4");
@@ -63,26 +69,28 @@ export default class extends Controller {
     const duration = 3000;
     const end = Date.now() + duration;
 
-    (function frame() {
+    const frame = () => {
       confetti({
         particleCount: 5,
         angle: 60,
         spread: 55,
         origin: { x: 0 },
-        colors: ["#34D399", "#60A5FA", "#FBBF24"],
+        colors: ['#34D399', '#60A5FA', '#FBBF24']
       });
       confetti({
         particleCount: 5,
         angle: 120,
         spread: 55,
         origin: { x: 1 },
-        colors: ["#34D399", "#60A5FA", "#FBBF24"],
+        colors: ['#34D399', '#60A5FA', '#FBBF24']
       });
 
       if (Date.now() < end) {
-        requestAnimationFrame(frame);
+        this.confettiFrameId = requestAnimationFrame(frame);
       }
-    })();
+    };
+
+    frame();
   }
 
   animateNumber(start, end, duration) {
