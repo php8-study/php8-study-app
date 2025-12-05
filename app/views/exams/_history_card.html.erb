@@ -1,35 +1,17 @@
 <%# locals: (exam:) %>
 
-<%
-  theme = exam.passed? ? {
-    wrapper_class: "border-slate-100 hover:border-emerald-200 hover:bg-emerald-50/30",
-    accent_border: "border-l-emerald-500",
-    text_main: "text-emerald-700",
-    calendar_bg: "bg-emerald-100/50 text-emerald-800",
-    calendar_label: "text-emerald-600/70",
-    stamp_text: "PASSED",
-    stamp_style: "text-emerald-600 border-emerald-600 bg-emerald-100/50 -rotate-12",
-  } : {
-    wrapper_class: "border-slate-100 hover:border-red-200 hover:bg-red-50/30",
-    accent_border: "border-l-red-500",
-    text_main: "text-red-700",
-    calendar_bg: "bg-red-100/50 text-red-800",
-    calendar_label: "text-red-600/70",
-    stamp_text: "FAILED",
-    stamp_style: "text-red-600 border-red-600 bg-red-100/50 rotate-6",
-  }
-%>
+<% heme = exam_status_theme(exam)% >
 
 <%= link_to exam_path(exam), class: "group block bg-white rounded-xl p-5 border shadow-sm hover:shadow-md transition-all duration-200 border-l-[6px] #{theme[:accent_border]} #{theme[:wrapper_class]} hover:-translate-y-0.5" do %>
   <div class="flex items-center justify-between">
-
+    
     <div class="flex items-center gap-6">
-
+      
       <div class="flex flex-col items-center justify-center w-16 h-16 rounded-lg <%= theme[:calendar_bg] %> flex-shrink-0">
         <span class="text-[10px] font-bold uppercase leading-none mb-1 <%= theme[:calendar_label] %>"><%= exam.created_at.strftime("%b") %></span>
         <span class="text-xl font-black leading-none"><%= exam.created_at.day %></span>
       </div>
-
+      
       <div class="flex flex-col">
         <div class="flex items-baseline gap-2">
           <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">SCORE</span>
@@ -37,7 +19,7 @@
             <%= exam.score_percentage %><span class="text-lg ml-0.5">%</span>
           </span>
         </div>
-
+        
         <div class="flex items-center gap-2 mt-1">
           <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider bg-slate-100 px-1.5 py-0.5 rounded">Correct</span>
           <span class="text-xs font-bold text-slate-600 flex items-center gap-1">
@@ -58,7 +40,7 @@
           <%= theme[:stamp_text] %>
         </span>
       </div>
-
+      
       <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
         <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
