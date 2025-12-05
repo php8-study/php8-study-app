@@ -1,6 +1,6 @@
 <%
-  theme = card_theme_classes(local_assigns[:theme_color])
-  icon  = card_icon_path(local_assigns[:icon_key])
+  theme = card_theme_classes(local_assigns[:theme_color] || "default")
+  icon  = card_icon_path(local_assigns[:icon_key] || "default")
 %>
 
 <%= link_to url, class: "group flex items-center bg-white rounded-xl p-6 shadow-sm border-2 border-transparent #{theme[:border]} hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ease-out" do %>

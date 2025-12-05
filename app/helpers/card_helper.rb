@@ -4,7 +4,6 @@ module CardHelper
   def card_theme_classes(theme_color)
     theme = theme_color.presence || "indigo"
 
-    # ここで「色の濃いグラデーション」を定義します
     colors = {
       "blue" => {
         icon_bg: "bg-gradient-to-br from-blue-500 to-blue-600",
