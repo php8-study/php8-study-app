@@ -18,7 +18,7 @@ export default class extends Controller {
     CHART_START: 600,
     ANIMATION_DURATION: 1000,
     SCALE_EFFECT: 200,
-    NEXT_ELEMENTS_DELAY: 500
+    NEXT_ELEMENTS_DELAY: 500,
   };
 
   disconnect() {
@@ -45,7 +45,7 @@ export default class extends Controller {
     const passed = this.passedValue;
     const duration = this.constructor.TIMINGS.ANIMATION_DURATION;
 
-    const radius = parseFloat(this.barTarget.getAttribute('r')) || 45; // default 45
+    const radius = parseFloat(this.barTarget.getAttribute("r")) || 45; // default 45
     const circumference = 2 * Math.PI * radius;
     const offset = circumference - (score / 100) * circumference;
 
@@ -58,7 +58,10 @@ export default class extends Controller {
       this.revealResultColor(passed);
     }, duration);
 
-    setTimeout(() => this.showNextElements(), duration + this.constructor.TIMINGS.NEXT_ELEMENTS_DELAY);
+    setTimeout(
+      () => this.showNextElements(),
+      duration + this.constructor.TIMINGS.NEXT_ELEMENTS_DELAY,
+    );
   }
 
   revealResultColor(passed) {
