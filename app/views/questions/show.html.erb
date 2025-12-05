@@ -6,9 +6,10 @@
         label: "RandomQuestion.php" %>
 
     <%= render "shared/answer_form",
-        question: @question,
-        url: solution_question_path(@question),
-        method: :get %>
+    question: @question,
+    url: solution_question_path(@question),
+    method: :get,
+    button_text: "解答する" %>
 
   </div>
 </div>
