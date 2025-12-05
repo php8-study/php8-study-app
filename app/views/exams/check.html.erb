@@ -1,19 +1,47 @@
-<div class="max-w-xl mx-auto py-8">
-  <h1 class="text-3xl font-bold text-red-600 mb-6">⚠️ 回答中の試験があります</h1>
+<div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 flex items-center justify-center relative overflow-hidden">
 
-  <div class="bg-white p-6 shadow-lg rounded-xl mb-8">
-    <p class="text-xl text-gray-800 mb-6">
-      未完了の模擬試験（開始: <%= @active_exam.created_at.to_formatted_s(:short) %>）があります。
-      どうされますか？
-    </p>
+  <div class="absolute inset-0 opacity-[0.05] pointer-events-none"
+       style="background-image: linear-gradient(#6366f1 1px, transparent 1px), linear-gradient(to right, #6366f1 1px, transparent 1px); background-size: 40px 40px;">
+  </div>
 
-    <div class="space-y-4">
-      <%= link_to "続きから回答する",
-          review_exam_path(@active_exam),
-          class: "w-full text-center bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors block" %>
+  <div class="max-w-2xl w-full relative z-10">
 
-      <%= button_to "破棄して新しい試験を開始する", exams_path, method: :post,
-          class: "w-full bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors mt-2" %>
+    <div class="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 sm:p-12 text-center">
+
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-yellow-50 mb-6 ring-8 ring-yellow-50/50">
+        <svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+        </svg>
+      </div>
+
+      <h2 class="text-3xl font-black text-slate-900 mb-4 tracking-tight">
+        未完了の模擬試験があります
+      </h2>
+
+      <p class="text-lg text-slate-500 mb-8">
+        前回中断した箇所から試験を再開できます。<br>
+        新しい試験を始めるには、現在のデータを破棄する必要があります。
+      </p>
+
+      <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 mb-10 max-w-lg mx-auto">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Last Session Started</div>
+        <div class="text-xl font-bold text-slate-700 flex items-center justify-center gap-2">
+          <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          <%= @active_exam.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <%= link_to exam_path(@active_exam), class: "w-full sm:w-auto min-w-[200px] group inline-flex items-center justify-center px-8 py-4 bg-indigo-600 border border-transparent rounded-xl font-bold text-white text-lg hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 transition-all" do %>
+          <span>続きから再開</span>
+          <svg class="w-5 h-5 ml-2 -mr-1 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        <% end %>
+
+        <%= button_to exams_path, method: :post, class: "w-full sm:w-auto min-w-[200px] inline-flex items-center justify-center px-8 py-4 bg-white border-2 border-slate-200 rounded-xl font-bold text-slate-600 text-lg hover:bg-red-50 hover:border-red-200 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all", data: { turbo_confirm: "本当に現在の進捗を破棄してよろしいですか？" } do %>
+          破棄して新規開始
+        <% end %>
+      </div>
+
     </div>
   </div>
 </div>
