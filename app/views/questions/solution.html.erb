@@ -1,50 +1,29 @@
-<%
-  result_class = @is_correct ? "bg-green-50 border-green-500 text-green-800" : "bg-red-50 border-red-500 text-red-800"
-  result_icon  = @is_correct ? "✅ 正解！" : "❌ 不正解"
-%>
+<div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6">
+  <div class="max-w-3xl mx-auto space-y-8">
 
-<div class="max-w-xl mx-auto py-8">
-  <h1 class="text-3xl font-bold text-gray-900 mb-6">解答と参照情報</h1>
+    <%= render "shared/result_status", is_correct: @is_correct %>
 
-  <div class="p-6 border-l-4 <%= result_class %> rounded-r-lg shadow-sm mb-8">
-    <div class="text-2xl font-extrabold flex items-center gap-2">
-      <%= result_icon %>
+    <%= render "shared/terminal_display",
+        content: @question.content,
+        label: "Question.php (Review)" %>
+
+    <%= render "shared/choices_feedback",
+        question: @question,
+        user_choice_ids: @user_answer_ids %>
+
+    <%= render "shared/reference_info", question: @question %>
+
+    <div class="flex flex-col sm:flex-row gap-4 pt-4 border-t border-slate-200">
+      <%= link_to root_path, class: "flex-1 inline-flex justify-center items-center px-6 py-3 border border-slate-300 shadow-sm text-base font-bold rounded-xl text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-all" do %>
+        <svg class="w-5 h-5 mr-2 -ml-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+        トップへ戻る
+      <% end %>
+
+      <%= link_to random_questions_path, class: "flex-1 inline-flex justify-center items-center px-6 py-3 border border-transparent shadow-sm text-base font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 transition-all" do %>
+        <span>次の問題へ</span>
+        <svg class="w-5 h-5 ml-2 -mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+      <% end %>
     </div>
-    <% unless @is_correct %>
-      <p class="mt-2 text-lg opacity-90">もう一度確認してみましょう。</p>
-    <% end %>
-  </div>
 
-  <div class="bg-white p-6 shadow-lg rounded-xl mb-8">
-    <h2 class="text-xl font-semibold text-indigo-700 mb-4">問題</h2>
-    <p class="text-lg text-gray-800 whitespace-pre-wrap mb-6"><%= @question.content %></p>
-
-    <h3 class="text-lg font-bold text-gray-900 mb-3 border-b pb-1">選択肢の正誤</h3>
-    <div class="space-y-3">
-      <%= render partial: "shared/choice_result_row",
-                 collection: @question.question_choices,
-                 as: :choice,
-                 locals: { user_choice_ids: @user_answer_ids } %>
-    </div>
-  </div>
-
-  <div class="bg-white p-6 shadow-lg rounded-xl mb-8">
-    <h3 class="text-lg font-bold text-gray-900 mb-3 border-b pb-1">参照情報</h3>
-    <% if @question.official_page.present? %>
-      <p class="text-gray-700">公式テキストの参照箇所は以下の通りです。</p>
-      <p class="mt-2 text-xl font-semibold text-indigo-700">
-        ページ: <%= @question.official_page %>
-      </p>
-    <% else %>
-      <p class="text-gray-500">この問題には参照情報が設定されていません。</p>
-    <% end %>
-  </div>
-
-  <div class="flex justify-between gap-4">
-    <%= link_to "トップへ戻る", root_path,
-        class: "flex-1 text-center text-gray-700 bg-gray-200 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors" %>
-
-    <%= link_to "次の問題へ", random_questions_path,
-        class: "flex-1 text-center bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors" %>
   </div>
 </div>

@@ -1,0 +1,33 @@
+<%# locals: (url:, method:, question:, button_text: nil) %>
+<%= form_with url: url, method: method, local: true, class: "space-y-8" do |f| %>
+
+  <div class="space-y-3">
+    <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider ml-1">Select Answer</h2>
+
+    <% question.question_choices.each do |choice| %>
+      <label class="group relative flex items-start p-4 cursor-pointer bg-white rounded-xl border-2 border-transparent shadow-sm hover:shadow-md hover:border-indigo-100 transition-all duration-200">
+
+        <div class="flex items-center h-6">
+          <%= check_box_tag "user_answer_ids[]", choice.id, false,
+              class: "peer w-5 h-5 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500 transition-colors" %>
+        </div>
+
+        <div class="ml-4 flex-1">
+          <span class="block text-base text-slate-700 group-hover:text-indigo-900 transition-colors peer-checked:font-bold">
+            <%= choice.content %>
+          </span>
+        </div>
+
+        <div class="absolute inset-0 rounded-xl border-2 border-indigo-500 opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity duration-200"></div>
+      </label>
+    <% end %>
+  </div>
+
+  <div class="flex justify-end pt-4">
+    <button type="submit" class="group relative inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0">
+      <span><%= local_assigns[:button_text] || "解答する" %></span>
+      <svg class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+    </button>
+  </div>
+
+<% end %>
