@@ -33,6 +33,10 @@ class Exam < ApplicationRecord
     exam_questions.size
   end
 
+  def answered_count
+    exam_questions.count(&:answered?)
+  end
+
   def correct_count
     exam_questions.count(&:correct?)
   end
