@@ -15,12 +15,12 @@
         <div class="flex items-center gap-3">
           <% if exam_question.correct? %>
             <div class="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 text-emerald-600">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
             </div>
             <h3 class="text-lg font-bold text-slate-800">正解の解説</h3>
           <% else %>
             <div class="flex items-center justify-center w-8 h-8 rounded-full bg-red-100 text-red-600">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </div>
             <h3 class="text-lg font-bold text-slate-800">不正解の解説</h3>
           <% end %>
