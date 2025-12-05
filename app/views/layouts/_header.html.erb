@@ -16,7 +16,7 @@
         </div>
 
         <% if session.dig(:github_info, "image") %>
-          <%= image_tag session[:github_info]["image"], class: "w-9 h-9 rounded-full border border-slate-200 shadow-sm" %>
+          <%= image_tag session[:github_info]["image"], alt: "#{session.dig(:github_info, "nickname")}のアバター", class: "w-9 h-9 rounded-full border border-slate-200 shadow-sm" %>
         <% end %>
 
         <%= link_to logout_path, data: { turbo_method: :delete }, class: "text-slate-400 hover:text-red-500 transition-colors p-1", title: "ログアウト", aria:  { label: "ログアウト" } do %>
