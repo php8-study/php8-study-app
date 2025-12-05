@@ -1,17 +1,28 @@
-<header class="bg-gray-100 shadow-sm <%= container_class %>">
-  <div class="px-6 py-4 flex items-center justify-between">
-    <div class="text-lg font-bold text-gray-800">
-      <%= link_to "PHP8技術者認定初級試験スタディ", root_path %>
-    </div>
+<header class="bg-white/90 backdrop-blur-sm sticky top-0 z-50 border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
 
-    <div class="flex items-center gap-4">
-      <div class="flex flex-col text-right text-sm">
-        <span><%= session.dig(:github_info, "nickname") %></span>
-        <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "text-red-500 hover:underline" %>
+      <div class="flex-shrink-0">
+        <%= link_to root_path, class: "flex items-center gap-0.5 hover:opacity-80 transition-opacity" do %>
+          <span class="text-slate-900 font-black text-2xl tracking-tighter">PHP8</span>
+          <span class="text-blue-600 font-black text-2xl tracking-tighter">Study</span>
+        <% end %>
       </div>
-      <% if session.dig(:github_info, "image") %>
-        <%= image_tag session[:github_info]["image"], class: "w-10 h-10 rounded-full" %>
-      <% end %>
+
+      <div class="flex items-center gap-4">
+        <div class="text-right hidden sm:block">
+          <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Logged in</div>
+          <div class="text-sm font-bold text-slate-700 leading-none"><%= session.dig(:github_info, "nickname") %></div>
+        </div>
+
+        <% if session.dig(:github_info, "image") %>
+          <%= image_tag session[:github_info]["image"], alt: "#{session.dig(:github_info, "nickname")}のアバター", class: "w-9 h-9 rounded-full border border-slate-200 shadow-sm" %>
+        <% end %>
+
+        <%= link_to logout_path, data: { turbo_method: :delete }, class: "text-slate-400 hover:text-red-500 transition-colors p-1", title: "ログアウト", aria:  { label: "ログアウト" } do %>
+           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+        <% end %>
+      </div>
     </div>
   </div>
 </header>
