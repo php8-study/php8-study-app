@@ -55,12 +55,4 @@ class Admin::QuestionsController < AdminController
         question_choices_attributes: [:id, :content, :correct, :_destroy]
       )
     end
-
-    def update_as_new_version
-      if save_as_new_version
-        redirect_to admin_questions_path, notice: "問題は受験履歴があるため、履歴を保持したまま新しい問題として作成されました。"
-      else
-        render :edit, status: :unprocessable_entity
-      end
-    end
 end
