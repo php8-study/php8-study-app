@@ -44,6 +44,8 @@ class Question::Versioner
       when Hash
         obj.delete("id")
         obj.delete("_destroy")
+        obj.delete(:id)
+        obj.delete(:_destroy)
         obj.each_value { |v| strip_ids!(v) }
       when Array
         obj.each { |v| strip_ids!(v) }
