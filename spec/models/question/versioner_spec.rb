@@ -1,9 +1,11 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe Question::Versioner, type: :model do
   let!(:old_question) { create(:question) }
   let!(:old_choice) { create(:question_choice, question: old_question) }
-  
+
   let(:params) do
     ActionController::Parameters.new({
       content: "更新後の問題文",
@@ -16,7 +18,7 @@ RSpec.describe Question::Versioner, type: :model do
           _destroy: "1"
         },
         {
-          content: "新しく追加する選択肢", 
+          content: "新しく追加する選択肢",
           _destroy: "0"
         }
       ]
@@ -25,7 +27,7 @@ RSpec.describe Question::Versioner, type: :model do
 
   let(:versioner) { described_class.new(old_question, params) }
 
-  describe '#create_version!' do
+  describe "#create_version!" do
     it "新しいバージョンの問題が作成されること" do
       expect { versioner.create_version! }.to change(Question, :count).by(1)
     end

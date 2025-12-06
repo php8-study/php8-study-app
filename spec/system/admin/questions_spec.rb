@@ -1,4 +1,6 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe "Admin::Questions", type: :system do
   let(:admin) { create(:user, :admin) }
@@ -26,7 +28,7 @@ RSpec.describe "Admin::Questions", type: :system do
         click_button "保存する"
 
         expect(page).to have_field "question[content]", with: "新しい問題文"
-        expect(page).to have_field 'question[question_choices_attributes][0][content]', with: '新しい選択肢'
+        expect(page).to have_field "question[question_choices_attributes][0][content]", with: "新しい選択肢"
         expect(current_path).not_to eq edit_admin_question_path(question)
       end
     end

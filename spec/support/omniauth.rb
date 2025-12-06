@@ -23,9 +23,9 @@ module OmniAuthHelpers
 
   def sign_in_as(user)
     mock_github_auth(user)
-    visit root_path 
-    click_button "GitHubでログイン" 
-    expect(page).to have_content "LOGGED IN" 
+    visit root_path
+    click_button "GitHubでログイン"
+    expect(page).to have_content "LOGGED IN"
   end
 end
 
