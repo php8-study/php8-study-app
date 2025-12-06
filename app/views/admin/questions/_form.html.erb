@@ -1,4 +1,4 @@
-<%= form_with model: [:admin, @question], class: "space-y-6 p-8 bg-white shadow-lg rounded-xl", data: { controller: "nested-form" } do |f| %>
+<%= form_with model: [:admin, question], class: "space-y-8", data: { controller: "nested-form" } do |f| %>
 
   <template data-nested-form-target="template">
     <%= f.fields_for :question_choices, QuestionChoice.new, child_index: "NEW_RECORD" do |choice_fields| %>
@@ -6,47 +6,75 @@
     <% end %>
   </template>
 
-  <div class="space-y-2">
-    <%= f.label :content, "問題文", class: admin_form_label_class %>
-    <%= f.text_area :content, rows: 4, class: admin_form_text_area_class %>
-  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <div class="lg:col-span-2 space-y-6">
+      
+      <div class="bg-white shadow-sm rounded-xl border border-slate-200 p-6">
+        <div class="space-y-6"> <div>
+            <%= f.label :content, "問題文", class: "block text-sm font-bold text-slate-600 mb-2" %>
+            <%= f.text_area :content, rows: 5, class: "w-full rounded-lg border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 shadow-sm placeholder-slate-300 transition-shadow", placeholder: "ここに問題文を入力してください..." %>
+          </div>
+          
+          <div>
+            <%= f.label :explanation, "解説", class: "block text-sm font-bold text-slate-600 mb-2" %>
+            <div class="relative">
+              <%= f.text_area :explanation, rows: 8, class: "w-full rounded-lg border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 shadow-sm placeholder-slate-300 bg-slate-50/50 transition-shadow", placeholder: "解説を入力..." %>
+              <div class="absolute top-3 right-3 text-xs text-slate-400 font-bold bg-white/80 px-2 py-1 rounded border border-slate-200 backdrop-blur-sm">任意</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <div class="space-y-2">
-    <%= f.label :official_page, "参照ページ", class: admin_form_label_class %>
-    <%= f.text_field :official_page, class: admin_form_text_area_class, placeholder: "例: 152ページ, P.25-28" %>
-  </div>
+      <div class="bg-white shadow-sm rounded-xl border border-slate-200 p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-lg font-bold text-indigo-900">選択肢の管理</h3>
+          <span class="text-xs text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full font-medium">正解にチェックを入れてください</span>
+        </div>
 
-  <div class="space-y-2">
-    <%= f.label :category_id, "カテゴリー", class: admin_form_label_class %>
-    <%= f.collection_select :category_id, Category.all, :id, :name, {}, class: admin_form_text_area_class %>
-  </div>
+        <div id="choices_container" data-nested-form-target="target" class="space-y-3">
+          <%= f.fields_for :question_choices do |choice_fields| %>
+            <%= render "admin/question_choices/choice_fields", f: choice_fields %>
+          <% end %>
+        </div>
 
-  <div class="space-y-2">
-    <%= f.label :explanation, "解説", class: admin_form_label_class %>
-    <%= f.text_area :explanation, rows: 6, class: admin_form_text_area_class, placeholder: "将来的に実装予定なので、現在は無記入を許可" %>
-  </div>
-
-  <div class="border-t border-slate-200 pt-6 mt-6">
-    <h3 class="text-lg font-medium text-slate-900 mb-4">選択肢</h3>
-
-    <div id="choices_container" data-nested-form-target="target">
-      <%= f.fields_for :question_choices do |choice_fields| %>
-        <%= render "admin/question_choices/choice_fields", f: choice_fields %>
-      <% end %>
+        <div class="mt-6 pt-4 border-t border-slate-100">
+          <button type="button" data-action="nested-form#add" class="w-full inline-flex items-center justify-center px-4 py-3 border-2 border-dashed border-slate-300 rounded-lg text-sm font-bold text-slate-500 hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
+            <svg class="w-5 h-5 mr-2 text-slate-400 group-hover:text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            選択肢を追加
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div class="mt-4">
-      <button type="button" data-action="nested-form#add" class="inline-flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-800 transition-colors">
-        ＋ 選択肢を追加
-      </button>
+    <div class="lg:col-span-1 space-y-6">
+      <div class="bg-white shadow-sm rounded-xl border border-slate-200 p-6 sticky top-24">
+        <h3 class="text-sm font-bold text-indigo-900 uppercase tracking-wider mb-6">設定</h3>
+        
+        <div class="space-y-6">
+          <div>
+            <%= f.label :category_id, "カテゴリー", class: "block text-sm font-bold text-slate-600 mb-2" %>
+            <%= f.collection_select :category_id, Category.all, :id, :name, {}, class: "w-full rounded-lg border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 shadow-sm transition-shadow" %>
+          </div>
+
+          <div>
+            <%= f.label :official_page, "公式テキスト参照", class: "block text-sm font-bold text-slate-600 mb-2" %>
+            <div class="relative rounded-md shadow-sm">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                <span class="text-slate-400 font-medium">P.</span>
+              </div>
+              <%= f.text_field :official_page, class: "block w-full rounded-lg border-slate-300 pl-10 pr-4 py-3 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 shadow-sm placeholder-slate-300 transition-shadow", placeholder: "25-28" %>
+            </div>
+            <p class="mt-2 text-xs text-slate-500">例: 152, 25-28</p>
+          </div>
+
+          <div class="pt-6 border-t border-slate-100 flex flex-col gap-3">
+            <%= f.submit "保存する", class: "w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all cursor-pointer" %>
+            <%= link_to "キャンセル", admin_questions_path, class: "w-full flex justify-center py-3 px-4 border border-slate-300 rounded-lg shadow-sm text-sm font-bold text-slate-700 bg-white hover:bg-slate-50 transition-all" %>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="pt-6 border-t border-slate-200 mt-6 flex justify-end gap-4">
-    <%= link_to "キャンセル", admin_questions_path,
-        class: "inline-flex items-center text-gray-700 bg-gray-200 px-6 py-2 rounded-lg font-semibold hover:bg-gray-300 transition-colors" %>
-
-    <%= f.submit "保存する",
-        class: "bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 cursor-pointer transition-colors" %>
   </div>
 <% end %>

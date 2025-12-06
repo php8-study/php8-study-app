@@ -1,17 +1,25 @@
-<div class="nested-form-wrapper border border-gray-200 rounded-lg p-3 mb-3 hover:shadow-sm transition-shadow bg-gray-50">
-  <div class="flex items-center gap-4">
-    <%= f.hidden_field :id %>
-    <%= f.hidden_field :_destroy %>
-
-    <div class="flex items-center">
-      <%= f.check_box :correct, class: "w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer" %>
-      <%= f.label :correct, "正解", class: "ml-2 text-sm text-slate-700 font-medium cursor-pointer" %>
+<div class="nested-form-wrapper group flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200 hover:border-indigo-200 hover:bg-white transition-all">
+  
+  <div class="flex items-center h-[42px]">
+    <div class="relative flex items-center">
+      <%= f.check_box :correct, class: "h-5 w-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer peer" %>
+      
+      <div class="hidden peer-checked:block absolute -top-9 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold whitespace-nowrap shadow-sm after:content-[''] after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-4 after:border-transparent after:border-t-emerald-600">
+        正解
+      </div>
     </div>
+  </div>
 
-    <%= f.text_field :content, class: "flex-grow border border-gray-300 rounded-lg p-2 text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors", placeholder: "選択肢を入力" %>
+  <div class="flex-1">
+    <%= f.text_field :content, class: "block w-full rounded-md border-slate-300 px-4 py-2.5 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm transition-shadow", placeholder: "選択肢を入力..." %>
+  </div>
 
-    <button type="button" data-action="nested-form#remove" class="text-sm text-red-600 hover:text-red-700 p-1 hover:bg-red-50 rounded-lg transition-colors">
-      削除
+  <div class="flex items-center h-[42px]">
+    <%= f.hidden_field :_destroy %>
+    <button type="button" data-action="nested-form#remove" class="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all" title="削除">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+      </svg>
     </button>
   </div>
 </div>
