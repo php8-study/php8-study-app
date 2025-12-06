@@ -26,7 +26,8 @@ RSpec.describe "Admin::Questions", type: :system do
         fill_in "question[question_choices_attributes][0][content]", match: :first, with: "新しい選択肢"
 
         click_button "保存する"
-
+        
+        expect(page).to have_content "問題を保存しました"
         expect(page).to have_field "question[content]", with: "新しい問題文"
         expect(page).to have_field "question[question_choices_attributes][0][content]", with: "新しい選択肢"
         expect(current_path).not_to eq edit_admin_question_path(question)
@@ -40,6 +41,7 @@ RSpec.describe "Admin::Questions", type: :system do
         fill_in "問題文", with: "単なる修正です"
         click_button "保存する"
 
+        expect(page).to have_content "問題を保存しました"
         expect(page).to have_field "question[content]", with: "単なる修正です"
         expect(current_path).to eq edit_admin_question_path(question)
       end
