@@ -8,7 +8,7 @@ class Question < ApplicationRecord
 
   DEFAULT_CHOICES_COUNT = 4
 
-  def update_or_version!(params)
+  def update_or_version(params)
     assign_attributes(params)
     return false unless valid?
 
