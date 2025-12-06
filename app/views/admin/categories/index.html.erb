@@ -1,26 +1,33 @@
-<div class="container mx-auto px-4 py-16 max-w-5xl">
-  <div class="flex justify-between items-end mb-6">
+<div class="max-w-5xl mx-auto py-8 px-4 sm:px-6">
+
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
     <div>
-      <h1 class="text-2xl font-bold text-slate-800">カテゴリー管理</h1>
-      <p class="text-slate-500 text-sm mt-1">カテゴリーの追加・編集・削除が行えます</p>
+      <h1 class="text-2xl font-bold text-slate-900 tracking-tight">カテゴリー管理</h1>
+      <p class="text-sm text-slate-500 mt-1">カテゴリーの追加・編集・削除が行えます。</p>
     </div>
 
-    <div class="flex space-x-4">
-      <%= link_to "管理画面へ戻る", admin_root_path, class: "bg-slate-200 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-300 text-sm font-semibold transition-colors" %>
-      <%= link_to "新規作成", new_admin_category_path, class: "bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 text-sm font-semibold transition-colors" %>
+    <div class="flex gap-3">
+      <%= link_to admin_root_path, class: "inline-flex items-center px-4 py-2 text-sm font-bold text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-sm" do %>
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        管理トップ
+      <% end %>
+
+      <%= link_to new_admin_category_path, class: "inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm hover:shadow" do %>
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        新規作成
+      <% end %>
     </div>
   </div>
 
-  <div class="bg-white shadow-sm border border-slate-200 rounded-xl overflow-hidden">
-    <div class="grid text-slate-500 text-sm font-semibold px-4 h-12 items-center bg-slate-50 border-b border-slate-200 <%= category_grid_cols %>">
-      <span class="text-center pl-2">章番号</span>
-      <span class="pl-20">タイトル</span>
-      <span></span>
-      <span class="text-center pl-4">出題割合</span>
-      <span class="text-center pl-10">操作</span>
+  <div class="bg-white shadow-sm rounded-xl border border-slate-200 overflow-hidden">
+    <div class="grid items-center bg-slate-50 border-b border-slate-200 px-4 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider <%= category_grid_cols %>">
+      <div class="text-center">章番号</div>
+      <div class="pl-4">タイトル</div>
+      <div></div> <div class="text-right pr-4">出題割合</div>
+      <div class="text-right pr-4">操作</div>
     </div>
 
-    <div class="divide-y divide-slate-200">
+    <div class="divide-y divide-slate-100">
       <%= render @categories %>
     </div>
   </div>
