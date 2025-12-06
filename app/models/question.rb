@@ -8,6 +8,22 @@ class Question < ApplicationRecord
 
   DEFAULT_CHOICES_COUNT = 4
 
+  def update_or_version!(params)
+    assign_attributes(params)
+    return false unless valid?
+
+    transaction do
+      if in_use?
+        Question::Versioner.new(self, params).create!
+      else
+        save!
+        self
+      end
+    end
+  rescue ActiveRecord::RecordInvalid
+    false
+  end
+
   def build_default_choices
     return if question_choices.present?
     DEFAULT_CHOICES_COUNT.times { question_choices.build }
@@ -22,4 +38,15 @@ class Question < ApplicationRecord
 
     user_ids == correct_choice_ids
   end
+
+  private
+    def in_use?
+      exam_questions.exists?
+    end
+
+    def create_new_version!(original_params)
+      update_columns(deleted_at: Time.current)
+      clean_params = strip_ids_from_params(original_params.to_h)
+      Question.create!(clean_params)
+    end
 end

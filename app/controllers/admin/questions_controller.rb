@@ -25,8 +25,8 @@ class Admin::QuestionsController < AdminController
   end
 
   def update
-    if @question.update(question_params)
-      redirect_to admin_questions_path, notice: "問題を更新しました"
+    if @new_question = @question.update_or_version!(question_params)
+      redirect_to admin_question_path(@new_question), notice: "問題を保存しました"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -54,5 +54,13 @@ class Admin::QuestionsController < AdminController
         :official_page,
         question_choices_attributes: [:id, :content, :correct, :_destroy]
       )
+    end
+
+    def update_as_new_version
+      if save_as_new_version
+        redirect_to admin_questions_path, notice: "問題は受験履歴があるため、履歴を保持したまま新しい問題として作成されました。"
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
 end

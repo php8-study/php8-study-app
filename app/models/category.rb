@@ -9,14 +9,10 @@ class Category < ApplicationRecord
   validates :weight, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_nil: true
 
   private
-
-  def ensure_no_questions
-    if questions.exists?
-      errors.add(:base, "このカテゴリーには問題が紐付いているため削除できません。先に問題を移動または削除してください。")
-      throw :abort
+    def ensure_no_questions
+      if questions.exists?
+        errors.add(:base, "このカテゴリーには問題が紐付いているため削除できません。先に問題を移動または削除してください。")
+        throw :abort
+      end
     end
-  end
 end
-
-
-
