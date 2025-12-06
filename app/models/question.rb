@@ -14,7 +14,7 @@ class Question < ApplicationRecord
 
     transaction do
       if in_use?
-        Question::Versioner.new(self, params).create!
+        Question::Versioner.new(self, params).create_version!
       else
         save!
         self
