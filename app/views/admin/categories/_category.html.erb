@@ -1,34 +1,39 @@
 <%= turbo_frame_tag category do %>
-  <div class="grid items-center hover:bg-slate-50 transition-colors duration-150 px-2 py-4 rounded <%= category_grid_cols %>">
+  <div class="grid items-center hover:bg-slate-50 transition-colors duration-150 px-4 py-4 <%= category_grid_cols %>">
 
-    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-slate-600 text-sm font-bold mx-6">
-      <%= category.chapter_number %>
-    </span>
-
-    <span class="text-sm font-medium text-slate-900 pl-16">
-      <%= category.name %>
-    </span>
-
-    <div></div>
-
-    <div class="flex items-center gap-2 justify-end">
-      <span class="text-sm text-slate-600 font-mono tabular-nums">
-        <%= "#{category.weight}%" %>
+    <div class="flex justify-center">
+      <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-slate-100 text-slate-600 font-bold text-sm">
+        <%= category.chapter_number %>
       </span>
+    </div>
 
-      <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
-        <div class="h-full bg-blue-600 rounded-full" style="<%= progress_bar_style(category.weight) %>"></div>
+    <div class="pl-4 font-bold text-slate-700">
+      <%= category.name %>
+    </div>
+
+    <div></div> <div class="flex items-center justify-end gap-3 pr-4">
+      <span class="text-sm font-mono font-bold text-slate-600 tabular-nums w-12 text-right">
+        <%= category.weight %>%
+      </span>
+      <div class="w-24 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+        <div class="h-full bg-indigo-500 rounded-full" style="<%= progress_bar_style(category.weight) %>"></div>
       </div>
     </div>
 
-    <div class="flex items-center gap-3 justify-end">
-      <%= link_to "編集", edit_admin_category_path(category),
+    <div class="flex items-center justify-end gap-2 pr-2">
+      <%= link_to edit_admin_category_path(category),
           data: { turbo_frame: dom_id(category) },
-          class: "text-indigo-600 hover:text-indigo-800 font-medium mr-3" %>
+          class: "p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors",
+          title: "編集" do %>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+      <% end %>
 
-      <%= link_to "削除", admin_category_path(category),
-          data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
-          class: "text-red-600 hover:text-red-800 font-medium" %>
+      <%= link_to admin_category_path(category),
+          data: { turbo_method: :delete, turbo_confirm: "カテゴリー「#{category.name}」を削除しますか？" },
+          class: "p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors",
+          title: "削除" do %>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+      <% end %>
     </div>
   </div>
 <% end %>
