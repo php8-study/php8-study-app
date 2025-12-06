@@ -43,10 +43,4 @@ class Question < ApplicationRecord
     def in_use?
       exam_questions.exists?
     end
-
-    def create_new_version!(original_params)
-      update_columns(deleted_at: Time.current)
-      clean_params = strip_ids_from_params(original_params.to_h)
-      Question.create!(clean_params)
-    end
 end
