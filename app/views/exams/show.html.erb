@@ -21,18 +21,15 @@
            class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100 mb-12 transition-all duration-700 ease-out <%= anim[:wrapper] %>">
 
         <div class="p-8 md:p-12 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
-
           <div class="relative w-48 h-48 md:w-56 md:h-56">
             <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
               <circle cx="50" cy="50" r="45" fill="none" stroke="#f1f5f9" stroke-width="8"></circle>
-
               <circle data-result-reveal-target="bar"
                       cx="50" cy="50" r="45" fill="none"
                       stroke="currentColor" stroke-width="8" stroke-linecap="round"
                       class="transition-all duration-1000 ease-out <%= chart[:initial_color] %>"
                       style="<%= chart[:style] %>"></circle>
             </svg>
-
             <div class="absolute inset-0 flex flex-col items-center justify-center">
               <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Score</span>
               <div class="flex items-baseline">
@@ -53,7 +50,6 @@
                 <%= result_msg[:description].html_safe %>
               </p>
             </div>
-
             <div data-result-reveal-target="scoreDetail" class="mt-6 flex items-center justify-center md:justify-start gap-6 transition-opacity duration-500 delay-500 <%= anim[:fade] %>">
               <div class="text-center">
                 <div class="text-xs font-bold text-slate-400 uppercase">Correct</div>
@@ -71,14 +67,8 @@
         </div>
       </div>
 
-      <div data-result-reveal-target="actionButtons" class="flex flex-col sm:flex-row justify-center gap-4 mb-16 transition-all duration-500 delay-700 <%= anim[:wrapper] %>">
-        <%= link_to root_path, class: "px-8 py-4 bg-white border border-slate-200 text-slate-600 font-bold rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm" do %>
-          トップへ戻る
-        <% end %>
-        <%= link_to exams_path, class: "px-8 py-4 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 transition-all shadow-md flex items-center justify-center" do %>
-          <span>履歴一覧へ</span>
-          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-        <% end %>
+      <div data-result-reveal-target="actionButtons" class="mb-16 transition-all duration-500 delay-700 <%= anim[:wrapper] %>">
+        <%= render "result_navigation" %>
       </div>
 
       <div data-result-reveal-target="detailTable" class="transition-opacity duration-700 delay-1000 <%= anim[:fade] %>">
@@ -133,6 +123,9 @@
             <% end %>
           <% end %>
         </div>
+      </div>
+      <div data-result-reveal-target="actionButtons" class="mt-12 transition-opacity duration-700 delay-1000 <%= anim[:wrapper] %>">
+        <%= render "result_navigation" %>
       </div>
     </div>
   </div>
