@@ -26,7 +26,7 @@ class Admin::QuestionsController < AdminController
 
   def update
     if @new_question = @question.update_or_version(question_params)
-      redirect_to admin_question_path(@new_question), notice: "問題を保存しました"
+      redirect_to edit_admin_question_path(@new_question), notice: "問題を保存しました"
     else
       render :edit, status: :unprocessable_entity
     end
