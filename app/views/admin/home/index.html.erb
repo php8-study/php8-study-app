@@ -1,11 +1,34 @@
-<div class="container mx-auto px-4">
-  <section class="hero py-16 text-center">
-    <h1 class="text-4xl font-bold mb-4">管理画面</h1>
-    <p class="text-lg text-gray-700">管理する項目を選択してください</p>
-  </section>
+<div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 font-sans">
+  <div class="max-w-2xl mx-auto">
 
-  <section class="cards grid gap-6 max-w-2xl mx-auto">
-    <%= render "shared/card", title: "問題一覧", description: "", url: admin_questions_path %>
-    <%= render "shared/card", title: "カテゴリー一覧", description: "", url: admin_categories_path %>
-  </section>
+    <div class="text-center mb-10">
+      <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">管理画面</h1>
+      <p class="text-slate-500 mt-2">管理する項目を選択してください</p>
+    </div>
+
+    <div class="space-y-6">
+
+      <%= render "shared/card",
+          title: "問題一覧",
+          description: "問題の作成・編集・削除を行います。",
+          url: admin_questions_path,
+          theme_color: "blue",
+          icon_key: "clipboard" # card_helperに追加したキーを使用 %>
+
+      <%= render "shared/card",
+          title: "カテゴリー一覧",
+          description: "問題カテゴリーの管理を行います。",
+          url: admin_categories_path,
+          theme_color: "orange",
+          icon_key: "tag" %>
+
+      <div class="mt-8 pt-8 border-t border-slate-200 flex justify-center">
+        <%= link_to root_path, class: "text-slate-500 hover:text-indigo-600 font-bold flex items-center transition-colors" do %>
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          ユーザー画面に戻る
+        <% end %>
+      </div>
+
+    </div>
+  </div>
 </div>
