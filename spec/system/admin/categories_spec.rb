@@ -38,7 +38,7 @@ RSpec.describe "Admin::Categories", type: :system do
           find("a[title='削除']").click
         end
 
-        expect(page).to have_content "削除できません"
+        expect(page).to have_content "削除できません：紐付く問題が存在します"
         expect(page).to have_selector("#category_#{category.id}")
         expect(page).to have_content "テストカテゴリー"
       end

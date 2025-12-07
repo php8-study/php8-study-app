@@ -36,7 +36,8 @@ class Admin::CategoriesController < ::AdminController
       ]
     else
       flash.now[:alert] = "削除できません：紐付く問題が存在します"
-      render turbo_stream: turbo_stream.update("flash", partial: "layouts/flash")
+      render turbo_stream: turbo_stream.update("flash", partial: "layouts/flash"),
+      status: :unprocessable_entity
     end
   end
 
