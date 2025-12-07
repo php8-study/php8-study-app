@@ -28,11 +28,16 @@ class Admin::CategoriesController < ::AdminController
   end
 
   def destroy
-    @category.destroy
-
-    respond_to do |format|
-      format.html { redirect_to admin_categories_url, notice: "カテゴリーが削除されました。" }
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(@category) }
+    if @category.destroy
+      flash.now[:notice] = "カテゴリー「#{ @category.name }」を削除しました"
+      render turbo_stream: [
+        turbo_stream.remove(@category),
+        turbo_stream.update("flash", partial: "layouts/flash")
+      ]
+    else
+      flash.now[:alert] = "削除できません：紐付く問題が存在します"
+      render turbo_stream: turbo_stream.update("flash", partial: "layouts/flash"),
+      status: :unprocessable_entity
     end
   end
 
