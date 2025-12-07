@@ -28,8 +28,6 @@ class Admin::CategoriesController < ::AdminController
   end
 
   def destroy
-    @category = Category.find(params[:id])
-
     if @category.destroy
       render turbo_stream: turbo_stream.remove(@category)
     else
