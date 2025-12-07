@@ -32,6 +32,7 @@ RSpec.describe User, type: :model do
       it "試験を削除すること" do
         user.discard_active_exam
         expect(Exam.exists?(exam.id)).to be false
+        expect(ExamQuestion.exists?(exam_question.id)).to be false
         expect(ExamAnswer.exists?(exam_answer.id)).to be false
       end
     end
