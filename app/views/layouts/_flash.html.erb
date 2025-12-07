@@ -1,9 +1,43 @@
-<% if flash.any? %>
-  <div class="flex justify-end">
-    <% flash.each do |type, message| %>
-      <div class="<%= flash_class(type) %>">
+<% flash.each do |key, message| %>
+  <%
+    if key == "notice"
+      icon_bg     = "bg-emerald-50"
+      icon_color  = "text-emerald-600"
+      title_text  = "Success"
+      icon_svg    = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>'
+    else
+      icon_bg     = "bg-rose-50"
+      icon_color  = "text-rose-600"
+      title_text  = "Error"
+      icon_svg    = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>'
+    end
+  %>
+
+  <div data-controller="flash"
+       class="fixed bottom-5 right-5 z-[100] flex items-start gap-4 p-4
+              bg-white border border-slate-100 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] rounded-xl
+              transition-all duration-500 ease-out transform translate-y-0 opacity-100
+              max-w-md w-full md:w-auto min-w-[320px]">
+
+    <div class="flex-shrink-0 w-10 h-10 rounded-full <%= icon_bg %> flex items-center justify-center">
+      <svg class="w-5 h-5 <%= icon_color %>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <%== icon_svg %>
+      </svg>
+    </div>
+
+    <div class="flex-1 pt-0.5">
+      <p class="text-sm font-bold text-slate-800 leading-none mb-1">
+        <%= title_text %>
+      </p>
+      <p class="text-sm text-slate-600 leading-relaxed">
         <%= message %>
-      </div>
-    <% end %>
+      </p>
+    </div>
+
+    <button data-action="flash#dismiss" class="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded-md hover:bg-slate-50">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
   </div>
 <% end %>
