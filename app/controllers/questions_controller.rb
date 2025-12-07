@@ -3,7 +3,7 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :solution]
   def random
-    random_question = Question.order("RANDOM()").first
+    random_question = Question.active.order("RANDOM()").first
     redirect_to question_path(random_question)
   end
 
