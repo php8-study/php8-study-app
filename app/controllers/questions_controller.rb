@@ -6,8 +6,9 @@ class QuestionsController < ApplicationController
     random_question = Question.active.order("RANDOM()").first
     if random_question.nil?
       redirect_to root_path, alert: "現在利用可能な問題がありません"
-    end
+    else
     redirect_to question_path(random_question)
+    end
   end
 
   def show
