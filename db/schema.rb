@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_06_165916) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_07_153707) do
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.integer "chapter_number", null: false
@@ -78,7 +78,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_06_165916) do
     t.index ["github_id"], name: "index_users_on_github_id", unique: true
   end
 
-  add_foreign_key "exam_answers", "exam_questions"
+  add_foreign_key "exam_answers", "exam_questions", on_delete: :cascade
   add_foreign_key "exam_answers", "question_choices"
   add_foreign_key "exam_questions", "exams"
   add_foreign_key "exam_questions", "questions"

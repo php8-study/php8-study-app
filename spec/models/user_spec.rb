@@ -26,10 +26,14 @@ RSpec.describe User, type: :model do
   describe "#discard_active_exam" do
     context "進行中の試験がある場合" do
       let!(:exam) { create(:exam, user: user, completed_at: nil) }
+      let!(:exam_question) { create(:exam_question, exam: exam) }
+      let!(:exam_answer) { create(:exam_answer, exam_question: exam_question) }
 
       it "試験を削除すること" do
         user.discard_active_exam
         expect(Exam.exists?(exam.id)).to be false
+        expect(ExamQuestion.exists?(exam_question.id)).to be false
+        expect(ExamAnswer.exists?(exam_answer.id)).to be false
       end
     end
 
