@@ -1,6 +1,6 @@
 <% flash.each do |key, message| %>
   <%
-    if key == "notice"
+    if key.to_s == "notice"
       icon_bg     = "bg-emerald-50"
       icon_color  = "text-emerald-600"
       title_text  = "Success"
