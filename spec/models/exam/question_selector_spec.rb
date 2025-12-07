@@ -66,5 +66,19 @@ RSpec.describe Exam::QuestionSelector do
         expect(selected_ids.count).to eq(20)
       end
     end
+
+    context "論理削除された（アーカイブ済みの）問題が存在する場合" do
+      let!(:active_questions)   { create_list(:question, 30, category: category_heavy) }
+      let!(:archived_questions) { create_list(:question, 10, :archived, category: category_heavy) }
+
+      it "アーカイブ済みの問題は選出リストに含まれないこと" do
+        archived_ids = archived_questions.map(&:id)
+        expect(selected_ids).not_to include(*archived_ids)
+      end
+
+      it "アクティブな問題のみから選出されること" do
+        expect(selected_ids.count).to eq(30)
+      end
+    end
   end
 end
