@@ -13,5 +13,9 @@ FactoryBot.define do
         create_list(:question_choice, 3, question: question)
       end
     end
+
+    trait :archived do
+      deleted_at { Time.current }
+    end
   end
 end
