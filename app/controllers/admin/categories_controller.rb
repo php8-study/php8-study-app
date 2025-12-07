@@ -28,11 +28,13 @@ class Admin::CategoriesController < ::AdminController
   end
 
   def destroy
-    @category.destroy
+    @category = Category.find(params[:id])
 
-    respond_to do |format|
-      format.html { redirect_to admin_categories_url, notice: "カテゴリーが削除されました。" }
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(@category) }
+    if @category.destroy
+      render turbo_stream: turbo_stream.remove(@category)
+    else
+      flash.now[:alert] = "削除できません：紐付く問題が存在します"
+      render turbo_stream: turbo_stream.update("flash", partial: "layouts/flash")
     end
   end
 
