@@ -29,7 +29,11 @@ class Admin::CategoriesController < ::AdminController
 
   def destroy
     if @category.destroy
-      render turbo_stream: turbo_stream.remove(@category)
+      flash.now[:notice] = "カテゴリー「#{ @category.name }」を削除しました"
+      render turbo_stream: [
+        turbo_stream.remove(@category),
+        turbo_stream.update("flash", partial: "layouts/flash")
+      ]
     else
       flash.now[:alert] = "削除できません：紐付く問題が存在します"
       render turbo_stream: turbo_stream.update("flash", partial: "layouts/flash")
