@@ -48,13 +48,18 @@ class Exam::QuestionSelector
     def sample_based_on_weight(categories, total_weight)
       return [] if total_weight.zero?
 
+      questions_by_category = Question.active
+                                      .pluck(:category_id, :id)
+                                      .group_by(&:first)
+                                      .transform_values { |pairs| pairs.map(&:last) }
+
       categories.each_with_object([]) do |category, result|
         count = (TOTAL_QUESTIONS * category.weight / total_weight).floor
         next if count <= 0
+        candidate_ids = questions_by_category[category.id] || []
+        selected_ids = candidate_ids.sample(count)
 
-        question_ids = category.questions.active.order("RANDOM()").limit(count).pluck(:id)
-
-        question_ids.each do |q_id|
+        selected_ids.each do |q_id|
           result << build_data(q_id, category.chapter_number)
         end
       end
