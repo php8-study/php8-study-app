@@ -4,7 +4,7 @@ class Admin::QuestionsController < AdminController
   before_action :set_question, only: [:edit, :update, :destroy]
 
   def index
-    @questions = Question.includes(:category).all
+    @questions = Question.includes(:category).active.order(created_at: :desc)
   end
 
   def new
