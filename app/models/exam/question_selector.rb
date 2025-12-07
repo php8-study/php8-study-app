@@ -34,11 +34,12 @@ class Exam::QuestionSelector
       selected_ids = selected_questions.map(&:id)
       remaining_count = TOTAL_QUESTIONS - selected_ids.count
       return selected_questions if remaining_count <= 0
-      extra_questions = Question.where.not(id: selected_ids)
-                                    .joins(:category)
-                                    .select("questions.id", "categories.chapter_number")
-                                    .order("RANDOM()")
-                                    .limit(remaining_count)
+      extra_questions = Question.active
+                                .where.not(id: selected_ids)
+                                .joins(:category)
+                                .select("questions.id", "categories.chapter_number")
+                                .order("RANDOM()")
+                                .limit(remaining_count)
 
       extras = extra_questions.map { |q| build_data(q.id, q.chapter_number) }
       selected_questions.concat(extras)
@@ -51,7 +52,7 @@ class Exam::QuestionSelector
         count = (TOTAL_QUESTIONS * category.weight / total_weight).floor
         next if count <= 0
 
-        question_ids = category.questions.order("RANDOM()").limit(count).pluck(:id)
+        question_ids = category.questions.active.order("RANDOM()").limit(count).pluck(:id)
 
         question_ids.each do |q_id|
           result << build_data(q_id, category.chapter_number)
