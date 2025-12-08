@@ -1,9 +1,11 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe "Exams", type: :system do
   let(:user) { create(:user) }
   let!(:category) { create(:category, name: "基礎知識") }
-  
+
   let!(:questions) do
     create_list(:question, 2, :with_choices, category: category)
   end
@@ -34,7 +36,7 @@ RSpec.describe "Exams", type: :system do
     before do
       visit root_path
       click_link "模擬試験を受験する"
-      
+
       expect(page).to have_current_path(%r{/exams/\d+/exam_questions/\d+})
 
       @current_exam = Exam.last
@@ -42,12 +44,12 @@ RSpec.describe "Exams", type: :system do
       @q2_record = @current_exam.exam_questions.find_by(position: 2)
 
       answer_question(@q1_record, correct: true)
-      
+
       click_button "回答する"
 
       expect(page).to have_current_path(%r{/exams/#{@current_exam.id}/exam_questions/#{@q2_record.id}})
 
-      click_link "回答状況一覧へ" 
+      click_link "回答状況一覧へ"
     end
 
     it "各問題のステータスに応じたスタイルが適用されていること", :aggregate_failures do
