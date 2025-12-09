@@ -138,7 +138,7 @@ RSpec.describe "Admin::Questions", type: :system do
         accept_confirm do
           find("a[title='削除']").click
         end
-        
+
         expect(page).to have_content "問題を削除しました"
         expect(page).to have_no_content "古い問題文"
       end
