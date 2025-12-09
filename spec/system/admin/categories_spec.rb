@@ -78,6 +78,19 @@ RSpec.describe "Admin::Categories", type: :system do
       end
     end
 
+    context "無効な値を入力して保存した場合" do
+      it "更新されずエラーが表示される" do
+        expect(page).to have_selector("form[action*='/admin/categories/#{category.id}']")
+        execute_script("document.querySelector('form').noValidate = true")
+
+        fill_in "category[name]", with: ""
+        click_button "保存"
+
+        expect(page).to have_content "Name can't be blank"
+        expect(page).to have_field "category[name]", with: ""
+      end
+    end
+
     context "値を変更せず保存した場合" do
       it "対象のカテゴリの表記はそのまま" do
         click_button "保存"
