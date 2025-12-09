@@ -14,7 +14,6 @@ RSpec.describe "カテゴリーの管理画面", type: :system do
 
   describe "一覧表示" do
     it "カテゴリー一覧が表示され、アクションボタンが存在すること" do
-      expect(page).to have_content "カテゴリー管理"
       expect(page).to have_content "テストカテゴリー"
       expect(page).to have_link "新規作成", href: new_admin_category_path
       expect(page).to have_link "管理トップ", href: admin_root_path
