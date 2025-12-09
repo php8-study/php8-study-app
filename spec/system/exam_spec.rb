@@ -49,7 +49,7 @@ RSpec.describe "Exam (受験機能)", type: :system do
     end
   end
 
-  context "試験中の場合" do
+  context "試験中" do
     let!(:exam) { create(:exam, user: user) }
     let!(:exam_questions) do
       questions.map.with_index(1) do |q, i|
@@ -86,7 +86,7 @@ RSpec.describe "Exam (受験機能)", type: :system do
 
         expect(page).to have_button "回答を変更する"
         uncheck first_choice.content
-        
+
         other_choice = q1.question.question_choices.last
         check other_choice.content
 
@@ -102,6 +102,14 @@ RSpec.describe "Exam (受験機能)", type: :system do
 
         expect(page).to have_current_path(exam_exam_question_path(exam, q2))
         expect(q1.reload.exam_answers).to be_empty
+      end
+
+      it "選択肢を選ばずに回答ボタンを押すとアラートが表示され、画面遷移しない" do
+        accept_alert("回答を選択してください。\n後で回答する場合は「後で回答する」ボタンを使用してください。") do
+          click_button "回答する"
+        end
+
+        expect(page).to have_current_path(exam_exam_question_path(exam, q1))
       end
 
       it "回答状況一覧へボタンで確認画面へ遷移できる" do
