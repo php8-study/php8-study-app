@@ -35,8 +35,14 @@ class Admin::QuestionsController < AdminController
   def destroy
     if @question.destroy
       respond_to do |format|
-        format.html { redirect_to admin_questions_url, notice: "問題が削除されました。" }
-        format.turbo_stream { render turbo_stream: turbo_stream.remove(@question) }
+        format.html { redirect_to admin_questions_path, notice: "問題を削除しました" }
+        format.turbo_stream do
+          flash.now[:notice] = "問題を削除しました"
+          render turbo_stream: [
+            turbo_stream.remove(@question),
+            turbo_stream.update("flash", partial: "layouts/flash")
+          ]
+        end
       end
     else
       flash.now[:alert] = "削除できません：#{@question.errors.full_messages.join(', ')}"
