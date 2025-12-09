@@ -1,26 +1,25 @@
 <%= form_with(model: [:admin, category], class: "contents") do |f| %>
 
-  <%# エラーメッセージ %>
   <%= render "shared/error_messages", object: f.object %>
 
   <div class="max-w-3xl mx-auto"> <div class="bg-white shadow-sm rounded-xl border border-slate-200 p-8 space-y-8">
 
       <div>
         <%= f.label :name, "タイトル", class: "block text-sm font-bold text-slate-600 mb-2" %>
-        <%= f.text_field :name, class: "w-full rounded-lg border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 shadow-sm transition-shadow placeholder-slate-300", placeholder: "カテゴリー名を入力" %>
+        <%= f.text_field :name, class: "w-full rounded-lg border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 shadow-sm transition-shadow placeholder-slate-300", required: true, placeholder: "カテゴリー名を入力" %>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
         <div>
           <%= f.label :chapter_number, "章番号", class: "block text-sm font-bold text-slate-600 mb-2" %>
-          <%= f.number_field :chapter_number, class: "w-full rounded-lg border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 shadow-sm transition-shadow", placeholder: "1" %>
+          <%= f.number_field :chapter_number, class: "w-full rounded-lg border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 shadow-sm transition-shadow", required: true, placeholder: "1" %>
         </div>
 
         <div>
           <%= f.label :weight, "出題割合 (%)", class: "block text-sm font-bold text-slate-600 mb-2" %>
           <div class="relative">
-            <%= f.number_field :weight, class: "w-full rounded-lg border-slate-300 pl-4 pr-8 py-3 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 shadow-sm transition-shadow", step: 0.1, min: 0, max: 100, placeholder: "0.0" %>
+            <%= f.number_field :weight, class: "w-full rounded-lg border-slate-300 pl-4 pr-8 py-3 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 shadow-sm transition-shadow", required: true, step: 0.1, min: 0, max: 100, placeholder: "0.0" %>
 
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
               <span class="text-slate-400 font-bold">%</span>
