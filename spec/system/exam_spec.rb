@@ -70,6 +70,13 @@ RSpec.describe "Exam (受験機能)", type: :system do
         expect(page).to have_no_link "前へ"
       end
 
+      it "「前へ」ボタンが表示され、前の問題に戻れる" do
+        visit exam_exam_question_path(exam, q2)
+        expect(page).to have_link "前へ"
+        click_link "前へ"
+        expect(page).to have_current_path(exam_exam_question_path(exam, q1))
+      end
+
       it "選択肢を選んで回答し、次の問題へ遷移できる" do
         target_choice = q1.question.question_choices.first
         check target_choice.content
