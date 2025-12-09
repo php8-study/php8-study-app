@@ -119,7 +119,7 @@ RSpec.describe "Admin::Questions", type: :system do
 
         expect(page).to have_content "問題を保存しました"
 
-        expect(page).to have_no_field "question[content]", with: "古い選択肢"
+        expect(page).to have_no_field "question[question_choices_attributes][0][content]", with: "古い選択肢"
         expect(page).to have_field "question[question_choices_attributes][0][content]", with: "追加した選択肢"
       end
     end
