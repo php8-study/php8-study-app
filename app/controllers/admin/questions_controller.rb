@@ -33,11 +33,14 @@ class Admin::QuestionsController < AdminController
   end
 
   def destroy
-    @question.destroy
-
-    respond_to do |format|
-      format.html { redirect_to admin_questions_url, notice: "問題が削除されました。" }
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(@question) }
+    if @question.destroy
+      respond_to do |format|
+        format.html { redirect_to admin_questions_url, notice: "問題が削除されました。" }
+        format.turbo_stream { render turbo_stream: turbo_stream.remove(@question) }
+      end
+    else
+      flash.now[:alert] = "削除できません：#{@question.errors.full_messages.join(', ')}"
+      render turbo_stream: turbo_stream.update("flash", partial: "layouts/flash"), status: :unprocessable_entity
     end
   end
 
