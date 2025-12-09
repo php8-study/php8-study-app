@@ -2,21 +2,22 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::Categories", type: :system do
+RSpec.describe "カテゴリーの管理画面", type: :system do
   let(:admin) { create(:user, :admin) }
   let!(:category) { create(:category, name: "テストカテゴリー") }
 
   before do
     sign_in_as(admin)
     visit admin_categories_path
+    expect(page).to have_content "カテゴリー管理"
   end
 
   describe "一覧表示" do
     it "カテゴリー一覧が表示され、アクションボタンが存在すること" do
       expect(page).to have_content "カテゴリー管理"
       expect(page).to have_content "テストカテゴリー"
-      expect(page).to have_link "新規作成"
-      expect(page).to have_link "管理トップ"
+      expect(page).to have_link "新規作成", href: new_admin_category_path
+      expect(page).to have_link "管理トップ", href: admin_root_path
 
       within "#category_#{category.id}" do
         expect(page).to have_selector "a[title='編集']"
@@ -28,12 +29,13 @@ RSpec.describe "Admin::Categories", type: :system do
   describe "新規作成" do
     before do
       click_link "新規作成"
+      expect(page).to have_content "カテゴリー新規作成"
     end
     context "登録情報に過不足が無い場合" do
       it "正しく作成できる" do
-        fill_in "タイトル", with: "新しいカテゴリー"
-        fill_in "章番号", with: "99"
-        fill_in "出題割合", with: "20"
+        fill_in "category[name]", with: "新しいカテゴリー"
+        fill_in "category[chapter_number]", with: "99"
+        fill_in "category[weight]", with: "20"
 
         click_button "保存する"
 
@@ -66,10 +68,11 @@ RSpec.describe "Admin::Categories", type: :system do
       within "#category_#{category.id}" do
         find("a[title='編集']").click
       end
+      expect(page).to have_selector("form[action*='/admin/categories/#{category.id}']")
     end
 
     context "値を変更して保存した場合" do
-      it "対象のカテゴリの表記が変更される" do
+      it "表記が変更される" do
         fill_in "category[name]", with: "編集後のカテゴリー"
         click_button "保存"
 
@@ -80,12 +83,12 @@ RSpec.describe "Admin::Categories", type: :system do
 
     context "無効な値を入力して保存した場合" do
       it "更新されずエラーが表示される" do
-        expect(page).to have_selector("form[action*='/admin/categories/#{category.id}']")
         execute_script("document.querySelector('form').noValidate = true")
 
         fill_in "category[name]", with: ""
         click_button "保存"
 
+        # TODO i18n導入で日本語化することを検討する ユーザーは触れない場所なので今はそのまま
         expect(page).to have_content "Name can't be blank"
         expect(page).to have_field "category[name]", with: ""
       end
@@ -114,8 +117,6 @@ RSpec.describe "Admin::Categories", type: :system do
   describe "削除" do
     context "紐づく問題がない場合 (削除可能)" do
       it "削除に成功し、一覧から行が消える" do
-        expect(page).to have_content "テストカテゴリー"
-
         accept_confirm do
           find("a[title='削除']").click
         end
@@ -131,8 +132,6 @@ RSpec.describe "Admin::Categories", type: :system do
       end
 
       it "削除に失敗し、エラーが表示され、行は画面に残ったままになる" do
-        expect(page).to have_content "テストカテゴリー"
-
         accept_confirm do
           find("a[title='削除']").click
         end
