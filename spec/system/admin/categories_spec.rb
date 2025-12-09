@@ -46,6 +46,8 @@ RSpec.describe "カテゴリーの管理画面", type: :system do
 
     context "登録情報に過不足がある場合" do
       it "エラーが出て作成できない" do
+        execute_script("document.querySelector('form').noValidate = true")
+
         click_button "保存する"
 
         # TODO i18n導入で日本語化することを検討する ユーザーは触れない場所なので今はそのまま
