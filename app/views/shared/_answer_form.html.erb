@@ -1,6 +1,4 @@
 <%# locals: (question:, url:, method:, button_text:, input_name: "user_answer_ids[]", selected_choice_ids: [], guard_answer: false) %>
-<% guard_answer = local_assigns.fetch(:guard_answer, false) %>
-
 <div data-controller="answer-guard" data-answer-guard-active-value="<%= guard_answer %>">
   <%= form_with url: url, method: method, local: true, class: "space-y-8" do |f| %>
 
