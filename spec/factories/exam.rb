@@ -37,10 +37,10 @@ FactoryBot.define do
 
       after(:create) do |exam, evaluator|
         target_questions = if evaluator.questions.present?
-                             evaluator.questions
-                           else
-                             create_list(:question, evaluator.question_count, :with_choices)
-                           end
+          evaluator.questions
+        else
+          create_list(:question, evaluator.question_count, :with_choices)
+        end
 
         target_questions.each_with_index do |question, index|
           create(:exam_question, exam: exam, question: question, position: index + 1)
