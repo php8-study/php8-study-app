@@ -45,23 +45,22 @@ RSpec.describe "模擬試験受験履歴一覧", type: :system do
     end
   end
 
-  private
-    def exam_history_cards
-      all("a[href^='/exams/']").select do |link|
-        link[:href].match?(%r{/exams/\d+$})
-      end
+  def exam_history_cards
+    all("a[href^='/exams/']").select do |link|
+      link[:href].match?(%r{/exams/\d+$})
     end
+  end
 
-    def verify_exam_card(exam, score:, status:, correct_fraction:)
-      within "a[href='#{exam_path(exam)}']" do
-        expect(page).to have_content exam.created_at.strftime("%b").upcase
-        expect(page).to have_content exam.created_at.day.to_s
+  def verify_exam_card(exam, score:, status:, correct_fraction:)
+    within "a[href='#{exam_path(exam)}']" do
+      expect(page).to have_content exam.created_at.strftime("%b").upcase
+      expect(page).to have_content exam.created_at.day.to_s
 
-        expect(page).to have_content "SCORE"
-        expect(page).to have_content score
-        expect(page).to have_content status
-        expect(page).to have_content "CORRECT"
-        expect(page).to have_content correct_fraction
-      end
+      expect(page).to have_content "SCORE"
+      expect(page).to have_content score
+      expect(page).to have_content status
+      expect(page).to have_content "CORRECT"
+      expect(page).to have_content correct_fraction
     end
+  end
 end
