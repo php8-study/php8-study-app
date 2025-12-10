@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Exam::History (履歴一覧)", type: :system do
+RSpec.describe "模擬試験受験履歴一覧", type: :system do
   let(:user) { create(:user) }
 
   before do
