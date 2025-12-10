@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Authentication", type: :system do
+RSpec.describe "ログイン", type: :system do
   before do
     OmniAuth.config.mock_auth[:github] = nil
   end

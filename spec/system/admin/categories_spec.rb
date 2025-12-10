@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "カテゴリーの管理画面", type: :system do
+RSpec.describe "カテゴリーの管理", type: :system do
   let(:admin) { create(:user, :admin) }
   let!(:category) { create(:category, name: "テストカテゴリー") }
 

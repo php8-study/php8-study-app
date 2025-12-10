@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "模擬試験機能", type: :system do
+RSpec.describe "模擬試験", type: :system do
   let(:user) { create(:user) }
   let!(:category) { create(:category, name: "基礎知識") }
   let!(:questions) { create_list(:question, 3, :with_choices, category: category) }
