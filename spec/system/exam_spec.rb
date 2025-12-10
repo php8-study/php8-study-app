@@ -50,15 +50,10 @@ RSpec.describe "模擬試験機能", type: :system do
   end
 
   context "試験中" do
-    let!(:exam) { create(:exam, user: user) }
-    let!(:exam_questions) do
-      questions.map.with_index(1) do |q, i|
-        create(:exam_question, exam: exam, question: q, position: i)
-      end
-    end
-    let(:q1) { exam_questions.first }
-    let(:q2) { exam_questions.second }
-    let(:last_q) { exam_questions.last }
+    let!(:exam) { create(:exam, :with_questions, questions: questions, user: user) }
+    let(:q1) { exam.exam_questions.first }
+    let(:q2) { exam.exam_questions.second }
+    let(:last_q) { exam.exam_questions.last }
 
     describe "回答画面の操作" do
       before do
@@ -83,7 +78,7 @@ RSpec.describe "模擬試験機能", type: :system do
         click_button "回答する"
 
         expect(page).to have_current_path(exam_exam_question_path(exam, q2))
-        expect(q1.reload.exam_answers).to be_present
+        expect(q1.user_choices).to include target_choice
       end
 
       it "回答済みの場合は再回答してデータを更新できる" do
@@ -100,8 +95,7 @@ RSpec.describe "模擬試験機能", type: :system do
         click_button "回答を変更する"
 
         expect(page).to have_current_path(exam_exam_question_path(exam, q2))
-        expect(q1.reload.exam_answers.count).to eq 1
-        expect(q1.exam_answers.first.question_choice).to eq other_choice
+        expect(q1.user_choices).to contain_exactly(other_choice)
       end
 
       it "「後で回答するボタン」で回答せずに次の問題に進める" do
@@ -132,6 +126,8 @@ RSpec.describe "模擬試験機能", type: :system do
       end
 
       it "回答すると確認画面へ遷移できる" do
+        target_choice = last_q.question.question_choices.first
+        check target_choice.content
         click_button "回答する"
         expect(page).to have_current_path(review_exam_path(exam))
       end
