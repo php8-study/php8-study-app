@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::Questions", type: :system do
+RSpec.describe "問題の管理", type: :system do
   let(:admin) { create(:user, :admin) }
   let!(:category) { create(:category, name: "テストカテゴリー") }
   let!(:question) {

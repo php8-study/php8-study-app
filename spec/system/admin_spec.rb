@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "管理画面", type: :system do
+RSpec.describe "管理", type: :system do
   let(:admin) { create(:user, :admin) }
 
   before do
