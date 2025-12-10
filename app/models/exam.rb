@@ -6,7 +6,6 @@ class Exam < ApplicationRecord
   has_many :exam_questions, -> { order(position: :asc) }, dependent: :delete_all
   has_many :exam_answers, through: :exam_questions
   has_many :questions, through: :exam_questions
-  has_many :user_choices, through: :exam_answers, source: :question_choice
 
   PASSING_SCORE_PERCENTAGE = 70.0
 
