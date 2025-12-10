@@ -23,7 +23,9 @@ FactoryBot.define do
       completed
       after(:create) do |exam|
         question = create(:question, :with_choices)
-        create(:exam_question, exam: exam, question: question)
+        eq = create(:exam_question, exam: exam, question: question)
+        wrong_choice = question.question_choices.where(correct: false).first
+        create(:exam_answer, exam_question: eq, question_choice: wrong_choice)
       end
     end
   end
