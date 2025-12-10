@@ -28,5 +28,24 @@ FactoryBot.define do
         create(:exam_answer, exam_question: eq, question_choice: wrong_choice)
       end
     end
+
+    trait :with_questions do
+      transient do
+        questions { [] }
+        question_count { 3 }
+      end
+
+      after(:create) do |exam, evaluator|
+        target_questions = if evaluator.questions.present?
+                             evaluator.questions
+                           else
+                             create_list(:question, evaluator.question_count, :with_choices)
+                           end
+
+        target_questions.each_with_index do |question, index|
+          create(:exam_question, exam: exam, question: question, position: index + 1)
+        end
+      end
+    end
   end
 end
