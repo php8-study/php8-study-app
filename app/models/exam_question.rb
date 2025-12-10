@@ -4,6 +4,7 @@ class ExamQuestion < ApplicationRecord
   belongs_to :exam, inverse_of: :exam_questions
   belongs_to :question, inverse_of: :exam_questions
   has_many :exam_answers, inverse_of: :exam_question, dependent: :delete_all
+  has_many :user_choices, through: :exam_answers, source: :question_choice
 
   def save_answers!(choice_ids)
     input_ids = Array(choice_ids).map(&:to_i).uniq

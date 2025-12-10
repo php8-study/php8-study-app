@@ -26,7 +26,8 @@
         method: :post,
         button_text: @exam_question.answered? ? "回答を変更する" : "回答する",
         input_name: "question_choice_ids[]",
-        selected_choice_ids: @exam_question.user_choice_ids %>
+        selected_choice_ids: @exam_question.user_choice_ids,
+        guard_answer: true %>
 
     <div class="pt-8 border-t border-slate-200 grid grid-cols-2 sm:grid-cols-3 gap-4">
 

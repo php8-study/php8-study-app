@@ -8,5 +8,44 @@ FactoryBot.define do
     trait :completed do
       completed_at { Time.current }
     end
+
+    trait :passed do
+      completed
+      after(:create) do |exam|
+        question = create(:question, :with_choices)
+        eq = create(:exam_question, exam: exam, question: question)
+        correct_choice = question.question_choices.find_by(correct: true)
+        create(:exam_answer, exam_question: eq, question_choice: correct_choice)
+      end
+    end
+
+    trait :failed do
+      completed
+      after(:create) do |exam|
+        question = create(:question, :with_choices)
+        eq = create(:exam_question, exam: exam, question: question)
+        wrong_choice = question.question_choices.where(correct: false).first
+        create(:exam_answer, exam_question: eq, question_choice: wrong_choice)
+      end
+    end
+
+    trait :with_questions do
+      transient do
+        questions { [] }
+        question_count { 3 }
+      end
+
+      after(:create) do |exam, evaluator|
+        target_questions = if evaluator.questions.present?
+          evaluator.questions
+        else
+          create_list(:question, evaluator.question_count, :with_choices)
+        end
+
+        target_questions.each_with_index do |question, index|
+          create(:exam_question, exam: exam, question: question, position: index + 1)
+        end
+      end
+    end
   end
 end
