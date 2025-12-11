@@ -35,6 +35,9 @@ registry:
 env:
   secret:
     - RAILS_MASTER_KEY
+    - GITHUB_CLIENT_ID
+    - GITHUB_CLIENT_SECRET
+
   clear:
     DB_HOST: 133.125.53.173
 ssh:
