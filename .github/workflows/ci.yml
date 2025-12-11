@@ -7,11 +7,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Ruby
-    - uses: ruby/setup-ruby@v1
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.4.7'
         bundler-cache: true
