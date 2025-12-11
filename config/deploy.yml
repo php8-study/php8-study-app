@@ -1,3 +1,6 @@
+erb_bootstrap: |
+  <% require "dotenv" %>
+  <% Dotenv.load(".kamal/secrets") if File.exist?(".kamal/secrets") %>
 # Name of your application. Used to uniquely configure containers.
 service: php8-study
 
