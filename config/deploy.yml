@@ -35,6 +35,7 @@ env:
     DB_HOST: 133.125.53.173
 ssh:
   user: ubuntu
+  keys: ["~/.ssh/github_ssh"]
   # Specify the registry server, if you're not using Docker Hub
   # server: registry.digitalocean.com / ghcr.io / ...
   # username: my-user
