@@ -1,0 +1,42 @@
+name: Rails Tests and Lint
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Ruby
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.4.7'
+        bundler-cache: true
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'yarn'
+
+    - name: Install JS dependencies
+      run: yarn install --frozen-lockfile
+
+    - name: Set up Chrome
+      uses: browser-actions/setup-chrome@v1
+
+    - name: Prepare DB
+      run: bin/rails db:prepare
+
+    - name: Build CSS
+      run: yarn run build:css
+
+    - name: Run Lint
+      run: bash bin/lint
+
+    - name: Run RSpec tests
+      env:
+        RAILS_ENV: test
+      run: bundle exec rspec
