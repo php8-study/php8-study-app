@@ -6,7 +6,7 @@ image: sekito1107/php8-study-app
 # Deploy to these servers.
 servers:
   web:
-    - 133.125.53.173
+    - <%= ENV['SERVER_IP'] %>
   # job:
   #   hosts:
   #     - 192.168.0.1
