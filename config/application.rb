@@ -26,12 +26,6 @@ module Php8Study
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
 
-    if config.respond_to?(:active_support) && config.active_support.respond_to?(:use_instance_variable_config_storage)
-      # ActiveSupport::Configurable の古いストレージ形式の使用を停止し、
-      # Rails 8.2 互換の新しいインスタンス変数形式に強制的に移行させる。
-      config.active_support.use_instance_variable_config_storage = true
-    end
-
     config.exceptions_app = self.routes
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
