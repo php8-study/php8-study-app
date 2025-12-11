@@ -17,9 +17,12 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
-# Install packages needed to build gems
+# Install packages needed to build gems and assets
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config libyaml-dev
+    apt-get install --no-install-recommends -y build-essential git libvips pkg-config libyaml-dev curl gnupg && \
+    curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g yarn
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
