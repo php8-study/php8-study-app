@@ -106,7 +106,7 @@ RSpec.describe "ランダム出題", type: :system do
       it "問題は表示されるが、解答ボタンではなくログイン誘導が表示されること" do
         expect(page).to have_content(question.content)
 
-        expect(page).to have_no_link("解答する")
+        expect(page).to have_no_button("解答する")
         expect(page).to have_link("ログインして学習をはじめる")
       end
     end
