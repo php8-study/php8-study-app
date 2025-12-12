@@ -1,15 +1,32 @@
-<% title "試験開始待機中" %>
+<% title "試験準備中" %>
 <% noindex %>
-<div id="loading-overlay" data-controller="auto-start" class="
-  fixed inset-0
-  bg-black bg-opacity-70
-  flex flex-col items-center justify-center
-  z-50 text-white
-">
-  <%= link_to "試験を開始する", exams_path,
-      data: {
-          "auto-start-target": "startLink",
-          "turbo-method": :post
-      },
-      class: "hidden" %>
-</div>
+
+<main class="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
+
+  <div class="text-center max-w-md mx-auto space-y-8">
+    
+    <div class="relative flex justify-center" aria-hidden="true">
+      <div class="w-16 h-16 border-4 border-indigo-100 rounded-full"></div>
+      <div class="absolute top-0 left-1/2 -ml-8 w-16 h-16 border-4 border-t-indigo-600 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+    </div>
+
+    <section class="space-y-2" role="status" aria-live="polite">
+      <h1 class="text-xl font-bold text-slate-800 tracking-tight">試験データを作成しています...</h1>
+      <p class="text-slate-500 text-sm">準備が完了すると自動的に試験が開始されます。<br>画面を閉じずにお待ちください。</p>
+    </section>
+
+    <div data-controller="auto-start" class="mt-4">
+      <%= link_to exams_path,
+          data: {
+              "auto-start-target": "startLink",
+              "turbo-method": :post
+          },
+          class: "inline-flex items-center text-sm font-bold text-indigo-600 hover:text-indigo-800 transition-colors border-b-2 border-indigo-100 hover:border-indigo-600 pb-0.5" do %>
+        
+        <span>もし画面が切り替わらない場合はここをクリック</span>
+        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      <% end %>
+    </div>
+  </div>
+
+</main>
