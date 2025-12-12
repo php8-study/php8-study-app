@@ -1,14 +1,15 @@
 <% title "確認" %>
 <% noindex %>
-<div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 flex items-center justify-center relative overflow-hidden">
 
-  <div class="absolute inset-0 opacity-[0.05] pointer-events-none"
+<main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 flex items-center justify-center relative overflow-hidden">
+
+  <div class="absolute inset-0 opacity-[0.05] pointer-events-none" aria-hidden="true"
        style="background-image: linear-gradient(#6366f1 1px, transparent 1px), linear-gradient(to right, #6366f1 1px, transparent 1px); background-size: 40px 40px;">
   </div>
 
   <div class="max-w-2xl w-full relative z-10">
 
-    <div class="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 sm:p-12 text-center">
+    <section class="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 sm:p-12 text-center" aria-labelledby="confirm-heading">
 
       <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-yellow-50 mb-6 ring-8 ring-yellow-50/50">
         <svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -16,22 +17,22 @@
         </svg>
       </div>
 
-      <h2 class="text-3xl font-black text-slate-900 mb-4 tracking-tight">
+      <h1 id="confirm-heading" class="text-3xl font-black text-slate-900 mb-4 tracking-tight">
         未完了の模擬試験があります
-      </h2>
+      </h1>
 
       <p class="text-lg text-slate-500 mb-8">
         前回中断した箇所から試験を再開できます。<br>
         新しい試験を始めるには、現在のデータを破棄する必要があります。
       </p>
 
-      <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 mb-10 max-w-lg mx-auto">
-        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Last Session Started</div>
-        <div class="text-xl font-bold text-slate-700 flex items-center justify-center gap-2">
+      <dl class="bg-slate-50 rounded-2xl p-6 border border-slate-200 mb-10 max-w-lg mx-auto">
+        <dt class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Last Session Started</dt>
+        <dd class="text-xl font-bold text-slate-700 flex items-center justify-center gap-2">
           <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
           <%= @active_exam.created_at.strftime("%Y年%m月%d日 %H:%M") %>
-        </div>
-      </div>
+        </dd>
+      </dl>
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <%= link_to review_exam_path(@active_exam), class: "w-full sm:w-auto min-w-[200px] group inline-flex items-center justify-center px-8 py-4 bg-indigo-600 border border-transparent rounded-xl font-bold text-white text-lg hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 transition-all" do %>
@@ -44,6 +45,6 @@
         <% end %>
       </div>
 
-    </div>
+    </section>
   </div>
-</div>
+</main>
