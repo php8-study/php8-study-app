@@ -60,7 +60,7 @@
               <div class="text-center">
                 <dt class="text-xs font-bold text-slate-400 uppercase">Correct</dt>
                 <dd class="text-xl font-black text-slate-700">
-                  <%= @exam.correct_count %><span class="text-sm text-slate-400 font-medium mx-1" aria-hidden="true">/</span><span class="sr-only">問中</span><%= @exam.total_questions %><span class="sr-only">問正解</span>
+                  <%= @exam.correct_count %><span class="text-sm text-slate-400 font-medium mx-1" aria-hidden="true">/</span><%= @exam.total_questions %>
                 </dd>
               </div>
 
@@ -69,7 +69,7 @@
               <div class="text-center">
                 <dt class="text-xs font-bold text-slate-400 uppercase">Required</dt>
                 <dd class="text-xl font-black text-slate-700">
-                  <%= Exam::PASSING_SCORE_PERCENTAGE %><span class="sr-only">パーセント以上</span><span aria-hidden="true">%</span>
+                  <%= Exam::PASSING_SCORE_PERCENTAGE %><span aria-hidden="true">%</span>
                 </dd>
               </div>
             </dl>

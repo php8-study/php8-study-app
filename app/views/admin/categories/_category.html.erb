@@ -2,21 +2,18 @@
   <div class="grid items-center hover:bg-slate-50 transition-colors duration-150 px-4 py-4 <%= category_grid_cols %>" role="listitem">
 
     <div class="flex justify-center">
-      <span class="sr-only">章番号:</span>
       <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-slate-100 text-slate-600 font-bold text-sm">
         <%= category.chapter_number %>
       </span>
     </div>
 
     <div class="pl-4 font-bold text-slate-700">
-      <span class="sr-only">タイトル:</span>
       <%= category.name %>
     </div>
 
     <div></div>
 
     <div class="flex items-center justify-end gap-3 pr-4">
-      <span class="sr-only">出題割合:</span>
       <span class="text-sm font-mono font-bold text-slate-600 tabular-nums w-12 text-right">
         <%= category.weight %>%
       </span>
