@@ -1,22 +1,23 @@
 <% title "試験問題" %>
 <% noindex %>
-<div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6">
+
+<main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6">
   <div class="max-w-3xl mx-auto space-y-8">
 
-    <div class="flex items-center justify-between">
+    <header class="flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="p-2 bg-indigo-100 rounded-lg text-indigo-600" aria-hidden="true">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="img" aria-label="模擬試験"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
         </div>
         <h1 class="text-2xl font-bold text-slate-900 tracking-tight">模擬試験</h1>
       </div>
 
-      <div class="flex items-center gap-2">
-        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Question</span>
-        <span class="text-xl font-black text-indigo-600"><%= @exam_question.position %></span>
-        <span class="text-sm text-slate-400 font-medium">/ <%= @exam.exam_questions.size %></span>
+      <div class="flex items-center gap-2" role="group" aria-label="現在の問題: <%= @exam_question.position %>問目、全<%= @exam.exam_questions.size %>問中">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider" aria-hidden="true">Question</span>
+        <span class="text-xl font-black text-indigo-600" aria-hidden="true"><%= @exam_question.position %></span>
+        <span class="text-sm text-slate-400 font-medium" aria-hidden="true">/ <%= @exam.exam_questions.size %></span>
       </div>
-    </div>
+    </header>
 
     <%= render "shared/terminal_display",
         content: @exam_question.question.content,
@@ -31,7 +32,7 @@
         selected_choice_ids: @exam_question.user_choice_ids,
         guard_answer: true %>
 
-    <div class="pt-8 border-t border-slate-200 grid grid-cols-2 sm:grid-cols-3 gap-4">
+    <nav class="pt-8 border-t border-slate-200 grid grid-cols-2 sm:grid-cols-3 gap-4" aria-label="問題移動">
 
       <% prev_q = @exam_question.previous_question %>
       <% if prev_q %>
@@ -40,7 +41,8 @@
           前へ
         <% end %>
       <% else %>
-        <div class="invisible"></div> <% end %>
+        <div class="invisible" aria-hidden="true"></div>
+      <% end %>
 
       <%= link_to review_exam_path(@exam), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-slate-600 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors" do %>
         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
@@ -59,6 +61,6 @@
           <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
         <% end %>
       <% end %>
-    </div>
+    </nav>
   </div>
-</div>
+</main>

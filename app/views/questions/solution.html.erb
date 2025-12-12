@@ -1,7 +1,8 @@
 <% title "No.#{@question.id} の解説" %>
 <% summary = @question.explanation.tr("\n", " ").truncate(80) %>
 <% set_meta_tags description: summary %>
-<div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6">
+
+<main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6">
   <div class="max-w-3xl mx-auto space-y-8">
 
     <%= render "shared/result_status", is_correct: @is_correct %>
@@ -23,4 +24,4 @@
     <%= render "navigation" %>
 
   </div>
-</div>
+</main>

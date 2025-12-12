@@ -6,24 +6,26 @@
   result_msg = exam_result_message(@exam.passed?)
 %>
 
-<div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 font-sans">
+<main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 font-sans">
   <div class="max-w-4xl mx-auto">
 
-    <div class="text-center mb-10">
+    <header class="text-center mb-10">
       <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">試験結果</h1>
       <p class="text-slate-500 mt-2">お疲れ様でした。今回の成績を確認しましょう。</p>
-    </div>
+    </header>
 
     <div data-controller="<%= @needs_reveal_animation ? "result-reveal" : nil %>"
          data-result-reveal-score-value="<%= @exam.score_percentage %>"
          data-result-reveal-passed-value="<%= @exam.passed? %>"
          class="relative">
 
-      <div data-result-reveal-target="summary"
-           class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100 mb-12 transition-all duration-700 ease-out <%= anim[:wrapper] %>">
+      <section aria-label="総合成績"
+               data-result-reveal-target="summary"
+               class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100 mb-12 transition-all duration-700 ease-out <%= anim[:wrapper] %>">
 
         <div class="p-8 md:p-12 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
-          <div class="relative w-48 h-48 md:w-56 md:h-56">
+
+          <figure class="relative w-48 h-48 md:w-56 md:h-56" aria-label="スコアチャート">
             <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
               <circle cx="50" cy="50" r="45" fill="none" stroke="#f1f5f9" stroke-width="8"></circle>
               <circle data-result-reveal-target="bar"
@@ -32,7 +34,7 @@
                       class="transition-all duration-1000 ease-out <%= chart[:initial_color] %>"
                       style="<%= chart[:style] %>"></circle>
             </svg>
-            <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <figcaption class="absolute inset-0 flex flex-col items-center justify-center">
               <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Score</span>
               <div class="flex items-baseline">
                 <span data-result-reveal-target="scoreText" class="text-5xl md:text-6xl font-black text-slate-800">
@@ -40,8 +42,8 @@
                 </span>
                 <span class="text-2xl font-bold text-slate-400 ml-1">%</span>
               </div>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
 
           <div class="text-center md:text-left">
             <div data-result-reveal-target="message" class="transition-opacity duration-500 delay-300 <%= anim[:fade] %>">
@@ -52,30 +54,39 @@
                 <%= result_msg[:description].html_safe %>
               </p>
             </div>
-            <div data-result-reveal-target="scoreDetail" class="mt-6 flex items-center justify-center md:justify-start gap-6 transition-opacity duration-500 delay-500 <%= anim[:fade] %>">
+
+            <dl data-result-reveal-target="scoreDetail" class="mt-6 flex items-center justify-center md:justify-start gap-6 transition-opacity duration-500 delay-500 <%= anim[:fade] %>">
+
               <div class="text-center">
-                <div class="text-xs font-bold text-slate-400 uppercase">Correct</div>
-                <div class="text-xl font-black text-slate-700">
-                  <%= @exam.correct_count %><span class="text-sm text-slate-400 font-medium mx-1">/</span><%= @exam.total_questions %>
-                </div>
+                <dt class="text-xs font-bold text-slate-400 uppercase">Correct</dt>
+                <dd class="text-xl font-black text-slate-700">
+                  <%= @exam.correct_count %><span class="text-sm text-slate-400 font-medium mx-1" aria-hidden="true">/</span><%= @exam.total_questions %>
+                </dd>
               </div>
-              <div class="w-px h-8 bg-slate-200"></div>
+
+              <div class="w-px h-8 bg-slate-200" aria-hidden="true"></div>
+
               <div class="text-center">
-                <div class="text-xs font-bold text-slate-400 uppercase">Required</div>
-                <div class="text-xl font-black text-slate-700"><%= Exam::PASSING_SCORE_PERCENTAGE %>%</div>
+                <dt class="text-xs font-bold text-slate-400 uppercase">Required</dt>
+                <dd class="text-xl font-black text-slate-700">
+                  <%= Exam::PASSING_SCORE_PERCENTAGE %><span aria-hidden="true">%</span>
+                </dd>
               </div>
-            </div>
+            </dl>
           </div>
         </div>
-      </div>
+      </section>
 
       <div data-result-reveal-target="actionButtons" class="mb-16 transition-all duration-500 delay-700 <%= anim[:wrapper] %>">
         <%= render "result_navigation" %>
       </div>
 
-      <div data-result-reveal-target="detailTable" class="transition-opacity duration-700 delay-1000 <%= anim[:fade] %>">
-        <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
-          <div class="flex-shrink-0 p-1 bg-indigo-50 rounded-lg">
+      <section aria-labelledby="detail-heading"
+               data-result-reveal-target="detailTable"
+               class="transition-opacity duration-700 delay-1000 <%= anim[:fade] %>">
+
+        <h3 id="detail-heading" class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+          <div class="flex-shrink-0 p-1 bg-indigo-50 rounded-lg" aria-hidden="true">
             <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
             </svg>
@@ -83,52 +94,55 @@
           <span>回答詳細</span>
         </h3>
 
-        <div class="space-y-4">
+        <ul class="space-y-4">
           <% @exam_questions.each do |eq| %>
-            <%= link_to solution_exam_exam_question_path(@exam, eq),
-                        class: "block group bg-white rounded-xl p-5 shadow-sm border border-slate-100 hover:border-indigo-200 hover:shadow-md transition-all duration-200 cursor-pointer",
-                        data: { turbo_stream: true } do %>
+            <li>
+              <%= link_to solution_exam_exam_question_path(@exam, eq),
+                          class: "block group bg-white rounded-xl p-5 shadow-sm border border-slate-100 hover:border-indigo-200 hover:shadow-md transition-all duration-200 cursor-pointer",
+                          data: { turbo_stream: true } do %>
 
-              <div class="flex items-start gap-4">
-                <div class="flex-shrink-0 mt-1">
-                  <% if eq.correct? %>
-                    <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    </div>
-                  <% else %>
-                    <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    </div>
-                  <% end %>
-                </div>
-
-                <div class="flex-1 min-w-0">
-                  <div class="flex items-center gap-2 mb-1">
-                    <span class="text-xs font-bold text-slate-400 uppercase">Q.<%= eq.position %></span>
-                    <% if eq.question.category %>
-                      <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
-                        <%= eq.question.category.name %>
-                      </span>
+                <div class="flex items-start gap-4">
+                  <div class="flex-shrink-0 mt-1">
+                    <% if eq.correct? %>
+                      <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                      </div>
+                    <% else %>
+                      <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                      </div>
                     <% end %>
                   </div>
-                  <p class="text-sm text-slate-700 font-medium line-clamp-2 leading-relaxed">
-                    <%= eq.question.content.truncate(100) %>
-                  </p>
-                </div>
 
-                <div class="flex-shrink-0 self-center">
-                  <div class="w-8 h-8 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="text-xs font-bold text-slate-400 uppercase">Q.<%= eq.position %></span>
+                      <% if eq.question.category %>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
+                          <%= eq.question.category.name %>
+                        </span>
+                      <% end %>
+                    </div>
+                    <p class="text-sm text-slate-700 font-medium line-clamp-2 leading-relaxed">
+                      <%= eq.question.content.truncate(100) %>
+                    </p>
+                  </div>
+
+                  <div class="flex-shrink-0 self-center">
+                    <div class="w-8 h-8 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors" aria-hidden="true">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
                   </div>
                 </div>
-              </div>
-            <% end %>
+              <% end %>
+            </li>
           <% end %>
-        </div>
-      </div>
+        </ul>
+      </section>
+
       <div data-result-reveal-target="actionButtons" class="mt-12 transition-opacity duration-700 delay-1000 <%= anim[:wrapper] %>">
         <%= render "result_navigation" %>
       </div>
     </div>
   </div>
-</div>
+</main>

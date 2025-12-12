@@ -1,56 +1,66 @@
 <% title "回答状況確認" %>
 <% noindex %>
-<div class="min-h-screen bg-slate-50 pb-32 font-sans">
 
-  <div class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+<main class="min-h-screen bg-slate-50 pb-32 font-sans">
+
+  <section class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm" aria-label="進捗状況">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4">
       <div class="flex items-center justify-between mb-2">
         <h1 class="text-xl font-bold text-slate-800">回答状況の確認</h1>
-        <div class="text-sm font-bold text-indigo-600">
+
+        <p class="text-sm font-bold text-indigo-600">
           <span class="text-2xl"><%= @exam.answered_count %></span> / <%= @exam.total_questions %>
-        </div>
+        </p>
       </div>
-      <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+
+      <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden"
+           role="progressbar"
+           aria-valuenow="<%= exam_progress_percentage(@exam) %>"
+           aria-valuemin="0"
+           aria-valuemax="100"
+           aria-label="回答の進捗率">
         <div class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500 ease-out"
              style="width: <%= exam_progress_percentage(@exam) %>%"></div>
       </div>
     </div>
-  </div>
+  </section>
 
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
 
-    <div class="flex gap-6 mb-6 text-sm font-medium text-slate-500 justify-end">
-      <div class="flex items-center gap-2">
+    <ul class="flex gap-6 mb-6 text-sm font-medium text-slate-500 justify-end" aria-hidden="true">
+      <li class="flex items-center gap-2">
         <div class="w-4 h-4 rounded bg-indigo-50 border border-indigo-200"></div>
         <span>回答済み</span>
-      </div>
-      <div class="flex items-center gap-2">
+      </li>
+      <li class="flex items-center gap-2">
         <div class="w-4 h-4 rounded bg-white border-2 border-slate-300 border-dashed"></div>
         <span>未回答</span>
-      </div>
-    </div>
+      </li>
+    </ul>
 
-    <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-8 gap-3 sm:gap-4">
+    <ul class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-8 gap-3 sm:gap-4" aria-label="問題一覧">
       <% @exam_questions.each do |exam_question| %>
-        <%= link_to exam_exam_question_path(@exam, exam_question),
-                    class: review_card_classes(exam_question.answered?) do %>
+        <li>
+          <%= link_to exam_exam_question_path(@exam, exam_question),
+                      class: review_card_classes(exam_question.answered?) do %>
 
-          <span class="text-xs font-bold uppercase tracking-wider opacity-60 mb-1">Q</span>
-          <span class="text-2xl font-black"><%= exam_question.position %></span>
-        <% end %>
+            <span class="text-xs font-bold uppercase tracking-wider opacity-60 mb-1">Q</span>
+            <span class="text-2xl font-black"><%= exam_question.position %></span>
+          <% end %>
+        </li>
       <% end %>
-    </div>
+    </ul>
   </div>
 
-  <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-40">
+  <footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-40">
     <div class="max-w-xl mx-auto">
       <%= button_to submissions_exam_path(@exam),
             method: :post,
             data: { turbo_confirm: "本当に提出しますか？提出後は変更できません。" },
-            class: "w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all active:scale-[0.98]" do %>
+            class: "w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all active:scale-[0.98] cursor-pointer" do %>
         <span>試験を提出して採点する</span>
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
       <% end %>
     </div>
-  </div>
-</div>
+  </footer>
+</main>

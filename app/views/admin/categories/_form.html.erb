@@ -2,7 +2,8 @@
 
   <%= render "shared/error_messages", object: f.object %>
 
-  <div class="max-w-3xl mx-auto"> <div class="bg-white shadow-sm rounded-xl border border-slate-200 p-8 space-y-8">
+  <section class="max-w-3xl mx-auto" aria-label="カテゴリー情報入力">
+    <div class="bg-white shadow-sm rounded-xl border border-slate-200 p-8 space-y-8">
 
       <div>
         <%= f.label :name, "タイトル", class: "block text-sm font-bold text-slate-600 mb-2" %>
@@ -10,7 +11,6 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
         <div>
           <%= f.label :chapter_number, "章番号", class: "block text-sm font-bold text-slate-600 mb-2" %>
           <%= f.number_field :chapter_number, class: "w-full rounded-lg border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 shadow-sm transition-shadow", required: true, placeholder: "1" %>
@@ -21,7 +21,7 @@
           <div class="relative">
             <%= f.number_field :weight, class: "w-full rounded-lg border-slate-300 pl-4 pr-8 py-3 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 shadow-sm transition-shadow", required: true, step: 0.1, min: 0, max: 100, placeholder: "0.0" %>
 
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3" aria-hidden="true">
               <span class="text-slate-400 font-bold">%</span>
             </div>
           </div>
@@ -35,5 +35,5 @@
       </div>
 
     </div>
-  </div>
+  </section>
 <% end %>
