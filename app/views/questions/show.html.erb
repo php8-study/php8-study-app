@@ -1,5 +1,6 @@
 <% title "#{@question.category.name} の演習問題 (No.#{@question.id})" %>
-<% summary = @question.content.tr("\n", " ").truncate(80) %>
+<% summary = strip_tags(@question.content.to_s).squish.truncate(80) %>
+<% set_meta_tags description: summary %>
 <div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6">
   <div class="max-w-3xl mx-auto space-y-8">
 
