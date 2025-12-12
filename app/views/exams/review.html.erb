@@ -7,16 +7,16 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4">
       <div class="flex items-center justify-between mb-2">
         <h1 class="text-xl font-bold text-slate-800">回答状況の確認</h1>
-        
+
         <p class="text-sm font-bold text-indigo-600">
           <span class="text-2xl"><%= @exam.answered_count %></span> / <%= @exam.total_questions %>
         </p>
       </div>
-      
+
       <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden"
-           role="progressbar" 
-           aria-valuenow="<%= exam_progress_percentage(@exam) %>" 
-           aria-valuemin="0" 
+           role="progressbar"
+           aria-valuenow="<%= exam_progress_percentage(@exam) %>"
+           aria-valuemin="0"
            aria-valuemax="100"
            aria-label="回答の進捗率">
         <div class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500 ease-out"
