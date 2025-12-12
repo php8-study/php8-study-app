@@ -1,14 +1,15 @@
 <% title "管理画面" %>
 <% noindex %>
-<div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 font-sans">
+
+<main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 font-sans">
   <div class="max-w-2xl mx-auto">
 
-    <div class="text-center mb-10">
+    <header class="text-center mb-10">
       <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">管理画面</h1>
       <p class="text-slate-500 mt-2">管理する項目を選択してください</p>
-    </div>
+    </header>
 
-    <div class="space-y-6">
+    <nav class="space-y-6" aria-label="管理メニュー">
 
       <%= render "shared/card",
           title: "問題一覧",
@@ -24,13 +25,14 @@
           theme_color: "orange",
           icon_key: "tag" %>
 
-      <div class="mt-8 pt-8 border-t border-slate-200 flex justify-center">
-        <%= link_to root_path, class: "text-slate-500 hover:text-indigo-600 font-bold flex items-center transition-colors" do %>
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-          ユーザー画面に戻る
-        <% end %>
-      </div>
+    </nav>
 
-    </div>
+    <footer class="mt-8 pt-8 border-t border-slate-200 flex justify-center">
+      <%= link_to root_path, class: "text-slate-500 hover:text-indigo-600 font-bold flex items-center transition-colors" do %>
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        ユーザー画面に戻る
+      <% end %>
+    </footer>
+
   </div>
-</div>
+</main>
