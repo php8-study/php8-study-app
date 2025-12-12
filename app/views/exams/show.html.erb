@@ -4,6 +4,9 @@
   anim = reveal_animation_classes(@needs_reveal_animation)
   chart = exam_chart_attributes(@exam, @needs_reveal_animation)
   result_msg = exam_result_message(@exam.passed?)
+
+  controllers = "sticky-nav"
+  controllers += " result-reveal" if @needs_reveal_animation
 %>
 
 <main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 font-sans">
@@ -14,10 +17,11 @@
       <p class="text-slate-500 mt-2">お疲れ様でした。今回の成績を確認しましょう。</p>
     </header>
 
-    <div data-controller="<%= @needs_reveal_animation ? "result-reveal" : nil %>"
+    <div data-controller="<%= controllers %>"
          data-result-reveal-score-value="<%= @exam.score_percentage %>"
          data-result-reveal-passed-value="<%= @exam.passed? %>"
-         class="relative">
+         data-sticky-nav-footer-selector-value="#global-footer"
+         class="relative pb-24">
 
       <section aria-label="総合成績"
                data-result-reveal-target="summary"
@@ -56,16 +60,13 @@
             </div>
 
             <dl data-result-reveal-target="scoreDetail" class="mt-6 flex items-center justify-center md:justify-start gap-6 transition-opacity duration-500 delay-500 <%= anim[:fade] %>">
-
               <div class="text-center">
                 <dt class="text-xs font-bold text-slate-400 uppercase">Correct</dt>
                 <dd class="text-xl font-black text-slate-700">
                   <%= @exam.correct_count %><span class="text-sm text-slate-400 font-medium mx-1" aria-hidden="true">/</span><%= @exam.total_questions %>
                 </dd>
               </div>
-
               <div class="w-px h-8 bg-slate-200" aria-hidden="true"></div>
-
               <div class="text-center">
                 <dt class="text-xs font-bold text-slate-400 uppercase">Required</dt>
                 <dd class="text-xl font-black text-slate-700">
@@ -76,10 +77,6 @@
           </div>
         </div>
       </section>
-
-      <div data-result-reveal-target="actionButtons" class="mb-16 transition-all duration-500 delay-700 <%= anim[:wrapper] %>">
-        <%= render "result_navigation" %>
-      </div>
 
       <section aria-labelledby="detail-heading"
                data-result-reveal-target="detailTable"
@@ -140,9 +137,12 @@
         </ul>
       </section>
 
-      <div data-result-reveal-target="actionButtons" class="mt-12 transition-opacity duration-700 delay-1000 <%= anim[:wrapper] %>">
+      <div data-sticky-nav-target="nav"
+           data-result-reveal-target="actionButtons"
+           class="fixed bottom-0 left-0 w-full z-50 transition-transform duration-500 translate-y-full <%= anim[:wrapper] %>">
         <%= render "result_navigation" %>
       </div>
+
     </div>
   </div>
 </main>
