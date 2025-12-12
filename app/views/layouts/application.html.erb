@@ -25,14 +25,10 @@
       <div class="main-content-wrapper flex-1 w-full">
 
         <% if content_for?(:full_width) %>
-          <main>
-            <%= yield %>
-          </main>
+          <%= yield %>
         <% else %>
           <div class="max-w-screen-xl mx-auto w-full">
-            <main>
-              <%= yield %>
-            </main>
+            <%= yield %>
           </div>
         <% end %>
 
