@@ -151,7 +151,7 @@ RSpec.describe "試験結果詳細", type: :system do
       "border-slate-200"
     end
 
-    target_selector = "div.border-2.#{border_class}"
+    target_selector = "li.border-2.#{border_class}"
 
     within target_selector, text: choice_text do
       if your_choice
