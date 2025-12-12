@@ -33,15 +33,14 @@
         guard_answer: true %>
 
     <nav class="pt-8 border-t border-slate-200 grid grid-cols-2 sm:grid-cols-3 gap-4" aria-label="問題移動">
-
       <% prev_q = @exam_question.previous_question %>
       <% if prev_q %>
-        <%= link_to exam_exam_question_path(@exam, prev_q), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-slate-600 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-colors" do %>
+        <%= link_to exam_exam_question_path(@exam, prev_q), class: "col-span-2 sm:col-span-1 flex items-center justify-center px-4 py-3 text-sm font-bold text-slate-600 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-colors" do %>
           <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
           前へ
         <% end %>
       <% else %>
-        <div class="invisible" aria-hidden="true"></div>
+        <div class="hidden sm:block sm:invisible" aria-hidden="true"></div>
       <% end %>
 
       <%= link_to review_exam_path(@exam), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-slate-600 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors" do %>
