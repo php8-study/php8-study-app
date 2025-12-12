@@ -1,11 +1,11 @@
 <%# locals: (question:, user_choice_ids: []) %>
-<div class="space-y-4">
+<section class="space-y-4">
   <div class="flex items-center gap-2 mb-2">
-    <div class="w-1 h-6 bg-indigo-500 rounded-full"></div>
+    <div class="w-1 h-6 bg-indigo-500 rounded-full" aria-hidden="true"></div>
     <h3 class="text-lg font-bold text-slate-800">選択肢の正誤</h3>
   </div>
 
-  <div class="space-y-3">
+  <ul class="space-y-3">
     <% question.question_choices.each do |choice| %>
       <%
         is_selected = user_choice_ids.include?(choice.id)
@@ -20,7 +20,7 @@
         end
       %>
 
-      <div class="relative flex items-start p-4 rounded-xl border-2 <%= style_class %> transition-all">
+      <li class="relative flex items-start p-4 rounded-xl border-2 <%= style_class %> transition-all">
         <div class="flex-shrink-0 mt-0.5">
           <% if is_correct %>
             <div class="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
@@ -48,7 +48,7 @@
             <%= choice.content %>
           </p>
         </div>
-      </div>
+      </li>
     <% end %>
-  </div>
-</div>
+  </ul>
+</section>
