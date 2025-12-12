@@ -27,6 +27,11 @@ module OmniAuthHelpers
     click_button "GitHubでログイン"
     expect(page).to have_content "LOGGED IN"
   end
+
+  def sign_out
+    click_link "ログアウト"
+    expect(page).to have_content "GitHubでログイン"
+  end
 end
 
 RSpec.configure do |config|

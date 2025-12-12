@@ -11,6 +11,56 @@ RSpec.describe "模擬試験", type: :system do
     sign_in_as(user)
   end
 
+  describe "セキュリティ", type: :system do
+    let(:other_user) { create(:user) }
+    let!(:other_exam) { create(:exam, user: other_user) }
+    let!(:other_exam_question) { create(:exam_question, exam: other_exam) }
+    let!(:completed_exam) { create(:exam, :completed, user: user) }
+    let!(:completed_q) { create(:exam_question, exam: completed_exam) }
+
+    around do |example|
+      original_show_exceptions = Rails.application.env_config["action_dispatch.show_exceptions"]
+      original_detailed        = Rails.application.env_config["action_dispatch.show_detailed_exceptions"]
+
+      begin
+        Rails.application.env_config["action_dispatch.show_exceptions"] = true
+        Rails.application.env_config["action_dispatch.show_detailed_exceptions"] = false
+
+        example.run
+      ensure
+        Rails.application.env_config["action_dispatch.show_exceptions"] = original_show_exceptions
+        Rails.application.env_config["action_dispatch.show_detailed_exceptions"] = original_detailed
+      end
+    end
+
+    shared_examples "アクセスが拒否され404ページが表示されること" do
+      it "404ページが表示されること" do
+        subject
+        expect(page).to have_content("ページが見つかりません")
+      end
+    end
+
+    context "他人の試験（Exam）ページへのアクセス" do
+      subject { visit exam_path(other_exam) }
+      it_behaves_like "アクセスが拒否され404ページが表示されること"
+    end
+
+    context "他人の試験問題（ExamQuestion）ページへのアクセス" do
+      subject { visit exam_exam_question_path(other_exam, other_exam_question) }
+      it_behaves_like "アクセスが拒否され404ページが表示されること"
+    end
+
+    context "他人の回答状況一覧（Review）ページへのアクセス" do
+      subject { visit review_exam_path(other_exam) }
+      it_behaves_like "アクセスが拒否され404ページが表示されること"
+    end
+
+    context "完了済みの自身の試験の回答画面へのアクセス" do
+      subject { visit exam_exam_question_path(completed_exam, completed_q) }
+      it_behaves_like "アクセスが拒否され404ページが表示されること"
+    end
+  end
+
   describe "試験の開始" do
     context "中断データがない場合" do
       it "新規に試験を開始できる" do
