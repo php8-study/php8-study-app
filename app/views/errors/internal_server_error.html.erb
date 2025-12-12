@@ -1,10 +1,12 @@
 <% title "サーバーエラー (500)" %>
 <% noindex %>
-<div class="min-h-[calc(100vh-64px)] bg-slate-50 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+
+<main class="min-h-[calc(100vh-64px)] bg-slate-50 flex items-center justify-center px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full text-center">
 
-    <div class="relative">
-      <h1 class="text-9xl font-black text-slate-200 select-none">500</h1>
+    <div class="relative" aria-hidden="true">
+      <span class="block text-9xl font-black text-slate-200 select-none">500</span>
+      
       <div class="absolute inset-0 flex items-center justify-center">
         <div class="px-4 py-2 bg-red-100 text-red-600 text-sm font-mono rounded shadow-sm border border-red-200 transform rotate-3">
           System Error
@@ -12,7 +14,8 @@
       </div>
     </div>
 
-    <h2 class="mt-8 text-2xl font-bold text-slate-900">サーバーエラーが発生しました</h2>
+    <h1 class="mt-8 text-2xl font-bold text-slate-900">サーバーエラーが発生しました</h1>
+    
     <p class="mt-2 text-slate-500">
       予期せぬエラーが発生しました。<br>
       しばらく時間を置いてから再度お試しください。
@@ -20,9 +23,10 @@
 
     <div class="mt-8 flex justify-center gap-4">
       <%= link_to root_path, class: "group inline-flex items-center justify-center px-6 py-3 border border-slate-300 text-base font-bold rounded-xl text-slate-700 bg-white hover:bg-slate-50 transition-all shadow-sm" do %>
+        <svg class="w-5 h-5 mr-2 text-slate-400 group-hover:text-slate-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
         ダッシュボードへ戻る
       <% end %>
     </div>
 
   </div>
-</div>
+</main>
