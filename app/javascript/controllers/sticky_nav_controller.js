@@ -7,13 +7,27 @@ export default class extends Controller {
   };
 
   connect() {
-    this.handleScroll = this.handleScroll.bind(this);
-    window.addEventListener("scroll", this.handleScroll);
+    this.ticking = false;
+
+    this.onScroll = () => {
+      if (!this.ticking) {
+        window.requestAnimationFrame(() => {
+          this.handleScroll();
+          this.ticking = false;
+        });
+        this.ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", this.onScroll);
+    window.addEventListener("resize", this.onScroll);
+
     this.handleScroll();
   }
 
   disconnect() {
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onScroll);
   }
 
   handleScroll() {
