@@ -24,6 +24,6 @@ class QuestionsController < ApplicationController
 
   private
     def set_question
-      @question = Question.find(params[:id])
+      @question = Question.active.find(params[:id])
     end
 end
