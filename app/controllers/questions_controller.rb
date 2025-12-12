@@ -2,6 +2,8 @@
 
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :solution]
+  skip_before_action :require_login, only: [:show, :solution]
+
   def random
     random_question = Question.active.order("RANDOM()").first
     if random_question.nil?
@@ -22,6 +24,6 @@ class QuestionsController < ApplicationController
 
   private
     def set_question
-      @question = Question.find(params[:id])
+      @question = Question.active.find(params[:id])
     end
 end
