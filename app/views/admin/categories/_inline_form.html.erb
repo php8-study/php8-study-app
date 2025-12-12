@@ -3,26 +3,26 @@
 
     <%= render "shared/error_messages", object: category, class: "col-span-5" %>
 
-    <div class="grid items-center px-4 py-4 rounded border-2 border-blue-400 shadow-md <%= category_grid_cols %>">
+    <div class="grid items-center px-4 py-4 rounded border-2 border-blue-400 shadow-md <%= category_grid_cols %>" role="listitem">
 
       <span class="ml-2">
-        <%= f.number_field :chapter_number, class: admin_inline_input_class(align: :center), required: true %>
+        <%= f.number_field :chapter_number, class: admin_inline_input_class(align: :center), required: true, aria: { label: "章番号" } %>
       </span>
 
       <span class="pl-2">
-        <%= f.text_field :name, class: admin_inline_input_class, required: true %>
+        <%= f.text_field :name, class: admin_inline_input_class, required: true, aria: { label: "タイトル" } %>
       </span>
 
       <div></div>
 
       <div class="flex items-center gap-2 justify-end">
-        <%= f.number_field :weight, class: "border border-slate-300 rounded p-1 w-16 text-right text-sm", min: 0, max: 100, step: 0.1 %>
-        <span class="text-sm text-slate-600 pr-2">%</span>
+        <%= f.number_field :weight, class: "border border-slate-300 rounded p-1 w-16 text-right text-sm", min: 0, max: 100, step: 0.1, aria: { label: "出題割合(%)" } %>
+        <span class="text-sm text-slate-600 pr-2" aria-hidden="true">%</span>
       </div>
 
       <div class="flex items-center gap-2 justify-center">
-        <%= button_tag type: "submit", class: "text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-lg cursor-pointer transition-colors shadow-sm", title: "保存" do %>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <%= button_tag type: "submit", class: "text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-lg cursor-pointer transition-colors shadow-sm", title: "保存", aria: { label: "変更を保存" } do %>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
           </svg>
         <% end %>
@@ -30,8 +30,9 @@
         <%= link_to render_row_admin_category_path(category),
             data: { turbo_frame: dom_id(category) },
             class: "text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors",
-            title: "キャンセル" do %>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            title: "キャンセル",
+            aria: { label: "編集をキャンセル" } do %>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         <% end %>
