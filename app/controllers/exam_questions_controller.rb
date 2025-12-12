@@ -3,6 +3,7 @@
 class ExamQuestionsController < ApplicationController
   before_action :set_exam
   before_action :set_exam_question
+  before_action :ensure_exam_in_progress, only: %i[show answer]
 
   def show
   end
@@ -38,6 +39,10 @@ class ExamQuestionsController < ApplicationController
       @exam_question = @exam.exam_questions.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to root_path, alert: "指定された試験または問題は見つかりませんでした。"
+    end
+
+    def ensure_exam_in_progress
+      raise ActiveRecord::RecordNotFound if @exam.completed_at
     end
 
     def answer_params
