@@ -436,7 +436,7 @@ DEPENDENCIES
   faker
   importmap-rails
   jbuilder
-  meta-tags
+  meta-tags (~> 2.22)
   omniauth (~> 2.1.4)
   omniauth-github
   omniauth-rails_csrf_protection
