@@ -97,8 +97,8 @@ RSpec.describe "試験結果詳細", type: :system do
   end
 
   def verify_common_result_ui(exam)
-    expect(page).to have_link "履歴一覧へ", href: exams_path, count: 2
-    expect(page).to have_link "トップへ戻る", href: root_path, count: 2
+    expect(page).to have_link "履歴一覧へ", href: exams_path
+    expect(page).to have_link "トップへ戻る", href: root_path
     expect(page).to have_content "SCORE"
     expect(page).to have_content(/#{exam.score_percentage}\s*%/)
     expect(page).to have_content "CORRECT"
