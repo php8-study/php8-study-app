@@ -31,14 +31,10 @@ class ExamQuestionsController < ApplicationController
   private
     def set_exam
       @exam = current_user.exams.find(params[:exam_id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to root_path, alert: "指定された試験または問題は見つかりませんでした。"
     end
 
     def set_exam_question
       @exam_question = @exam.exam_questions.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to root_path, alert: "指定された試験または問題は見つかりませんでした。"
     end
 
     def ensure_exam_in_progress
