@@ -39,8 +39,8 @@ RSpec.describe "ランダム出題", type: :system do
       it "解説ページ、問題文、ナビゲーションが表示されていること", :aggregate_failures do
         expect(page).to have_content question.official_page
         expect(page).to have_content question.content
-        expect(page).to have_link "トップへ戻る", count: 2
-        expect(page).to have_link "次の問題へ", count: 2
+        expect(page).to have_link "トップへ戻る", count: 2, href: root_path
+        expect(page).to have_link "次の問題へ", count: 2, href: random_questions_path
       end
     end
 
@@ -93,25 +93,33 @@ RSpec.describe "ランダム出題", type: :system do
     end
   end
 
-  describe "回答後の機能" do
+  describe "非ログインユーザーの表示" do
     let!(:question) { create(:question, :with_choices) }
-    let!(:other_question) { create(:question, :with_choices) }
-
     before do
-      visit question_path(question)
-      answer_question(question, correct: true)
-      click_button "解答する"
-      expect(page).to have_current_path(%r{/questions/\d+/solution}, ignore_query: true)
+      sign_out
     end
 
-    it "「トップへ戻る」ボタンを押下するとダッシュボードに遷移すること" do
-      click_link "トップへ戻る", match: :first
-      expect(page).to have_current_path(root_path)
-    end
+    context "問題ページの場合" do
+      before do
+        visit question_path(question)
+      end
+      it "問題は表示されるが、解答ボタンではなくログイン誘導が表示されること" do
+        expect(page).to have_content(question.content)
 
-    it "「次の問題へ」ボタンを押下すると別の問題へ遷移すること" do
-      click_link "次の問題へ", match: :first
-      expect(page).to have_current_path(%r{/questions/\d+})
+        expect(page).to have_no_link("解答する")
+        expect(page).to have_link("ログインして学習をはじめる")
+      end
+    end
+    context "回答後ページの場合" do
+      before do
+        visit solution_question_path(question)
+      end
+      it "公式テキストへの参照は表示されるが、通常のナビゲーションではなく、ログイン誘導が表示されること" do
+        expect(page).to have_content(question.official_page)
+
+        expect(page).to have_no_link("次の問題へ")
+        expect(page).to have_link("ログインして学習をはじめる")
+      end
     end
   end
 
