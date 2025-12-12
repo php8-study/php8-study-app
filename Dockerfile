@@ -45,10 +45,7 @@ FROM base
 
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config libyaml-dev curl gnupg ca-certificates && \
-    curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
-    apt-get install --no-install-recommends -y nodejs && \
-    corepack enable && corepack prepare yarn@4.12.0 --activate && \
+    apt-get install --no-install-recommends -y git libvips libyaml-dev curl gnupg ca-certificates && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
