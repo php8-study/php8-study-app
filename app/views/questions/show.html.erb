@@ -23,20 +23,28 @@
         content: @question.content,
         label: "RandomQuestion.php" %>
 
-    <% if current_user %>
+    <% if current_user.present? %>
       <%= render "shared/answer_form",
-          question: @question,
-          url: solution_question_path(@question),
-          method: :get,
-          button_text: "解答する" %>
+            question: @question,
+            url: solution_question_path(@question),
+            method: :get,
+            button_text: "解答する",
+            input_name: "user_answer_ids[]",
+            selected_choice_ids: [],
+            guard_answer: false %>
     <% else %>
       <div class="pt-8 border-t border-slate-200">
-        <%= link_to root_path, class: "w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-md" do %>
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
-          </svg>
-          ログインして学習をはじめる
-        <% end %>
+        <%= render "shared/choices",
+            question: @question,
+            input_name: nil,
+            selected_choice_ids: [],
+            disabled: true %>
+
+        <div class="mt-6">
+          <%= link_to root_path, class: "w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-md" do %>
+            ログインして学習をはじめる
+          <% end %>
+        </div>
       </div>
     <% end %>
 

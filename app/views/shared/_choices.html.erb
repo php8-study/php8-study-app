@@ -1,0 +1,28 @@
+<%# locals required: question:, input_name:, selected_choice_ids:, disabled: %>
+
+<fieldset class="space-y-3">
+  <legend class="sr-only">選択肢</legend>
+
+  <% question.question_choices.each do |choice| %>
+    <% is_checked = Array(selected_choice_ids).map(&:to_i).include?(choice.id) %>
+
+    <% checkbox_name = input_name.present? ? input_name : "choice_#{choice.id}_disabled" %>
+
+    <label class="group relative flex items-start p-4 cursor-pointer bg-white rounded-xl border-2 border-transparent shadow-sm hover:shadow-md transition-all duration-200 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+      <div class="flex items-center h-6">
+        <%= check_box_tag checkbox_name, choice.id, is_checked,
+        class: "peer w-5 h-5 border-slate-300 rounded transition-colors focus:ring-0",
+        disabled: disabled,
+        data: { answer_guard_target: "checkbox" } %>
+      </div>
+
+      <div class="ml-4 flex-1">
+        <span class="block text-base text-slate-700 group-hover:text-indigo-900 transition-colors <%= "peer-checked:font-bold" unless disabled %>">
+          <%= choice.content %>
+        </span>
+      </div>
+
+      <div class="absolute inset-0 rounded-xl border-2 border-indigo-500 opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity duration-200"></div>
+    </label>
+  <% end %>
+</fieldset>
