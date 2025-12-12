@@ -2,9 +2,10 @@
 
 <fieldset class="space-y-3">
   <legend class="sr-only">選択肢</legend>
+  <% selected_ids = Array(selected_choice_ids).map(&:to_i) %>
 
   <% question.question_choices.each do |choice| %>
-    <% is_checked = Array(selected_choice_ids).map(&:to_i).include?(choice.id) %>
+    <% is_checked = selected_ids.include?(choice.id) %>
 
     <% checkbox_name = input_name.present? ? input_name : "choice_#{choice.id}_disabled" %>
 
