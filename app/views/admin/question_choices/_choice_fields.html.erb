@@ -1,23 +1,23 @@
-<div class="nested-form-wrapper group flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200 hover:border-indigo-200 hover:bg-white transition-all">
+<div class="nested-form-wrapper group flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200 hover:border-indigo-200 hover:bg-white transition-all" role="listitem">
 
   <div class="flex items-center h-[42px]">
     <div class="relative flex items-center">
-      <%= f.check_box :correct, class: "h-5 w-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer peer" %>
+      <%= f.check_box :correct, class: "h-5 w-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer peer", aria: { label: "この選択肢を正解にする" } %>
 
-      <div class="hidden peer-checked:block absolute -top-9 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold whitespace-nowrap shadow-sm after:content-[''] after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-4 after:border-transparent after:border-t-emerald-600">
+      <div class="hidden peer-checked:block absolute -top-9 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold whitespace-nowrap shadow-sm after:content-[''] after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-4 after:border-transparent after:border-t-emerald-600" aria-hidden="true">
         正解
       </div>
     </div>
   </div>
 
   <div class="flex-1">
-    <%= f.text_field :content, class: "block w-full rounded-md border-slate-300 px-4 py-2.5 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm transition-shadow", placeholder: "選択肢を入力..." %>
+    <%= f.text_field :content, class: "block w-full rounded-md border-slate-300 px-4 py-2.5 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm transition-shadow", placeholder: "選択肢を入力...", aria: { label: "選択肢の内容" } %>
   </div>
 
   <div class="flex items-center h-[42px]">
     <%= f.hidden_field :_destroy %>
-    <button type="button" data-action="nested-form#remove" class="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all" title="削除">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <button type="button" data-action="nested-form#remove" class="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all cursor-pointer" title="削除" aria-label="この選択肢を削除">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
       </svg>
     </button>
