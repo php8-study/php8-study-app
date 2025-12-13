@@ -2,15 +2,14 @@
 <% summary = @question.explanation.tr("\n", " ").truncate(80) %>
 <% set_meta_tags description: summary %>
 
-<main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6">
+<main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 relative pb-24"
+      data-controller="sticky-nav"
+      data-sticky-nav-footer-selector-value="#global-footer">
+
   <div class="max-w-3xl mx-auto space-y-8">
 
     <% if current_user %>
       <%= render "shared/result_status", is_correct: @is_correct %>
-
-      <div class="pb-4">
-        <%= render "navigation" %>
-      </div>
     <% end %>
 
     <%= render "shared/terminal_display",
@@ -23,9 +22,7 @@
 
     <%= render "shared/reference_info", question: @question %>
 
-    <% if current_user %>
-      <%= render "navigation" %>
-    <% else %>
+    <% unless current_user %>
       <div class="mt-8 pt-8 border-t border-slate-200">
         <%= link_to root_path, class: "w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-md" do %>
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -37,4 +34,15 @@
     <% end %>
 
   </div>
+
+  <% if current_user %>
+    <div data-sticky-nav-target="nav"
+        class="fixed bottom-0 left-0 w-full z-50 pb-6 pointer-events-none transition-transform duration-300">
+
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <%= render "navigation" %>
+      </div>
+    </div>
+  <% end %>
+
 </main>

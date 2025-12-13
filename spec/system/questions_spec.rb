@@ -39,8 +39,8 @@ RSpec.describe "ランダム出題", type: :system do
       it "解説ページ、問題文、ナビゲーションが表示されていること", :aggregate_failures do
         expect(page).to have_content question.official_page
         expect(page).to have_content question.content
-        expect(page).to have_link "トップへ戻る", count: 2, href: root_path
-        expect(page).to have_link "次の問題へ", count: 2, href: random_questions_path
+        expect(page).to have_link "トップへ戻る", href: root_path
+        expect(page).to have_link "次の問題へ", href: random_questions_path
       end
     end
 
