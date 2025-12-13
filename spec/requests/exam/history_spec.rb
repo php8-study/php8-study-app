@@ -21,7 +21,7 @@ RSpec.describe "模擬試験受験履歴一覧", type: :request do
         let!(:exam_failed) { create(:exam, :failed, user: user, created_at: 3.days.ago) }
         let!(:exam_passed) { create(:exam, :passed, user: user, created_at: 1.day.ago) }
 
-        it "履歴が降順で表示される" do
+        it "履歴が降順で表示され、各種ナビゲーションリンクが配置されている" do
           get exams_path
           body = response.body
 
