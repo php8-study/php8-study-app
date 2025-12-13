@@ -24,7 +24,7 @@
     </li>
   </ul>
 
-  <%= form_with url: "/auth/github", method: :post, data: { turbo: false }, class: "w-full sm:w-auto" do |f| %>
+  <%= form_with url: /auth/github, method: :post, data: { turbo: false }, class: "w-full sm:w-auto" do |f| %>
     <%= button_tag type: "submit", class: "group inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 active:scale-95 shadow-md hover:shadow-lg" do %>
       <i class="fab fa-github text-2xl mr-3" aria-hidden="true"></i>
       <span>GitHubでログイン</span>
