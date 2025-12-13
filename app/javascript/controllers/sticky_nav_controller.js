@@ -1,7 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["nav"];
   static values = {
     footerSelector: String,
   };
@@ -40,11 +39,11 @@ export default class extends Controller {
     const shouldUnfix = footerTop < windowHeight;
 
     if (shouldUnfix) {
-      this.navTarget.classList.remove("fixed");
-      this.navTarget.classList.add("absolute");
+      this.element.classList.remove("fixed");
+      this.element.classList.add("absolute");
     } else {
-      this.navTarget.classList.remove("absolute");
-      this.navTarget.classList.add("fixed");
+      this.element.classList.remove("absolute");
+      this.element.classList.add("fixed");
     }
   }
 }

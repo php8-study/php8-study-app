@@ -4,9 +4,6 @@
   anim = reveal_animation_classes(@needs_reveal_animation)
   chart = exam_chart_attributes(@exam, @needs_reveal_animation)
   result_msg = exam_result_message(@exam.passed?)
-
-  controllers = "sticky-nav"
-  controllers += " result-reveal" if @needs_reveal_animation
 %>
 
 <main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 font-sans">
@@ -17,10 +14,9 @@
       <p class="text-slate-500 mt-2">お疲れ様でした。今回の成績を確認しましょう。</p>
     </header>
 
-    <div data-controller="<%= controllers %>"
+    <div data-controller="<%= "result-reveal" if @needs_reveal_animation %>"
          data-result-reveal-score-value="<%= @exam.score_percentage %>"
          data-result-reveal-passed-value="<%= @exam.passed? %>"
-         data-sticky-nav-footer-selector-value="#global-footer"
          class="relative pb-24">
 
       <section aria-label="総合成績"
@@ -137,8 +133,9 @@
         </ul>
       </section>
 
-      <div data-sticky-nav-target="nav"
+      <div data-controller="sticky-nav"
            data-result-reveal-target="actionButtons"
+           data-sticky-nav-footer-selector-value="#global-footer"
            class="fixed bottom-0 left-0 w-full z-50 transition-transform duration-500 translate-y-full <%= anim[:wrapper] %>">
         <%= render "result_navigation" %>
       </div>

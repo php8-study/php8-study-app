@@ -2,9 +2,7 @@
 <% summary = @question.explanation.tr("\n", " ").truncate(80) %>
 <% set_meta_tags description: summary %>
 
-<main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 relative pb-24"
-      data-controller="sticky-nav"
-      data-sticky-nav-footer-selector-value="#global-footer">
+<main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 relative pb-24">
 
   <div class="max-w-3xl mx-auto space-y-8">
 
@@ -36,7 +34,8 @@
   </div>
 
   <% if current_user %>
-    <div data-sticky-nav-target="nav"
+    <div data-controller="sticky-nav"
+        data-sticky-nav-footer-selector-value="#global-footer"
         class="fixed bottom-0 left-0 w-full z-50 pb-6 pointer-events-none transition-transform duration-300">
 
       <div class="max-w-3xl mx-auto px-4 sm:px-6">
