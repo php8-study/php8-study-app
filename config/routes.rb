@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   get "terms", to: "pages#terms"
+  get "privacy", to: "pages#privacy"
 
   root "home#index"
 
