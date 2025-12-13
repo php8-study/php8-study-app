@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   workflow_run:
-      workflows: ["Rails Tests and Lint"]  # ← さっきのファイルの名前を正確に書く
+      workflows: ["Rails Tests and Lint"]
       branches: [main]
       types: 
         - completed
@@ -35,8 +35,8 @@ jobs:
           echo "KAMAL_REGISTRY_PASSWORD=${{ secrets.KAMAL_REGISTRY_PASSWORD }}" > .kamal/secrets
           echo "RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}" >> .kamal/secrets
           echo "SERVER_IP=${{ secrets.SERVER_IP }}" >> .kamal/secrets
-          echo "GITHUB_CLIENT_ID=${{ secrets.GITHUB_CLIENT_ID }}" >> .kamal/secrets
-          echo "GITHUB_CLIENT_SECRET=${{ secrets.GITHUB_CLIENT_SECRET }}" >> .kamal/secrets
+          echo "GITHUB_CLIENT_ID=${{ secrets.GH_CLIENT_ID }}" >> .kamal/secrets
+          echo "GITHUB_CLIENT_SECRET=${{ secrets.GH_CLIENT_SECRET }}" >> .kamal/secrets
           
       - name: Add known hosts
         run: |
