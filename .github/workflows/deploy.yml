@@ -7,12 +7,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    env:
-      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-      KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
-      SERVER_IP: ${{ secrets.SERVER_IP }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -34,8 +28,17 @@ jobs:
       - name: Install Kamal
         run: gem install kamal
 
+      - name: Create secrets file
+        run: |
+          mkdir -p .kamal
+          echo "KAMAL_REGISTRY_PASSWORD=${{ secrets.KAMAL_REGISTRY_PASSWORD }}" > .kamal/secrets
+          echo "RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}" >> .kamal/secrets
+          echo "SERVER_IP=${{ secrets.SERVER_IP }}" >> .kamal/secrets
+
       - name: Add known hosts
-        run: ssh-keyscan -H ${{ env.SERVER_IP }} >> ~/.ssh/known_hosts
+        run: |
+          source .kamal/secrets
+          ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
 
       - name: Run deploy
         run: kamal deploy
