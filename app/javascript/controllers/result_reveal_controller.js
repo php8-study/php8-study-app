@@ -139,7 +139,7 @@ export default class extends Controller {
     setTimeout(() => {
       if (this.hasActionButtonsTarget) {
         this.actionButtonsTargets.forEach((el) => {
-          el.classList.remove("opacity-0", "translate-y-4");
+          el.classList.remove("opacity-0", "translate-y-full");
         });
       }
     }, stagger * 2);
