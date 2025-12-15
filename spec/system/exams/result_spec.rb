@@ -7,7 +7,7 @@ RSpec.describe "Exam Result (試験結果)", type: :system do
 
   describe "合格時の表示（100点）" do
     let!(:exam) { create(:exam, :passed, user: user) }
-    
+
     let(:first_exam_question) { exam.exam_questions.first }
     let(:first_question) { first_exam_question.question }
     let(:correct_choice) { first_question.question_choices.find_by(correct: true) }
@@ -23,7 +23,7 @@ RSpec.describe "Exam Result (試験結果)", type: :system do
       end
 
       it "スコアや正答数が正しく表示されている" do
-        expect(page).to have_content "100" 
+        expect(page).to have_content "100"
         expect(page).to have_content "1/1"
       end
 
@@ -61,7 +61,7 @@ RSpec.describe "Exam Result (試験結果)", type: :system do
 
   describe "不合格・不正解時の表示（0点）" do
     let!(:failed_exam) { create(:exam, :failed, user: user) }
-    
+
     let(:failed_exam_question) { failed_exam.exam_questions.first }
     let(:question) { failed_exam_question.question }
     let(:correct_choice) { question.question_choices.find_by(correct: true) }
