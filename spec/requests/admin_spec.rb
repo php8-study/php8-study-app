@@ -10,7 +10,7 @@ RSpec.describe "Admin::Home", type: :request do
     context "管理者としてアクセスした場合" do
       before { sign_in_as(admin) }
 
-      it "正常にレスポンスが返る(200)" do
+      it "正常にレスポンスが返る" do
         get admin_root_path
         expect(response).to have_http_status(:ok)
         expect(response.body).to include("管理画面")
