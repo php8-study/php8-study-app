@@ -42,18 +42,18 @@ RSpec.describe "Exam History (試験履歴一覧)", type: :system do
         expect(page).to have_content "模擬試験の履歴"
         expect(page).not_to have_link href: exam_path(active_exam)
 
-        cards = page.all("a[href^='/exams/']")
+        cards = page.all(:link, href: %r{/exams/\d+$})
         expect(cards.count).to eq 2
 
         within cards[0] do
           expect(page).to have_content "0%"
-          expect(page[:href]).to include(exam_path(new_failed_exam))
         end
+        expect(cards[0][:href]).to include(exam_path(new_failed_exam))
 
         within cards[1] do
-          expect(page).to have_content "100%"
-          expect(page[:href]).to include(exam_path(old_passed_exam))
+          expect(page).to have_content "100.0%"
         end
+        expect(cards[1][:href]).to include(exam_path(old_passed_exam))
       end
     end
   end
