@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Admin::Questions は管理者専用。
+# 未ログインユーザーは全てLPにリダイレクト。
 # 権限違反・不正操作は一律で 404 を返す。
 # 管理者の操作ミスのみ 422 を返す。
 

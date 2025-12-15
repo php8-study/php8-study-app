@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# 未ログインユーザーは全てLPにリダイレクト。
+# 権限違反・不正操作は一律で 404 を返す。
+
 require "rails_helper"
 
 RSpec.describe "ExamQuestions", type: :request do

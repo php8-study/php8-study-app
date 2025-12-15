@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# 権限違反・不正操作は一律で 404 を返す。
+
 require "rails_helper"
 
 RSpec.describe "Questions (ランダム出題機能)", type: :request do
