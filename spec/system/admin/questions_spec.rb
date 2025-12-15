@@ -44,9 +44,10 @@ RSpec.describe "Admin (問題管理)", type: :system do
 
     click_button "保存する"
 
+    expect(choice_inputs.size).to be >= 4
     expect(page).to have_current_path admin_questions_path
     expect(page).to have_content "問題を作成しました"
-    expect(page).to have_content "新しい問題の本文"
+    expect(page).to have_content "新しい問題の本文です"
   end
 
   it "既存の問題を編集できる" do
