@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin Dashboard (管理画面ダッシュボード)", type: :system do
+RSpec.describe "Admin(管理画面ダッシュボード)", type: :system do
   let(:admin) { create(:user, :admin) }
 
   before do
