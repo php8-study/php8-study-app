@@ -45,7 +45,7 @@ RSpec.describe "Exams", type: :request do
     context "未ログインの場合" do
       before { sign_out }
 
-      it "ログイン画面へリダイレクトされる" do
+      it "LPへリダイレクトされる" do
         get exams_path
         expect(response).to redirect_to(root_path)
       end
@@ -78,7 +78,7 @@ RSpec.describe "Exams", type: :request do
     context "未ログインの場合" do
       before { sign_out }
 
-      it "ログイン画面へリダイレクトされる" do
+      it "LPへリダイレクトされる" do
         get check_exams_path
         expect(response).to redirect_to(root_path)
       end
@@ -117,7 +117,7 @@ RSpec.describe "Exams", type: :request do
     context "未ログインの場合" do
       before { sign_out }
 
-      it "ログイン画面へリダイレクトされる" do
+      it "LPへリダイレクトされる" do
         post exams_path
         expect(response).to redirect_to(root_path)
       end
@@ -154,7 +154,7 @@ RSpec.describe "Exams", type: :request do
     context "未ログインの場合" do
       before { sign_out }
 
-      it "ログイン画面へリダイレクトされる" do
+      it "LPへリダイレクトされる" do
         get exam_path(active_exam)
         expect(response).to redirect_to(root_path)
       end
@@ -202,7 +202,7 @@ RSpec.describe "Exams", type: :request do
     context "未ログインの場合" do
       before { sign_out }
 
-      it "ログイン画面へリダイレクトされる" do
+      it "LPへリダイレクトされる" do
         post submissions_exam_path(active_exam)
         expect(response).to redirect_to(root_path)
       end
@@ -239,7 +239,7 @@ RSpec.describe "Exams", type: :request do
     context "未ログインの場合" do
       before { sign_out }
 
-      it "ログイン画面へリダイレクトされる" do
+      it "LPへリダイレクトされる" do
         get review_exam_path(completed_exam)
         expect(response).to redirect_to(root_path)
       end
