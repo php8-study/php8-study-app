@@ -2,6 +2,8 @@
 
 class Question < ApplicationRecord
   belongs_to :category
+  validates :content, presence: true
+  validates :category_id, presence: true
   has_many :question_choices, dependent: :destroy
   has_many :exam_questions, dependent: :restrict_with_error
   accepts_nested_attributes_for :question_choices, allow_destroy: true, reject_if: :all_blank
@@ -10,20 +12,20 @@ class Question < ApplicationRecord
 
   scope :active, -> { where(deleted_at: nil) }
 
-  def update_or_version(params)
+  def safe_update(params)
     assign_attributes(params)
     return false unless valid?
 
     transaction do
-      if in_use?
-        Question::Versioner.new(self, params).create_version!
-      else
-        save!
-        self
-      end
+      in_use? ? Question::Versioner.new(self, params).create_version! : (save! && self)
     end
   rescue ActiveRecord::RecordInvalid
     false
+  end
+
+  def safe_destroy
+    return update(deleted_at: Time.current) if in_use?
+    destroy
   end
 
   def build_default_choices

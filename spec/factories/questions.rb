@@ -17,5 +17,11 @@ FactoryBot.define do
     trait :archived do
       deleted_at { Time.current }
     end
+
+    trait :in_use do
+      after(:create) do |question|
+        create(:exam_question, question: question)
+      end
+    end
   end
 end

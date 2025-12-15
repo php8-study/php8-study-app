@@ -9,36 +9,48 @@ RSpec.describe ExamQuestion, type: :model do
   let(:exam_question) { create(:exam_question, question: question) }
 
   describe "#save_answers!" do
-    context "まだ回答がない場合" do
-      it "指定した選択肢IDでExamAnswerが作成されること" do
-        exam_question.save_answers!([correct_choice.id])
-        expect(exam_question.exam_answers.reload.pluck(:question_choice_id)).to eq([correct_choice.id])
+    context "正常系" do
+      context "まだ回答がない場合" do
+        it "指定した選択肢IDでExamAnswerが作成されること" do
+          exam_question.save_answers!([correct_choice.id])
+          expect(exam_question.exam_answers.reload.pluck(:question_choice_id)).to eq([correct_choice.id])
+        end
+      end
+
+      context "既に回答が存在する場合" do
+        before do
+          exam_question.save_answers!([wrong_choice.id])
+        end
+
+        it "新しいIDを渡すと、回答が置き換わること" do
+          exam_question.save_answers!([correct_choice.id])
+          expect(exam_question.exam_answers.reload.pluck(:question_choice_id)).to eq([correct_choice.id])
+        end
+
+        it "空配列を渡すと、回答が削除されること" do
+          exam_question.save_answers!([])
+          expect(exam_question.exam_answers.reload).to be_empty
+        end
       end
     end
 
-    context "既に回答が存在する場合" do
-      before do
-        exam_question.save_answers!([wrong_choice.id])
-      end
-
-      it "新しいIDを渡すと、回答が置き換わること" do
-        exam_question.save_answers!([correct_choice.id])
-        expect(exam_question.exam_answers.reload.pluck(:question_choice_id)).to eq([correct_choice.id])
-      end
-
-      it "空配列を渡すと、回答が削除されること" do
-        exam_question.save_answers!([])
-        expect(exam_question.exam_answers.reload).to be_empty
-      end
-
-      context "不正な選択肢IDが含まれている場合" do
+    context "異常系（不正なID）" do
+      context "他の問題の選択肢IDが含まれている場合" do
         let(:other_question) { create(:question, :with_choices) }
         let(:invalid_choice) { other_question.question_choices.first }
 
-        it "不正なIDは無視され、正しいIDのみが保存されること" do
-          exam_question.save_answers!([correct_choice.id, invalid_choice.id])
+        it "ActiveRecord::RecordNotFound が発生すること" do
+          expect {
+            exam_question.save_answers!([correct_choice.id, invalid_choice.id])
+          }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
 
-          expect(exam_question.exam_answers.reload.pluck(:question_choice_id)).to eq([correct_choice.id])
+      context "存在しないIDが含まれている場合" do
+        it "ActiveRecord::RecordNotFound が発生すること" do
+          expect {
+            exam_question.save_answers!([correct_choice.id, 0])
+          }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
     end

@@ -23,17 +23,28 @@ module OmniAuthHelpers
 
   def sign_in_as(user)
     mock_github_auth(user)
-    visit root_path
-    click_button "GitHubでログイン"
-    expect(page).to have_content "LOGGED IN"
+
+    if RSpec.current_example.metadata[:type] == :system
+      visit root_path
+      click_button "GitHubでログイン"
+      expect(page).to have_content "LOGGED IN"
+    else
+      Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:github]
+      get "/auth/github/callback"
+    end
   end
 
   def sign_out
-    click_link "ログアウト"
-    expect(page).to have_content "GitHubでログイン"
+    if RSpec.current_example.metadata[:type] == :system
+      click_link "ログアウト"
+      expect(page).to have_content "GitHubでログイン"
+    else
+      delete logout_path
+    end
   end
-end
 
-RSpec.configure do |config|
-  config.include OmniAuthHelpers, type: :system
+  RSpec.configure do |config|
+    config.include OmniAuthHelpers, type: :system
+    config.include OmniAuthHelpers, type: :request
+  end
 end

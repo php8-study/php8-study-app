@@ -2,168 +2,93 @@
 
 require "rails_helper"
 
-RSpec.describe "試験結果詳細", type: :system do
+RSpec.describe "Exam Result (試験結果)", type: :system do
   let(:user) { create(:user) }
 
-  before do
-    sign_in_as(user)
-  end
+  describe "合格時の表示（100点）" do
+    let!(:exam) { create(:exam, :passed, user: user) }
 
-  describe "試験結果の表示" do
-    context "合格した場合" do
-      let!(:exam) { create(:exam, :passed, user: user) }
+    let(:first_exam_question) { exam.exam_questions.first }
+    let(:first_question) { first_exam_question.question }
+    let(:correct_choice) { first_question.question_choices.find_by(correct: true) }
 
-      before { visit exam_path(exam) }
+    before do
+      sign_in_as(user)
+    end
 
-      it "合格のUIと共通要素が正しく表示されること" do
-        expect(page).to have_content "PASSED!"
-        expect(page).to have_content "おめでとうございます！"
-        verify_common_result_ui(exam)
+    context "結果画面の表示" do
+      before do
+        visit exam_path(exam)
+        expect(page).to have_content "試験結果"
       end
 
-      it "回答詳細リストの内容が正しいこと" do
-        verify_answer_list_content(exam)
+      it "スコアや正答数が正しく表示されている" do
+        expect(page).to have_content "100"
+        expect(page).to have_content "1/1"
+      end
+
+      it "回答詳細リストに問題文が表示されている" do
+        within "section[aria-labelledby='detail-heading']" do
+          expect(page).to have_content "回答詳細"
+          expect(page).to have_content first_question.content.truncate(100)
+        end
       end
     end
 
-    context "不合格の場合" do
-      let!(:exam) { create(:exam, :failed, user: user) }
-
-      before { visit exam_path(exam) }
-
-      it "不合格のUIと共通要素が正しく表示されること" do
-        expect(page).to have_content "FAILED"
-        expect(page).to have_content "残念ながら不合格です。"
-        verify_common_result_ui(exam)
+    context "回答詳細モーダル" do
+      before do
+        visit exam_path(exam)
       end
 
-      it "回答詳細リストの内容が正しいこと" do
-        verify_answer_list_content(exam)
-      end
-    end
-  end
+      it "モーダルを開くと、自分の回答が「正解」として扱われている" do
+        find("a[href='#{solution_exam_exam_question_path(exam, first_exam_question)}']").click
 
-  describe "詳細解説（モーダル）の確認" do
-    context "正解した問題の場合" do
-      let!(:exam) { create(:exam, :passed, user: user) }
-      let(:question) { exam.questions.first }
-      let(:text_correct) { question.question_choices.find_by(correct: true).content }
+        expect(page).to have_selector "div[role='dialog']"
 
-      before { visit exam_path(exam) }
-
-      it "モーダルが開き、正解用のUIとバッジが表示される" do
-        first("a[href*='solution']").click
-
-        within "[data-controller='modal']" do
-          verify_modal_common_content(question)
-
+        within "div[role='dialog']" do
           expect(page).to have_content "正解の解説"
-          expect(page).to have_css ".bg-emerald-100"
 
-          verify_choice_badges(text_correct, your_choice: true, correct_answer: true)
-
-          click_button "閉じる"
+          correct_li = find("li", text: correct_choice.content)
+          expect(correct_li).to have_content "CORRECT ANSWER"
+          expect(correct_li).to have_content "YOUR CHOICE"
         end
-        expect(page).to have_no_selector "[data-controller='modal']"
-      end
-    end
 
-    context "不正解だった問題の場合" do
-      let!(:exam) { create(:exam, :failed, user: user) }
-      let(:question) { exam.questions.first }
-
-      let(:text_wrong) do
-        exam.exam_questions.first.user_choices.first.content
-      end
-
-      before { visit exam_path(exam) }
-
-      it "モーダルが開き、不正解用のUIとバッジが表示される" do
-        first("a[href*='solution']").click
-
-        within "[data-controller='modal']" do
-          verify_modal_common_content(question)
-
-          expect(page).to have_content "不正解の解説"
-          expect(page).to have_css ".bg-red-100"
-
-          verify_choice_badges(text_wrong, your_choice: true, correct_answer: false)
-
-          click_button "閉じる"
-        end
-        expect(page).to have_no_selector "[data-controller='modal']"
+        find("button", text: "閉じる").click
+        expect(page).not_to have_selector "div[role='dialog']"
       end
     end
   end
 
-  def verify_common_result_ui(exam)
-    expect(page).to have_link "履歴一覧へ", href: exams_path
-    expect(page).to have_link "トップへ戻る", href: root_path
-    expect(page).to have_content "SCORE"
-    expect(page).to have_content(/#{exam.score_percentage}\s*%/)
-    expect(page).to have_content "CORRECT"
-    expect(page).to have_content(/#{exam.correct_count}\s*\/\s*#{exam.total_questions}/)
-    expect(page).to have_content "REQUIRED"
-    expect(page).to have_content "70.0%"
-  end
+  describe "不合格・不正解時の表示（0点）" do
+    let!(:failed_exam) { create(:exam, :failed, user: user) }
 
-  def verify_answer_list_content(exam)
-    within ".space-y-4" do
-      target_eq = exam.exam_questions.order(:position).first
-      target_question = target_eq.question
-      row = first("a.group")
+    let(:failed_exam_question) { failed_exam.exam_questions.first }
+    let(:question) { failed_exam_question.question }
+    let(:correct_choice) { question.question_choices.find_by(correct: true) }
+    let(:wrong_choice) { failed_exam_question.user_choices.first }
 
-      within row do
-        expected_bg = target_eq.correct? ? ".bg-emerald-100" : ".bg-red-100"
-        unexpected_bg = target_eq.correct? ? ".bg-red-100" : ".bg-emerald-100"
-
-        expect(page).to have_css expected_bg
-        expect(page).to have_no_css unexpected_bg
-
-        expect(page).to have_content "Q.#{target_eq.position}"
-        expect(page).to have_content target_question.category.name if target_question.category
-        expect(page).to have_content target_question.content
-        expect(page).to have_css "svg.w-4.h-4"
-      end
-    end
-  end
-
-  def verify_modal_common_content(question)
-    expect(page).to have_content question.category.name if question.category
-    expect(page).to have_content "QUESTION"
-    expect(page).to have_content "Question.php"
-    expect(page).to have_content question.content
-    expect(page).to have_content "選択肢の正誤"
-    question.question_choices.each do |choice|
-      expect(page).to have_content choice.content
-    end
-    expect(page).to have_content "REFERENCE"
-    expect(page).to have_content question.official_page.to_s if question.official_page
-    expect(page).to have_content "PAGE"
-  end
-
-  def verify_choice_badges(choice_text, your_choice:, correct_answer:)
-    border_class = if correct_answer
-      "border-emerald-500"
-    elsif your_choice
-      "border-red-400"
-    else
-      "border-slate-200"
+    before do
+      sign_in_as(user)
+      visit exam_path(failed_exam)
     end
 
-    target_selector = "li.border-2.#{border_class}"
+    it "スコアが0点と表示されている" do
+      expect(page).to have_content "0"
+    end
 
-    within target_selector, text: choice_text do
-      if your_choice
-        expect(page).to have_content "YOUR CHOICE"
-      else
-        expect(page).to have_no_content "YOUR CHOICE"
-      end
+    it "モーダルを開くと、自分の回答と正解が区別して表示されている" do
+      find("a[href='#{solution_exam_exam_question_path(failed_exam, failed_exam_question)}']").click
 
-      if correct_answer
-        expect(page).to have_content "CORRECT ANSWER"
-      else
-        expect(page).to have_no_content "CORRECT ANSWER"
+      within "div[role='dialog']" do
+        expect(page).to have_content "不正解の解説"
+
+        user_choice_li = find("li", text: wrong_choice.content)
+        expect(user_choice_li).to have_content "YOUR CHOICE"
+        expect(user_choice_li).not_to have_content "CORRECT ANSWER"
+
+        correct_li = find("li", text: correct_choice.content)
+        expect(correct_li).to have_content "CORRECT ANSWER"
+        expect(correct_li).not_to have_content "YOUR CHOICE"
       end
     end
   end

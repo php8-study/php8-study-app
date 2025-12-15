@@ -25,7 +25,7 @@ class Admin::QuestionsController < AdminController
   end
 
   def update
-    if @new_question = @question.update_or_version(question_params)
+    if @new_question = @question.safe_update(question_params) # 使用中であれば論理削除して新verを作成、そうでなければ更新するメソッド
       redirect_to edit_admin_question_path(@new_question), notice: "問題を保存しました"
     else
       render :edit, status: :unprocessable_entity
@@ -33,7 +33,7 @@ class Admin::QuestionsController < AdminController
   end
 
   def destroy
-    if @question.destroy
+    if @question.safe_destroy # 使用中であれば論理削除、そうでなければ物理削除するメソッド
       flash.now[:notice] = "問題を削除しました"
       render turbo_stream: [
         turbo_stream.remove(@question),
@@ -47,7 +47,7 @@ class Admin::QuestionsController < AdminController
 
   private
     def set_question
-      @question = Question.find(params[:id])
+      @question = Question.active.find(params[:id])
     end
 
     def question_params
