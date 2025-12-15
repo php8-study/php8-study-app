@@ -8,15 +8,17 @@ class ExamQuestion < ApplicationRecord
 
   def save_answers!(choice_ids)
     input_ids = Array(choice_ids).map(&:to_i).uniq
-    valid_choice_ids = question.question_choices.map(&:id)
-    target_choice_ids = input_ids & valid_choice_ids
+    valid_choice_ids = question.question_choices.pluck(:id)
+
+    raise ActiveRecord::RecordNotFound unless (input_ids - valid_choice_ids).empty?
+
     current_time = Time.current
 
     transaction do
       exam_answers.delete_all
-      return if target_choice_ids.empty?
+      return if input_ids.empty?
 
-      answers = target_choice_ids.map do |choice_id|
+      answers = input_ids.map do |choice_id|
         {
           exam_question_id: id,
           question_choice_id: choice_id,

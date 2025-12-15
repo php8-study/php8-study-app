@@ -4,6 +4,7 @@ class ExamQuestionsController < ApplicationController
   before_action :set_exam
   before_action :set_exam_question
   before_action :ensure_exam_in_progress, only: %i[show answer]
+  before_action :ensure_exam_completed, only: %i[solution]
 
   def show
   end
@@ -39,6 +40,10 @@ class ExamQuestionsController < ApplicationController
 
     def ensure_exam_in_progress
       raise ActiveRecord::RecordNotFound if @exam.completed_at
+    end
+
+    def ensure_exam_completed
+      raise ActiveRecord::RecordNotFound unless @exam.completed_at
     end
 
     def answer_params

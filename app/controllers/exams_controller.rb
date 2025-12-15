@@ -2,6 +2,9 @@
 
 class ExamsController < ApplicationController
   before_action :set_exam, only: %i[show submit review]
+  before_action :ensure_completed, only: %i[show]
+  before_action :ensure_in_progress, only: %i[review submit]
+
 
   def index
     @exams = current_user.exams
@@ -55,5 +58,13 @@ class ExamsController < ApplicationController
       @exam = current_user.exams
                           .includes(exam_questions: [{ question: :question_choices }, :exam_answers])
                           .find(params[:id])
+    end
+
+    def ensure_completed
+      raise ActiveRecord::RecordNotFound unless @exam.completed_at
+    end
+
+    def ensure_in_progress
+      raise ActiveRecord::RecordNotFound if @exam.completed_at
     end
 end
