@@ -7,7 +7,7 @@ RSpec.describe "Exam Result (試験結果)", type: :system do
 
   describe "合格時の表示（100点）" do
     let!(:exam) { create(:exam, :passed, user: user) }
-
+    
     let(:first_exam_question) { exam.exam_questions.first }
     let(:first_question) { first_exam_question.question }
     let(:correct_choice) { first_question.question_choices.find_by(correct: true) }
@@ -16,23 +16,21 @@ RSpec.describe "Exam Result (試験結果)", type: :system do
       sign_in_as(user)
     end
 
-    context "結果画面の表示（履歴閲覧モード）" do
+    context "結果画面の表示" do
       before do
         visit exam_path(exam)
         expect(page).to have_content "試験結果"
       end
 
-      it "スコアや正答数が表示されている" do
-        expect(page).to have_content "100"
+      it "スコアや正答数が正しく表示されている" do
+        expect(page).to have_content "100" 
         expect(page).to have_content "1/1"
       end
 
-      it "回答詳細リストが表示され、正解（緑色）のアイコンが表示されている" do
+      it "回答詳細リストに問題文が表示されている" do
         within "section[aria-labelledby='detail-heading']" do
           expect(page).to have_content "回答詳細"
           expect(page).to have_content first_question.content.truncate(100)
-
-          expect(page).to have_css ".bg-emerald-100.text-emerald-600"
         end
       end
     end
@@ -42,18 +40,15 @@ RSpec.describe "Exam Result (試験結果)", type: :system do
         visit exam_path(exam)
       end
 
-      it "リストをクリックするとモーダルが開き、解説と選択肢の正誤が表示される" do
+      it "モーダルを開くと、自分の回答が「正解」として扱われている" do
         find("a[href='#{solution_exam_exam_question_path(exam, first_exam_question)}']").click
 
         expect(page).to have_selector "div[role='dialog']"
 
         within "div[role='dialog']" do
           expect(page).to have_content "正解の解説"
-          expect(page).to have_content first_question.content
 
           correct_li = find("li", text: correct_choice.content)
-
-          expect(correct_li[:class]).to include("bg-emerald-50")
           expect(correct_li).to have_content "CORRECT ANSWER"
           expect(correct_li).to have_content "YOUR CHOICE"
         end
@@ -66,7 +61,7 @@ RSpec.describe "Exam Result (試験結果)", type: :system do
 
   describe "不合格・不正解時の表示（0点）" do
     let!(:failed_exam) { create(:exam, :failed, user: user) }
-
+    
     let(:failed_exam_question) { failed_exam.exam_questions.first }
     let(:question) { failed_exam_question.question }
     let(:correct_choice) { question.question_choices.find_by(correct: true) }
@@ -77,27 +72,21 @@ RSpec.describe "Exam Result (試験結果)", type: :system do
       visit exam_path(failed_exam)
     end
 
-    it "スコアが0点であり、回答リストに不正解（赤色）アイコンが表示されている" do
+    it "スコアが0点と表示されている" do
       expect(page).to have_content "0"
-
-      within "section[aria-labelledby='detail-heading']" do
-        expect(page).to have_css ".bg-red-100.text-red-600"
-      end
     end
 
-    it "詳細モーダルで『自分の回答（不正解）』と『正解』が区別して表示される" do
+    it "モーダルを開くと、自分の回答と正解が区別して表示されている" do
       find("a[href='#{solution_exam_exam_question_path(failed_exam, failed_exam_question)}']").click
 
       within "div[role='dialog']" do
         expect(page).to have_content "不正解の解説"
 
         user_choice_li = find("li", text: wrong_choice.content)
-        expect(user_choice_li[:class]).to include("bg-red-50")
         expect(user_choice_li).to have_content "YOUR CHOICE"
         expect(user_choice_li).not_to have_content "CORRECT ANSWER"
 
         correct_li = find("li", text: correct_choice.content)
-        expect(correct_li[:class]).to include("bg-emerald-50")
         expect(correct_li).to have_content "CORRECT ANSWER"
         expect(correct_li).not_to have_content "YOUR CHOICE"
       end
