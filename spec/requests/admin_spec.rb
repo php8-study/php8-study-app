@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Admin::Home", type: :request do
   let(:admin) { create(:user, :admin) }
-  let(:general_user) { create(:user) }
+  let(:user) { create(:user) }
 
   describe "GET /admin" do
     context "管理者としてアクセスした場合" do
@@ -18,7 +18,7 @@ RSpec.describe "Admin::Home", type: :request do
     end
 
     context "一般ユーザーとしてアクセスした場合" do
-      before { sign_in_as(general_user) }
+      before { sign_in_as(user) }
 
       it "404 Not Found を返す" do
         get admin_root_path
