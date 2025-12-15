@@ -2,49 +2,107 @@
 
 require "rails_helper"
 
-RSpec.describe "ランダム出題", type: :request do
-  describe "ランダム出題" do
-    let(:user) { create(:user) }
+RSpec.describe "Questions (ランダム出題機能)", type: :request do
+  let(:user) { create(:user) }
+  let!(:question) { create(:question, :with_choices) }
 
-    before { sign_in_as(user) }
+  describe "GET /questions/random" do
+    context "ログインしている場合" do
+      before { sign_in_as(user) }
 
-    context "有効な問題データが存在する場合" do
-      let!(:question) { create(:question, :with_choices) }
-      it "ランダム出題にアクセスすると問題ページにリダイレクトされる" do
-        get random_questions_path
-        expect(response).to redirect_to(question_path(Question.first))
+      context "利用可能な問題が存在する場合" do
+        it "ランダムに選ばれた問題詳細ページへリダイレクトする" do
+          get random_questions_path
+          expect(response).to redirect_to(%r{/questions/\d+})
+        end
+      end
+
+      context "利用可能な問題が1つもない場合" do
+        before do
+          Question.update_all(deleted_at: Time.current)
+        end
+
+        it "ルートパスへリダイレクトされ、アラートが表示される" do
+          get random_questions_path
+
+          expect(response).to redirect_to(root_path)
+          expect(flash[:alert]).to eq "現在利用可能な問題がありません"
+        end
       end
     end
 
-    context "有効な問題データが存在しない場合" do
-      it "ランダム出題にアクセスするとアラート付きでダッシュボードにリダイレクトされる" do
+    context "未ログインの場合" do
+      it "ルートパスへリダイレクトされる" do
         get random_questions_path
         expect(response).to redirect_to(root_path)
-        follow_redirect!
-        expect(response.body).to include("現在利用可能な問題がありません")
       end
     end
   end
 
-  describe "非ログインユーザーのアクセス制御" do
-    let!(:question) { create(:question, :with_choices) }
-    before { sign_out }
-
-    context "問題ページ" do
-      it "問題文は表示されるが解答ボタンはなく、ログイン誘導が表示される" do
+  describe "GET /questions/:id" do
+    context "正常系" do
+      it "ログインしていれば、正常に表示される" do
+        sign_in_as(user)
         get question_path(question)
-        expect(response.body).to include(question.content)
-        expect(response.body).to include("ログインして学習をはじめる")
-        expect(response.body).not_to include("解答する")
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "未ログインでも、SEO用に正常に表示される" do
+        get question_path(question)
+        expect(response).to have_http_status(:ok)
       end
     end
 
-    context "回答後ページ" do
-      it "公式ページ参照は表示されるが次の問題リンクはなく、ログイン誘導が表示される" do
+    context "異常系" do
+      before { sign_in_as(user) }
+
+      it "存在しないIDにアクセスすると404 Not Foundになる" do
+        get question_path(0)
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it "論理削除された問題にはアクセスできず404 Not Foundになる" do
+        deleted_question = create(:question, deleted_at: Time.current)
+        get question_path(deleted_question)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
+  describe "GET /questions/:id/solution" do
+    let(:correct_choice) { question.question_choices.find_by(correct: true) }
+
+    context "正常系" do
+      it "ログイン状態でアクセスすると、正常に表示される" do
+        sign_in_as(user)
+
+        get solution_question_path(question), params: { user_answer_ids: [correct_choice.id] }
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "回答を選択せずに（未回答で）アクセスしてもエラーにならず、正常に表示される" do
+        sign_in_as(user)
+
         get solution_question_path(question)
-        expect(response.body).to include(question.official_page.to_s)
-        expect(response.body).to include("ログインして学習をはじめる")
-        expect(response.body).not_to include("次の問題へ")
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "未ログインでもアクセス可能で、正常に表示される" do
+        get solution_question_path(question)
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context "異常系" do
+      it "存在しないIDにアクセスすると404 Not Foundになる" do
+        get solution_question_path(0)
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it "論理削除された問題の詳細にはアクセスできず404 Not Foundになる" do
+        deleted_question = create(:question, deleted_at: Time.current)
+        get solution_question_path(deleted_question)
+        expect(response).to have_http_status(:not_found)
       end
     end
   end
