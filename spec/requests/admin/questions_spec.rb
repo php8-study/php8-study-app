@@ -26,7 +26,7 @@ RSpec.describe "Admin::Questions", type: :request do
         expect(response).to have_http_status(:ok)
         expect(response.body).to include("試験使用前問題")
         expect(response.body).to include("試験使用中問題")
-      
+
         expect(response.body).not_to include("論理削除済問題")
       end
     end
@@ -56,7 +56,7 @@ RSpec.describe "Admin::Questions", type: :request do
         expect(response).to have_http_status(:ok)
       end
     end
-    
+
     context "一般ユーザーの場合" do
       before { sign_in_as(user) }
       it "404 Not Found になる" do
@@ -75,16 +75,16 @@ RSpec.describe "Admin::Questions", type: :request do
 
   describe "POST /admin/questions" do
     let(:valid_params) do
-      { 
-        question: { 
-          content: "新規問題文", 
+      {
+        question: {
+          content: "新規問題文",
           category_id: category.id,
           explanation: "解説",
           question_choices_attributes: [
             { content: "選択肢1", correct: true },
             { content: "選択肢2", correct: false }
           ]
-        } 
+        }
       }
     end
 
@@ -256,9 +256,9 @@ RSpec.describe "Admin::Questions", type: :request do
           }.not_to change(Question, :count)
 
           expect(response).to have_http_status(:ok)
-          
+
           expect(in_use_question.reload.deleted_at).to be_present
-          
+
           expect(response.body).to include(%(action="remove"))
         end
       end

@@ -14,7 +14,7 @@ RSpec.describe "Admin (問題管理)", type: :system do
 
   it "登録されている問題が一覧表示されている" do
     expect(page).to have_content "問題管理"
-    
+
     target_row = "#question_#{question.id}"
     within target_row do
       expect(page).to have_content "既存の問題文"
@@ -59,7 +59,7 @@ RSpec.describe "Admin (問題管理)", type: :system do
     expect(page).to have_content "問題文"
 
     fill_in "問題文", with: "編集後の問題文"
-    
+
     select "テストカテゴリー", from: "カテゴリー"
 
     click_button "保存する"
@@ -78,7 +78,7 @@ RSpec.describe "Admin (問題管理)", type: :system do
     end
 
     expect(page).to have_content "問題を削除しました"
-    
+
     expect(page).to have_no_selector target_row
   end
 end
