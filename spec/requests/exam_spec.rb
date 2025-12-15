@@ -4,219 +4,241 @@ require "rails_helper"
 
 RSpec.describe "Exams", type: :request do
   let(:user) { create(:user) }
-  let!(:exam) { create(:exam, :with_questions, question_count: 3, user: user) }
-  let(:q1) { exam.exam_questions.first }
-  let(:q2) { exam.exam_questions.second }
+  let(:other_user) { create(:user) }
 
-  describe "未ログイン時のアクセス制限" do
-    context "試験一覧ページへのアクセス" do
-      it "ルートパス（またはログイン画面）へリダイレクトされる" do
+  let!(:completed_exam) { create(:exam, :completed, :with_questions, user: user) }
+  let!(:active_exam) { create(:exam, :with_questions, user: user) }
+
+  before { sign_in_as(user) }
+
+  describe "GET /index" do
+    context "正常系" do
+      it "完了済みの試験のみが表示され、進行中の試験は表示されない" do
+        get exams_path
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("exams/#{completed_exam.id}")
+        expect(response.body).not_to include("exams/#{active_exam.id}")
+      end
+
+      it "他人の試験は表示されない" do
+        other_exam = create(:exam, :completed, user: other_user)
+        get exams_path
+        expect(response.body).not_to include("exams/#{other_exam.id}")
+      end
+
+      context "表示する試験が1件もない場合" do
+        before do
+          user.exams.destroy_all
+        end
+
+        it "エラーにならず、正常にページが表示される" do
+          get exams_path
+          expect(response).to have_http_status(:ok)
+        end
+      end
+    end
+
+    context "未ログインの場合" do
+      before { sign_out }
+
+      it "ログイン画面へリダイレクトされる" do
         get exams_path
         expect(response).to redirect_to(root_path)
       end
     end
+  end
 
-    context "試験詳細ページへのアクセス" do
-      it "リダイレクトされる" do
-        get exam_path(exam)
+  describe "GET /exams/check" do
+    context "正常系" do
+      context "進行中の試験がある場合" do
+        it "再開確認画面（checkテンプレート）が表示される" do
+          get check_exams_path
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include("未完了の模擬試験があります")
+        end
+      end
+
+      context "試験履歴が全くない（進行中もない）場合" do
+        before do
+          user.exams.destroy_all
+        end
+
+        it "自動開始画面（auto_startテンプレート）が表示される" do
+          get check_exams_path
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include("試験データを作成しています")
+        end
+      end
+    end
+
+    context "未ログインの場合" do
+      before { sign_out }
+
+      it "ログイン画面へリダイレクトされる" do
+        get check_exams_path
         expect(response).to redirect_to(root_path)
       end
     end
-
-    context "データ作成（POST）の試行" do
-      it "作成されず、リダイレクトされる" do
-        expect {
-          post exams_path
-        }.not_to change(Exam, :count)
-        expect(response).to redirect_to(root_path)
-      end
-    end
   end
 
-  describe "他人のデータに対する操作" do
-    let(:other_user) { create(:user) }
-    let(:other_exam) { create(:exam, :with_questions, user: other_user) }
-    let(:other_q1) { other_exam.exam_questions.first }
-    let(:other_answer) { create(:exam_answer, exam_question: other_q1) }
+  describe "POST /exams" do
+    context "正常系" do
+      it "新しい試験が作成され、その第1問へリダイレクトされる" do
+        previous_exam_id = active_exam.id
 
-    before { sign_in_as(user) }
+        post exams_path
+        new_exam = Exam.where(user: user).order(created_at: :desc).first
 
-    shared_examples "アクセス権がなく404が返る" do
-      it "404 Not Found を返す" do
-        subject
-        expect(response).to have_http_status(404)
-      end
-    end
-
-    context "閲覧 (GET)" do
-      context "他人の試験ページ" do
-        subject { get exam_path(other_exam) }
-        it_behaves_like "アクセス権がなく404が返る"
-      end
-
-      context "他人の試験問題画面" do
-        subject { get exam_exam_question_path(other_exam, other_q1) }
-        it_behaves_like "アクセス権がなく404が返る"
-      end
-
-      context "他人のレビュー画面" do
-        subject { get review_exam_path(other_exam) }
-        it_behaves_like "アクセス権がなく404が返る"
-      end
-    end
-
-    context "書き込み" do
-      let(:choice) { other_q1.question.question_choices.first }
-      context "他人の試験に回答を作成しようとした場合" do
-        subject {
-          post answer_exam_exam_question_path(other_exam, other_q1), params: {
-            question_choice_ids: [choice.id]
-          }
-        }
-        it_behaves_like "アクセス権がなく404が返る"
-      end
-
-      context "他人の回答を更新しようとした場合" do
-        subject {
-          patch answer_exam_exam_question_path(other_exam, other_q1, other_answer), params: {
-            question_choice_ids: [choice.id]
-          }
-        }
-        it_behaves_like "アクセス権がなく404が返る"
-      end
-
-      context "他人の試験を提出しようとした場合" do
-        subject { post submissions_exam_path(other_exam) }
-        it_behaves_like "アクセス権がなく404が返る"
-      end
-    end
-  end
-
-  describe "完了済み試験に対する操作" do
-    let(:completed_exam) { create(:exam, :completed, :with_questions, user: user) }
-    let(:completed_q1) { completed_exam.exam_questions.first }
-
-    before { sign_in_as(user) }
-
-    context "閲覧 (GET)" do
-      it "回答画面にはアクセスできない（404 Not Found）" do
-        get exam_exam_question_path(completed_exam, completed_q1)
-        expect(response).to have_http_status(404)
-      end
-    end
-
-    context "書き込み (POST/PATCH)" do
-      let(:choice) { completed_q1.question.question_choices.first }
-
-      it "完了後に回答を作成しようとしても保存されない" do
-        expect {
-          post answer_exam_exam_question_path(completed_exam, completed_q1), params: {
-            exam_answer: { question_choice_id: choice.id }
-          }
-        }.not_to change(ExamAnswer, :count)
-
-        expect(response).to have_http_status(404)
-      end
-
-      it "完了後に回答を更新しようとしても変更されない" do
-        existing_answer = create(:exam_answer, exam_question: completed_q1, question_choice: choice)
-        completed_q1.question.question_choices.last
-
-        patch answer_exam_exam_question_path(completed_exam, completed_q1, existing_answer), params: {
-          question_choice_ids: [choice.id]
-        }
-
-        expect(existing_answer.reload.question_choice).to eq choice
-      end
-    end
-  end
-
-  describe "正常な試験進行" do
-    before { sign_in_as(user) }
-
-    describe "試験の作成 (POST /exams)" do
-      let(:new_user) { create(:user) }
-      let!(:questions) { create_list(:question, 5, :with_choices) }
-
-      before { sign_in_as(new_user) }
-
-      it "試験が新規作成され、1問目にリダイレクトされる" do
-        expect { post exams_path }.to change(Exam, :count).by(1)
-        new_exam = Exam.last
+        expect(new_exam.id).not_to eq previous_exam_id
         expect(response).to redirect_to(exam_exam_question_path(new_exam, new_exam.exam_questions.first))
       end
     end
 
-    describe "回答の送信 (POST)" do
-      let(:choice) { q1.question.question_choices.first }
-      it "選んだ回答が保存され、次の問題へリダイレクトされる" do
-        expect {
-          post answer_exam_exam_question_path(exam, q1), params: {
-            question_choice_ids: [choice.id]
-          }
-        }.to change(ExamAnswer, :count).by(1)
+    context "異常系（サービス層でのエラー）" do
+      before do
+        allow_any_instance_of(Exam::Start).to receive(:call).and_raise(StandardError, "Something went wrong")
+      end
 
-        expect(q1.exam_answers.last.question_choice).to eq choice
-        expect(response).to redirect_to(exam_exam_question_path(exam, q2))
+      it "エラーログを出力し、ルートパスへリダイレクトする" do
+        expect(Rails.logger).to receive(:error).with(/Exam Start Failed/)
+
+        expect {
+          post exams_path
+        }.not_to change(Exam, :count)
+
+        expect(response).to redirect_to(root_path)
       end
     end
 
-    describe "回答の更新 (PATCH)" do
-      let(:choice) { q1.question.question_choices.first }
-      let!(:answer) { create(:exam_answer, exam_question: q1, question_choice: choice) }
-      let(:new_choice) { q1.question.question_choices.last }
+    context "未ログインの場合" do
+      before { sign_out }
 
-      it "回答データが更新され、次の問題へリダイレクトされる" do
-        expect {
-          post answer_exam_exam_question_path(exam, q1), params: {
-             question_choice_ids: [new_choice.id]
-          }
-        }.not_to change(ExamAnswer, :count)
-
-        expect(q1.exam_answers.last.question_choice).to eq new_choice
-        expect(response).to redirect_to(exam_exam_question_path(exam, q2))
-      end
-    end
-
-    describe "試験の提出と採点 (POST submit)" do
-      it "提出するとステータスが完了になり、結果画面へ遷移する" do
-        post submissions_exam_path(exam)
-        exam.reload
-        expect(exam.completed_at).to be_present
-        expect(response).to redirect_to(exam_path(exam, reveal: true))
+      it "ログイン画面へリダイレクトされる" do
+        post exams_path
+        expect(response).to redirect_to(root_path)
       end
     end
   end
 
-  describe "画面表示の制御" do
-    before { sign_in_as(user) }
+  describe "GET /exams/:id" do
+    context "正常系" do
+      it "自分の試験にはアクセスできる" do
+        get exam_path(completed_exam)
+        expect(response).to have_http_status(:ok)
+      end
 
-    context "1問目の表示" do
-      it "「前へ」ボタンが存在しない" do
-        get exam_exam_question_path(exam, q1)
-        expect(response.body).not_to include("前へ")
+      it "パラメータ reveal=true がある場合もアクセスできる" do
+        get exam_path(completed_exam, reveal: true)
+        expect(response).to have_http_status(:ok)
       end
     end
 
-    context "2問目の表示" do
-      it "「前へ」ボタンが存在する" do
-        get exam_exam_question_path(exam, q2)
-        expect(response.body).to include(exam_exam_question_path(exam, q1))
+    context "異常系" do
+      let(:other_exam) { create(:exam, user: other_user) }
+
+      it "他人の試験にはアクセスできず404になる" do
+        get exam_path(other_exam)
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it "進行中の試験にはアクセスできず404になる" do
+        get exam_path(active_exam)
+        expect(response).to have_http_status(:not_found)
       end
     end
 
-    context "最後の問題の表示" do
-      it "「後で回答する」ボタンの文言が変わっている" do
-        get exam_exam_question_path(exam, exam.exam_questions.last)
-        expect(response.body).to include("回答せずに確認画面へ")
+    context "未ログインの場合" do
+      before { sign_out }
+
+      it "ログイン画面へリダイレクトされる" do
+        get exam_path(active_exam)
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  describe "POST /exams/:id/submissions" do
+    context "正常系" do
+      it "試験を終了し、結果画面（reveal付き）へリダイレクトする" do
+        post submissions_exam_path(active_exam)
+
+        active_exam.reload
+        expect(active_exam.completed_at).to be_present
+        expect(response).to redirect_to(exam_path(active_exam, reveal: true))
       end
     end
 
-    context "回答一覧画面" do
-      it "正常に表示される" do
-        get review_exam_path(exam)
-        expect(response).to have_http_status(200)
-        expect(response.body).to include("回答状況の確認")
+    context "異常系" do
+      context "finish! が false を返した場合" do
+        before do
+          allow_any_instance_of(Exam).to receive(:finish!).and_return(false)
+        end
+
+        it "ルートパスへリダイレクトされる" do
+          post submissions_exam_path (active_exam)
+          expect(response).to redirect_to(root_path)
+        end
+      end
+
+      context "既に完了している試験を提出しようとした場合" do
+        it "404 Not Found になる" do
+          post submissions_exam_path (completed_exam)
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context "存在しない試験IDで提出しようとした場合" do
+        it "404 Not Found になる" do
+          post submissions_exam_path(id: 0)
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+    end
+
+    context "未ログインの場合" do
+      before { sign_out }
+
+      it "ログイン画面へリダイレクトされる" do
+        post submissions_exam_path(active_exam)
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  describe "GET /exams/:id/review" do
+    context "正常系" do
+      it "確認画面が表示される" do
+        get review_exam_path(active_exam)
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context "異常系" do
+      let(:other_exam) { create(:exam, user: other_user) }
+
+      it "他人の試験の確認画面にはアクセスできず404になる" do
+        get review_exam_path(other_exam)
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it "終了した試験の確認画面にはアクセスできず404になる" do
+        get review_exam_path(completed_exam)
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it "存在しない試験IDにアクセスすると404になる" do
+        get review_exam_path(id: 0)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "未ログインの場合" do
+      before { sign_out }
+
+      it "ログイン画面へリダイレクトされる" do
+        get review_exam_path(completed_exam)
+        expect(response).to redirect_to(root_path)
       end
     end
   end

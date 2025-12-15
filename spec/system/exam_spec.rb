@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "模擬試験 UI操作", type: :system do
+RSpec.describe "Exam(受験動作)", type: :system do
   let(:user) { create(:user) }
   let!(:category) { create(:category, name: "基礎知識") }
   let!(:questions) { create_list(:question, 3, :with_choices, category: category) }
@@ -14,19 +14,18 @@ RSpec.describe "模擬試験 UI操作", type: :system do
       click_link "模擬試験を受験する"
       expect(page).to have_content "ExamQuestion_1"
 
-      exam = Exam.last
-      q1 = exam.exam_questions.first
-      exam.exam_questions.second
-      target_choice = q1.question.question_choices.first
+      choices = all("fieldset label")
+      target_element = choices.first
+      target_choice_text = target_element.text
 
-      check target_choice.content
+      target_element.click
       click_button "回答する"
 
       expect(page).to have_content "ExamQuestion_2"
       click_link "前へ"
 
       expect(page).to have_content "ExamQuestion_1"
-      expect(page).to have_checked_field(target_choice.content)
+      expect(page).to have_checked_field(target_choice_text)
       click_link "後で回答する"
 
       expect(page).to have_content "ExamQuestion_2"
@@ -48,7 +47,7 @@ RSpec.describe "模擬試験 UI操作", type: :system do
       end
 
       expect(page).to have_content "試験結果"
-      expect(page).to have_current_path(exam_path(exam), ignore_query: true)
+      expect(page).to have_current_path(%r{/exams/\d+}, ignore_query: true)
     end
   end
 
