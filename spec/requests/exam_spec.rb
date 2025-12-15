@@ -179,14 +179,14 @@ RSpec.describe "Exams", type: :request do
         end
 
         it "ルートパスへリダイレクトされる" do
-          post submissions_exam_path (active_exam)
+          post submissions_exam_path(active_exam)
           expect(response).to redirect_to(root_path)
         end
       end
 
       context "既に完了している試験を提出しようとした場合" do
         it "404 Not Found になる" do
-          post submissions_exam_path (completed_exam)
+          post submissions_exam_path(completed_exam)
           expect(response).to have_http_status(:not_found)
         end
       end
