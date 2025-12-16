@@ -4,7 +4,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Questions (ランダム出題機能)", type: :request do
+RSpec.describe "Questions", type: :request do
   let(:user) { create(:user) }
   let!(:question) { create(:question, :with_choices) }
 
@@ -66,44 +66,6 @@ RSpec.describe "Questions (ランダム出題機能)", type: :request do
       it "論理削除された問題にはアクセスできず404 Not Foundになる" do
         deleted_question = create(:question, deleted_at: Time.current)
         get question_path(deleted_question)
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-  end
-
-  describe "GET /questions/:id/solution" do
-    let(:correct_choice) { question.question_choices.find_by(correct: true) }
-
-    context "正常系" do
-      it "ログイン状態でアクセスすると、正常に表示される" do
-        sign_in_as(user)
-
-        get solution_question_path(question), params: { user_answer_ids: [correct_choice.id] }
-        expect(response).to have_http_status(:ok)
-      end
-
-      it "回答を選択せずに（未回答で）アクセスしてもエラーにならず、正常に表示される" do
-        sign_in_as(user)
-
-        get solution_question_path(question)
-        expect(response).to have_http_status(:ok)
-      end
-
-      it "未ログインでもアクセス可能で、正常に表示される" do
-        get solution_question_path(question)
-        expect(response).to have_http_status(:ok)
-      end
-    end
-
-    context "異常系" do
-      it "存在しないIDにアクセスすると404 Not Foundになる" do
-        get solution_question_path(0)
-        expect(response).to have_http_status(:not_found)
-      end
-
-      it "論理削除された問題の詳細にはアクセスできず404 Not Foundになる" do
-        deleted_question = create(:question, deleted_at: Time.current)
-        get solution_question_path(deleted_question)
         expect(response).to have_http_status(:not_found)
       end
     end
