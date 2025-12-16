@@ -27,7 +27,7 @@ class Exam < ApplicationRecord
   end
 
   def finish!
-    update!(completed_at: Time.current) unless completed_at.present?
+    update!(completed_at: Time.current) if completed_at.blank?
   end
 
   def total_questions

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class ExamsController < ApplicationController
-  before_action :set_exam, only: %i[show submit]
+  before_action :set_exam, only: %i[show]
   before_action :ensure_completed, only: %i[show]
-  before_action :ensure_in_progress, only: %i[submit]
-
 
   def index
     @exams = current_user.exams
@@ -39,16 +37,6 @@ class ExamsController < ApplicationController
     redirect_to root_path
   end
 
-  def submit
-    if @exam.finish!
-      redirect_to exam_path(@exam, reveal: true)
-    else
-      redirect_to root_path
-    end
-  rescue ActiveRecord::RecordInvalid
-    redirect_to root_path
-  end
-
   private
     def set_exam
       @exam = current_user.exams
@@ -58,9 +46,5 @@ class ExamsController < ApplicationController
 
     def ensure_completed
       raise ActiveRecord::RecordNotFound unless @exam.completed_at
-    end
-
-    def ensure_in_progress
-      raise ActiveRecord::RecordNotFound if @exam.completed_at
     end
 end
