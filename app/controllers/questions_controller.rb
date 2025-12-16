@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class QuestionsController < ApplicationController
-  before_action :set_question
   skip_before_action :require_login
 
   def show
