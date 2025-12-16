@@ -48,7 +48,7 @@
           class: "p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors",
           title: "編集",
           aria: { label: "問題ID:#{question.id}を編集" } do %>
-        <%= inline_svg_tag "icons/check.svg", class: "w-5 h-5", aria_hidden: true %>
+        <%= inline_svg_tag "icons/edit.svg", class: "w-5 h-5", aria_hidden: true %>
       <% end %>
 
       <%= link_to admin_question_path(question),
