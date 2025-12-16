@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :solution]
-  skip_before_action :require_login, only: [:show, :solution]
+  before_action :set_question, only: [:show]
+  skip_before_action :require_login, only: [:show]
 
   def random
     random_question = Question.active.order("RANDOM()").first
