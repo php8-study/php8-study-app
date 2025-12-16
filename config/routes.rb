@@ -40,10 +40,7 @@ Rails.application.routes.draw do
     end
 
     resources :exam_questions, only: [:show] do
-      resource :answer, only: [:show], module: :exam_questions
-      member do
-        post :answer
-      end
+      resource :answer, only: [:show, :create], module: :exam_questions
     end
   end
 

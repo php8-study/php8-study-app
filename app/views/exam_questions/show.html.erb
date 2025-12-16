@@ -25,7 +25,7 @@
 
     <%= render "shared/answer_form",
         question: @exam_question.question,
-        url: answer_exam_exam_question_path(@exam, @exam_question),
+        url: exam_exam_question_answer_path(@exam, @exam_question),
         method: :post,
         button_text: @exam_question.answered? ? "回答を変更する" : "回答する",
         input_name: "question_choice_ids[]",
