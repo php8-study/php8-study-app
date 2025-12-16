@@ -4,11 +4,10 @@ require "rails_helper"
 
 RSpec.describe "Questions::Solutions", type: :request do
   let(:user) { create(:user) }
-  let(:question) { create(:question) }
+  let(:question) { create(:question, :with_choices) }
+  let(:correct_choice) { question.question_choices.find_by(correct: true) }
 
   describe "GET /questions/:question_id/solution" do
-    let(:correct_choice) { question.question_choices.find_by(correct: true) }
-
     context "正常系" do
       it "ログイン状態でアクセスすると、正常に表示される" do
         sign_in_as(user)

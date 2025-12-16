@@ -6,10 +6,8 @@ class Questions::SolutionsController < ApplicationController
 
   def show
     user_answer_ids = params[:user_answer_ids]
-    if user_answer_ids.present?
-      @is_correct = @question.answer_correct?(user_answer_ids)
-      @user_answer_ids = Array(user_answer_ids).map(&:to_i)
-    end
+    @is_correct = @question.answer_correct?(user_answer_ids)
+    @user_answer_ids = Array(user_answer_ids).map(&:to_i)
   end
 
   private
