@@ -16,12 +16,6 @@ class QuestionsController < ApplicationController
   def show
   end
 
-  def solution
-    user_answer_ids = params[:user_answer_ids]
-    @is_correct = @question.answer_correct?(user_answer_ids)
-    @user_answer_ids = Array(user_answer_ids).map(&:to_i)
-  end
-
   private
     def set_question
       @question = Question.active.find(params[:id])
