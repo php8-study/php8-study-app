@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ExamsController < ApplicationController
-  before_action :set_exam, only: %i[show submit review]
+  before_action :set_exam, only: %i[show submit]
   before_action :ensure_completed, only: %i[show]
-  before_action :ensure_in_progress, only: %i[review submit]
+  before_action :ensure_in_progress, only: %i[submit]
 
 
   def index
