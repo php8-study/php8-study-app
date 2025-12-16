@@ -41,7 +41,7 @@ RSpec.describe "Exams::Reviews", type: :request do
       before { sign_out }
 
       it "LPへリダイレクトされる" do
-        get exam_review_path(completed_exam)
+        get exam_review_path(active_exam_exam)
         expect(response).to redirect_to(root_path)
       end
     end
