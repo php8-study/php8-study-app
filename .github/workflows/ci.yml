@@ -36,6 +36,9 @@ jobs:
     - name: Build CSS
       run: yarn run build:css
 
+    - name: Reset changes from previous steps
+      run: git checkout .
+
     - name: Run Lint
       run: bash bin/lint
 
