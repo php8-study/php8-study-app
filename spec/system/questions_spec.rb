@@ -52,7 +52,7 @@ RSpec.describe "Questions (ランダム出題)", type: :system do
     end
 
     it "解説ページ: 直接アクセスしてもエラーにならず、ログイン誘導が表示される" do
-      visit solution_question_path(question)
+      visit question_solution_path(question)
 
       expect(page).to have_content "選択肢の正誤"
 
