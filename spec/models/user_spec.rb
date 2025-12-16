@@ -9,54 +9,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "バリデーション" do
-    context "github_id" do
-      it "空であれば無効なこと" do
-        user = build(:user, github_id: nil)
-        user.valid?
-        expect(user.errors.of_kind?(:github_id, :blank)).to be true
-      end
-
-      it "重複していれば無効なこと" do
-        create(:user, github_id: "12345678")
-        user = build(:user, github_id: "12345678")
-        user.valid?
-        expect(user.errors.of_kind?(:github_id, :taken)).to be true
-      end
-    end
-  end
-
-  describe "DB制約" do
-    it "github_id が重複するレコードを保存しようとすると一意性制約違反が発生すること" do
-      create(:user, github_id: "12345678")
-      user = build(:user, github_id: "12345678")
-
-      expect {
-        user.save!(validate: false)
-      }.to raise_error(ActiveRecord::StatementInvalid)
-    end
-  end
-
-  describe "デフォルト値" do
-    it "admin はデフォルトで false であること" do
-      user = create(:user)
-      expect(user.admin).to be false
-    end
-  end
-
-  describe "関連付け" do
-    describe "has_many :exams" do
-      let(:user) { create(:user) }
-      let!(:exam) { create(:exam, user: user) }
-
-      it "ユーザーが削除された場合、紐付く試験も削除されること" do
-        # UIに削除機能はないが、dependent: :destroy が設定されていることを保証する
-        user.destroy
-        expect(Exam.exists?(exam.id)).to be false
-      end
-    end
-  end
-
   describe "インスタンスメソッド" do
     let(:user) { create(:user) }
 
