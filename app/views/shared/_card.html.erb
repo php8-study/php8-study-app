@@ -1,15 +1,13 @@
 <%
   theme = card_theme_classes(local_assigns[:theme_color] || "default")
-  icon  = card_icon_path(local_assigns[:icon_key] || "default")
+  icon_name = local_assigns[:icon_key] || "default"
 %>
 
 <%= link_to url, class: "group flex items-center bg-white rounded-xl p-6 shadow-sm border-2 border-transparent #{theme[:border]} hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ease-out" do %>
 
   <div class="flex-shrink-0 mr-6">
     <div class="w-16 h-16 rounded-xl <%= theme[:icon_bg] %> flex items-center justify-center shadow-md group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
-      <svg class="w-8 h-8 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<%= icon %>"></path>
-      </svg>
+      <%= inline_svg_tag "icons/#{icon_name}.svg", class: "w-8 h-8 text-white drop-shadow-sm" %>
     </div>
   </div>
 
