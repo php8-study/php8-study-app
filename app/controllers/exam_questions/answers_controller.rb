@@ -21,9 +21,6 @@ module ExamQuestions
       else
         redirect_to review_exam_path(@exam)
       end
-    rescue ActiveRecord::RecordInvalid => e
-      flash.now[:alert] = "回答の保存に失敗しました: #{e.record.errors.full_messages.to_sentence}"
-      render :show, status: :unprocessable_entity
     end
 
     private
