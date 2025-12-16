@@ -81,7 +81,7 @@
         <ul class="space-y-4">
           <% @exam_questions.each do |eq| %>
             <li>
-              <%= link_to solution_exam_exam_question_path(@exam, eq),
+              <%= link_to exam_exam_question_answer_path(@exam, eq),
                           class: "block group bg-white rounded-xl p-5 shadow-sm border border-slate-100 hover:border-indigo-200 hover:shadow-md transition-all duration-200 cursor-pointer",
                           data: { turbo_stream: true } do %>
 

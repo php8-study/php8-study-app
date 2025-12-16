@@ -173,7 +173,7 @@ RSpec.describe "ExamQuestions", type: :request do
       let(:completed_question) { completed_exam.exam_questions.first }
 
       it "試験完了後であれば、解答をTurbo Streamで取得できる" do
-        get solution_exam_exam_question_path(completed_exam, completed_question), as: :turbo_stream
+        get exam_exam_question_answer_path(completed_exam, completed_question), as: :turbo_stream
 
         expect(response).to have_http_status(:ok)
         expect(response.media_type).to eq Mime[:turbo_stream]
@@ -182,7 +182,7 @@ RSpec.describe "ExamQuestions", type: :request do
 
     context "異常系（ステータス制御）" do
       it "試験中（未完了）の場合は解答にアクセスできず 404 になる" do
-        get solution_exam_exam_question_path(exam, exam_question), as: :turbo_stream
+        get exam_exam_question_answer_path(exam, exam_question), as: :turbo_stream
         expect(response).to have_http_status(:not_found)
       end
     end
@@ -192,7 +192,7 @@ RSpec.describe "ExamQuestions", type: :request do
       let(:other_question) { other_exam.exam_questions.first }
 
       it "他人の試験の解答にはアクセスできず 404 になる" do
-        get solution_exam_exam_question_path(other_exam, other_question), as: :turbo_stream
+        get exam_exam_question_answer_path(other_exam, other_question), as: :turbo_stream
         expect(response).to have_http_status(:not_found)
       end
     end
@@ -201,7 +201,7 @@ RSpec.describe "ExamQuestions", type: :request do
       before { sign_out }
 
       it "未ログインでアクセスするとルートパスへリダイレクトされる" do
-        get solution_exam_exam_question_path(exam, exam_question), as: :turbo_stream
+        get exam_exam_question_answer_path(exam, exam_question), as: :turbo_stream
         expect(response).to redirect_to(root_path)
       end
     end

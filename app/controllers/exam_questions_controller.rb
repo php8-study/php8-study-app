@@ -4,15 +4,8 @@ class ExamQuestionsController < ApplicationController
   before_action :set_exam
   before_action :set_exam_question
   before_action :ensure_exam_in_progress, only: %i[show answer]
-  before_action :ensure_exam_completed, only: %i[solution]
 
   def show
-  end
-
-  def solution
-    respond_to do |format|
-      format.turbo_stream { render :solution }
-    end
   end
 
   def answer

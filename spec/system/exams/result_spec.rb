@@ -41,7 +41,7 @@ RSpec.describe "Exam Result (試験結果)", type: :system do
       end
 
       it "モーダルを開くと、自分の回答が「正解」として扱われている" do
-        find("a[href='#{solution_exam_exam_question_path(exam, first_exam_question)}']").click
+        find("a[href='#{exam_exam_question_answer_path(exam, first_exam_question)}']").click
 
         expect(page).to have_selector "div[role='dialog']"
 
@@ -77,7 +77,7 @@ RSpec.describe "Exam Result (試験結果)", type: :system do
     end
 
     it "モーダルを開くと、自分の回答と正解が区別して表示されている" do
-      find("a[href='#{solution_exam_exam_question_path(failed_exam, failed_exam_question)}']").click
+      find("a[href='#{exam_exam_question_answer_path(failed_exam, failed_exam_question)}']").click
 
       within "div[role='dialog']" do
         expect(page).to have_content "不正解の解説"
