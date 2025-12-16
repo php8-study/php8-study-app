@@ -49,10 +49,6 @@ class ExamsController < ApplicationController
     redirect_to root_path
   end
 
-  def review
-    @exam_questions = @exam.exam_questions.includes(:exam_answers).order(position: :asc)
-  end
-
   private
     def set_exam
       @exam = current_user.exams
