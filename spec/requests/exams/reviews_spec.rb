@@ -32,7 +32,7 @@ RSpec.describe "Exam::Reviews", type: :request do
       end
 
       it "存在しない試験IDにアクセスすると404になる" do
-        get exam_review_path(exam_id: 0)
+        get exam_review_path(0)
         expect(response).to have_http_status(:not_found)
       end
     end
