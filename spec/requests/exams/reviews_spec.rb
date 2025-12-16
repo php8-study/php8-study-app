@@ -10,7 +10,7 @@ RSpec.describe "Exam::Reviews", type: :request do
   let!(:active_exam) { create(:exam, :with_questions, user: user) }
 
   before { sign_in_as(user) }
-  describe "GET /exams/:id/review" do
+  describe "GET /exams/:exam_id/review" do
     context "正常系" do
       it "確認画面が表示される" do
         get exam_review_path(active_exam)
