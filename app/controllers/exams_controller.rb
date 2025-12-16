@@ -19,15 +19,6 @@ class ExamsController < ApplicationController
     @needs_reveal_animation = params[:reveal].present?
   end
 
-  def check
-    if current_user.active_exam
-      @active_exam = current_user.active_exam
-      render :check
-    else
-      render :auto_start
-    end
-  end
-
   def create
     exam = Exam::Start.new(user: current_user).call
 
