@@ -5,6 +5,7 @@ module ExamQuestions
     before_action :set_exam
     before_action :set_exam_question
     before_action :ensure_exam_completed, only: %i[show]
+    before_action :ensure_exam_in_progress, only: %i[create]
 
     def show
       respond_to do |format|
