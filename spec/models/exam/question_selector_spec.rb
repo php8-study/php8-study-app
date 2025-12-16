@@ -72,11 +72,13 @@ RSpec.describe Exam::QuestionSelector, type: :model do
         questions = Question.where(id: result_ids)
 
         count_cat1 = questions.where(category_id: category1.id).count
-        questions.where(category_id: category2.id).count
+        count_cat2 = questions.where(category_id: category2.id).count
 
         expected_cat1 = Exam::QuestionSelector::TOTAL_QUESTIONS / 3
 
         expect(count_cat1).to be_within(1).of(expected_cat1)
+
+        expect(count_cat1 + count_cat2).to eq Exam::QuestionSelector::TOTAL_QUESTIONS
       end
     end
 
