@@ -56,12 +56,12 @@ RSpec.describe Question::Versioner, type: :model do
         expect(new_question.persisted?).to be true
       end
 
-      it "指定したパラメータ(content等)が反映されていること" do
+      it "指定したパラメータが反映されていること" do
         expect(new_question.content).to eq "新しい問題文"
         expect(new_question.category_id).to eq category.id
       end
 
-      describe "ネストされた選択肢(QuestionChoice)の処理" do
+      describe "ネストされた選択肢の処理" do
         it "削除フラグ(_destroy: 1)の選択肢は除外され、残りと新規のみ作成されること" do
           expect(new_question.question_choices.size).to eq 2
 
