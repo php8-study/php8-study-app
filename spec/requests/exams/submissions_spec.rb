@@ -8,6 +8,7 @@ RSpec.describe "Exams::Submissions", type: :request do
 
   let!(:completed_exam) { create(:exam, :completed, :with_questions, user: user) }
   let!(:active_exam) { create(:exam, :with_questions, user: user) }
+  let!(:other_active_exam) { create(:exam, :with_questions, user: other_user) }
 
   before do
     sign_in_as(user)
@@ -39,6 +40,13 @@ RSpec.describe "Exams::Submissions", type: :request do
       context "既に完了している試験を提出しようとした場合" do
         it "404 Not Found になる" do
           post exam_submission_path(completed_exam)
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context "他人の進行中の試験を提出しようとした場合" do
+        it "404 Not Found になる" do
+          post exam_submission_path(other_active_exam)
           expect(response).to have_http_status(:not_found)
         end
       end
