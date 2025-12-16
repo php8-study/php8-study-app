@@ -26,7 +26,7 @@
     <% if current_user.present? %>
       <%= render "shared/answer_form",
             question: @question,
-            url: solution_question_path(@question),
+            url: question_solution_path(@question),
             method: :get,
             button_text: "解答する",
             input_name: "user_answer_ids[]",

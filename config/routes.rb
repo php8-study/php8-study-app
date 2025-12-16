@@ -28,9 +28,7 @@ Rails.application.routes.draw do
       get :random
     end
 
-    member do
-      get :solution
-    end
+    resource :solution, only: [:show], module: :questions
   end
 
   resources :exams, only: [:index, :show, :create] do
