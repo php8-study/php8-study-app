@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Exam::Reviews", type: :request do
+RSpec.describe "Exams::Reviews", type: :request do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
 
