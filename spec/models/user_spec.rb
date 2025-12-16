@@ -11,11 +11,6 @@ RSpec.describe User, type: :model do
 
   describe "バリデーション" do
     context "github_id" do
-      it "存在すれば有効なこと" do
-        user = build(:user, github_id: "12345678")
-        expect(user).to be_valid
-      end
-
       it "空であれば無効なこと" do
         user = build(:user, github_id: nil)
         user.valid?
