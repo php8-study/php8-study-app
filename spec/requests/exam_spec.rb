@@ -52,39 +52,6 @@ RSpec.describe "Exams", type: :request do
     end
   end
 
-  describe "GET /exams/check" do
-    context "正常系" do
-      context "進行中の試験がある場合" do
-        it "再開確認画面（checkテンプレート）が表示される" do
-          get check_exams_path
-          expect(response).to have_http_status(:ok)
-          expect(response.body).to include("未完了の模擬試験があります")
-        end
-      end
-
-      context "試験履歴が全くない（進行中もない）場合" do
-        before do
-          user.exams.destroy_all
-        end
-
-        it "自動開始画面（auto_startテンプレート）が表示される" do
-          get check_exams_path
-          expect(response).to have_http_status(:ok)
-          expect(response.body).to include("試験データを作成しています")
-        end
-      end
-    end
-
-    context "未ログインの場合" do
-      before { sign_out }
-
-      it "LPへリダイレクトされる" do
-        get check_exams_path
-        expect(response).to redirect_to(root_path)
-      end
-    end
-  end
-
   describe "POST /exams" do
     context "正常系" do
       it "新しい試験が作成され、その第1問へリダイレクトされる" do

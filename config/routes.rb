@@ -32,11 +32,12 @@ Rails.application.routes.draw do
   end
 
   resources :exams, only: [:index, :show, :create] do
-    collection do
-      get :check
-    end
     resource :review, only: [:show], module: :exams
     resource :submission, only: [:create], module: :exams
+
+    collection do
+      get :check, to: "exams/checks#index"
+    end
 
     resources :exam_questions, only: [:show] do
       member do
