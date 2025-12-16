@@ -146,6 +146,9 @@ GEM
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
+    inline_svg (1.10.0)
+      activesupport (>= 3.0)
+      nokogiri (>= 1.6)
     io-console (0.8.1)
     irb (1.15.3)
       pp (>= 0.6.0)
@@ -438,6 +441,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   importmap-rails
+  inline_svg
   jbuilder
   meta-tags (~> 2.22)
   omniauth (~> 2.1.4)
