@@ -17,9 +17,7 @@ module Exams
 
     private
       def set_exam
-        @exam = current_user.exams
-                          .includes(exam_questions: [:exam_answers])
-                          .find(params[:exam_id])
+        @exam = current_user.exams.find(params[:exam_id])
       end
 
       def ensure_in_progress
