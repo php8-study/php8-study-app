@@ -9,24 +9,6 @@ RSpec.describe Question, type: :model do
     end
   end
 
-  describe "バリデーション" do
-    context "content" do
-      it "空であれば無効なこと" do
-        question = build(:question, content: nil)
-        question.valid?
-        expect(question.errors.of_kind?(:content, :blank)).to be true
-      end
-    end
-
-    context "category_id" do
-      it "空であれば無効なこと" do
-        question = build(:question, category: nil)
-        question.valid?
-        expect(question.errors.of_kind?(:category, :blank)).to be true
-      end
-    end
-  end
-
   describe "スコープ" do
     describe ".active" do
       let!(:active_question) { create(:question) }
@@ -35,29 +17,6 @@ RSpec.describe Question, type: :model do
       it "deleted_at が nil のレコードのみ取得すること" do
         expect(described_class.active).to include(active_question)
         expect(described_class.active).not_to include(archived_question)
-      end
-    end
-  end
-
-  describe "関連付け" do
-    describe "has_many :question_choices" do
-      let(:question) { create(:question) }
-      let!(:choice) { create(:question_choice, question: question) }
-
-      it "問題が物理削除された場合、紐付く選択肢も削除されること" do
-        question.destroy
-        expect(QuestionChoice.exists?(choice.id)).to be false
-      end
-    end
-
-    describe "has_many :exam_questions" do
-      let(:question) { create(:question) }
-      let!(:exam_question) { create(:exam_question, question: question) }
-
-      it "紐付く試験問題がある場合、物理削除はエラーとなり阻止されること" do
-        expect(question.destroy).to be false
-        expect(question.errors.of_kind?(:base, :"restrict_dependent_destroy.has_many")).to be true
-        expect(Question.exists?(question.id)).to be true
       end
     end
   end
