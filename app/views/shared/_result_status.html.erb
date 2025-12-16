@@ -8,7 +8,7 @@
     sub_text: "text-emerald-600",
     label: "正解！",
     message: "素晴らしい！この調子で進めましょう。",
-    icon_path: "M5 13l4 4L19 7" # Check
+    icon_name: "check"
   } : {
     bg: "bg-red-50",
     border: "border-red-200",
@@ -17,15 +17,15 @@
     sub_text: "text-red-600",
     label: "不正解...",
     message: "解説を読んで復習しましょう。",
-    icon_path: "M6 18L18 6M6 6l12 12" # X mark
+    icon_name: "x"
   }
 %>
 
 <div class="rounded-2xl border <%= theme[:border] %> <%= theme[:bg] %> p-6 flex items-center gap-5 shadow-sm">
   <div class="flex-shrink-0 w-14 h-14 rounded-full <%= theme[:icon_bg] %> flex items-center justify-center">
-    <svg class="w-8 h-8 <%= theme[:sub_text] %>" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="<%= theme[:icon_path] %>"></path>
-    </svg>
+    <%= inline_svg_tag "icons/#{theme[:icon_name]}.svg",
+        class: "w-8 h-8 #{theme[:sub_text]}",
+        aria_hidden: true %>
   </div>
   <div>
     <h2 class="text-2xl font-black <%= theme[:text] %> tracking-tight"><%= theme[:label] %></h2>
