@@ -19,7 +19,6 @@ RSpec.describe "Exams::Submissions", type: :request do
         post exam_submission_path(active_exam)
 
         active_exam.reload
-        p active_exam
         expect(active_exam.completed_at).to be_present
         expect(response).to redirect_to(exam_path(active_exam, reveal: true))
       end
