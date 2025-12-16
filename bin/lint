@@ -1,32 +1,13 @@
 #!/usr/bin/env bash
+# エラー(終了コードが0以外)が出た時点で即座に処理を中断する設定
+set -e
 
-MODE="check"
+echo "Running linters with auto-fix..."
 
-if [[ "$1" == "fix" ]]; then
-  MODE="fix"
-fi
+bundle exec rubocop -a
 
-echo "Lint mode: $MODE"
+yarn prettier --write '**/*.{js,ts,jsx,tsx,css,scss}'
 
-echo "Running Rubocop..."
-if [[ "$MODE" == "fix" ]]; then
-  bundle exec rubocop -A
-else
-  bundle exec rubocop
-fi
+bundle exec erb_lint --lint-all --autocorrect
 
-echo "Running Prettier..."
-if [[ "$MODE" == "fix" ]]; then
-  yarn prettier --write '**/*.{js,ts,jsx,tsx,css,scss}'
-else
-  yarn prettier --check '**/*.{js,ts,jsx,tsx,css,scss}'
-fi
-
-echo "Running ERB-Lint..."
-if [[ "$MODE" == "fix" ]]; then
-  bundle exec erb_lint --lint-all --autocorrect
-else
-  bundle exec erb_lint --lint-all
-fi
-
-echo "Linting complete!"
+echo "Linting & Fixing complete!"

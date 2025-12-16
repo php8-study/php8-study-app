@@ -36,8 +36,15 @@ jobs:
     - name: Build CSS
       run: yarn run build:css
 
+    - name: Reset changes from previous steps
+      run: git checkout .
+
     - name: Run Lint
       run: bash bin/lint
+
+    - name: Check for uncommitted changes
+      run: |
+        git diff --exit-code || (echo "Lint found issues and fixed them. Please commit the changes." && exit 1)
 
     - name: Run RSpec tests
       env:
