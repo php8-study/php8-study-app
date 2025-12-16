@@ -11,12 +11,12 @@
 
     <nav class="flex gap-3" aria-label="管理メニュー">
       <%= link_to admin_root_path, class: "inline-flex items-center px-4 py-2 text-sm font-bold text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-sm" do %>
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        <%= inline_svg_tag "icons/left_arrow.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
         管理トップ
       <% end %>
 
       <%= link_to new_admin_category_path, class: "inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm hover:shadow" do %>
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        <%= inline_svg_tag "icons/plus.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
         新規作成
       <% end %>
     </nav>

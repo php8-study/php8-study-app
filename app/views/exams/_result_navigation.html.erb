@@ -5,8 +5,6 @@
 
   <%= link_to exams_path, class: "px-8 py-4 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 transition-all shadow-md flex items-center justify-center" do %>
     <span>履歴一覧へ</span>
-    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-    </svg>
+    <%= inline_svg_tag "icons/right_arrow.svg", class: "w-5 h-5 ml-2", aria_hidden: true %>
   <% end %>
 </div>

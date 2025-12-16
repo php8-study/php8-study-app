@@ -11,12 +11,12 @@
 
     <nav class="flex gap-3" aria-label="管理メニュー">
       <%= link_to admin_root_path, class: "inline-flex items-center px-4 py-2 text-sm font-bold text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-sm" do %>
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        <%= inline_svg_tag "icons/left_arrow.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
         管理トップ
       <% end %>
 
       <%= link_to new_admin_question_path, class: "inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm hover:shadow" do %>
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        <%= inline_svg_tag "icons/plus.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
         新規作成
       <% end %>
     </nav>
@@ -45,13 +45,13 @@
   <% else %>
     <div class="text-center py-16 bg-white rounded-xl border border-slate-200 border-dashed">
       <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-50 mb-4" aria-hidden="true">
-        <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <%= inline_svg_tag "icons/memo.svg", class: "w-8 h-8 text-slate-400" %>
       </div>
       <h3 class="mt-2 text-sm font-bold text-slate-900">問題が登録されていません</h3>
       <p class="mt-1 text-sm text-slate-500">新しい問題を作成してデータベースに追加しましょう。</p>
       <div class="mt-6">
         <%= link_to new_admin_question_path, class: "inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm" do %>
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          <%= inline_svg_tag "icons/plus.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
           問題を新規作成
         <% end %>
       </div>

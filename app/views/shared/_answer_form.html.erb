@@ -14,9 +14,7 @@
               data-action="click->answer-guard#submit"
               class="group relative inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:shadow-lg">
         <span><%= button_text %></span>
-        <svg class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-        </svg>
+        <%= inline_svg_tag "icons/right_arrow.svg", class: "w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1", aria_hidden: true %>
       </button>
     </div>
 

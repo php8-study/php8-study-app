@@ -23,9 +23,7 @@
         <div class="flex items-center gap-2 mt-1">
           <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider bg-slate-100 px-1.5 py-0.5 rounded">Correct</span>
           <span class="text-xs font-bold text-slate-600 flex items-center gap-1">
-            <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
+            <%= inline_svg_tag "icons/mini-check.svg", class: "w-3.5 h-3.5 text-slate-400", aria_hidden: true %>
             <span class="<%= theme[:text_main] %>"><%= exam.correct_count %></span>
             <span class="text-slate-300">/</span>
             <%= exam.total_questions %>
@@ -42,9 +40,7 @@
       </div>
 
       <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
-        <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-        </svg>
+        <%= inline_svg_tag "icons/chevron-right.svg", class: "w-5 h-5 text-slate-400 group-hover:text-slate-600 transition-colors", aria_hidden: true %>
       </div>
     </div>
 

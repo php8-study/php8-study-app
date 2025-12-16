@@ -22,9 +22,7 @@
 
       <div class="flex items-center gap-2 justify-center">
         <%= button_tag type: "submit", class: "text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-lg cursor-pointer transition-colors shadow-sm", title: "保存", aria: { label: "変更を保存" } do %>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-          </svg>
+          <%= inline_svg_tag "icons/check.svg", class: "w-5 h-5", aria_hidden: true %>
         <% end %>
 
         <%= link_to render_row_admin_category_path(category),
@@ -32,9 +30,7 @@
             class: "text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors",
             title: "キャンセル",
             aria: { label: "編集をキャンセル" } do %>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
+          <%= inline_svg_tag "icons/x.svg", class: "w-5 h-5", aria_hidden: true %>
         <% end %>
       </div>
 
