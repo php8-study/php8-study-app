@@ -43,7 +43,7 @@
         <div class="hidden sm:block sm:invisible" aria-hidden="true"></div>
       <% end %>
 
-      <%= link_to review_exam_path(@exam), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-slate-600 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors" do %>
+      <%= link_to exam_review_path(@exam), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-slate-600 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors" do %>
         <%= inline_svg_tag "icons/hamburger.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
         回答状況一覧へ
       <% end %>
@@ -55,7 +55,7 @@
           <%= inline_svg_tag "icons/chevron-right.svg", class: "w-4 h-4 ml-2", aria_hidden: true %>
         <% end %>
       <% else %>
-        <%= link_to review_exam_path(@exam), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 shadow-md hover:shadow-lg transition-all" do %>
+        <%= link_to exam_review_path(@exam), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 shadow-md hover:shadow-lg transition-all" do %>
           回答せずに確認画面へ
           <%= inline_svg_tag "icons/check.svg", class: "w-4 h-4 ml-2", aria_hidden: true %>
         <% end %>

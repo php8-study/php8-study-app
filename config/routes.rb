@@ -35,9 +35,9 @@ Rails.application.routes.draw do
     collection do
       get :check
     end
+    resource :review, only: [:show], module: :exams
 
     member do
-      get :review
       post :submissions, to: "exams#submit"
     end
 
