@@ -36,10 +36,7 @@ Rails.application.routes.draw do
       get :check
     end
     resource :review, only: [:show], module: :exams
-
-    member do
-      post :submissions, to: "exams#submit"
-    end
+    resource :submission, only: [:create], module: :exams
 
     resources :exam_questions, only: [:show] do
       member do
