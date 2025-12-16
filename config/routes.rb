@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
   resources :questions, only: [:show] do
     collection do
-      get :random
+      get :random, to: "questions/randoms#index"
     end
 
     resource :solution, only: [:show], module: :questions
