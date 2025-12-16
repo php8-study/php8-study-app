@@ -2,62 +2,67 @@
 
 require "rails_helper"
 
-RSpec.describe Exam::Start do
+RSpec.describe Exam::Start, type: :model do
   describe "#call" do
     let(:user) { create(:user) }
-    let(:service_call) { described_class.new(user: user).call }
-    let(:questions) { create_list(:question, 3) }
-    let(:question_ids) { questions.map(&:id) }
-    let(:selector_instance) { instance_double(Exam::QuestionSelector, call: question_ids) }
+    let(:service) { described_class.new(user: user) }
+
+    let(:mock_questions) { create_list(:question, 5) }
+    let(:mock_question_ids) { mock_questions.pluck(:id) }
+
+    let(:selector_double) { instance_double(Exam::QuestionSelector) }
 
     before do
-      allow(Exam::QuestionSelector).to receive(:new).and_return(selector_instance)
+      allow(Exam::QuestionSelector).to receive(:new).and_return(selector_double)
+      allow(selector_double).to receive(:call).and_return(mock_question_ids)
     end
 
-    context "正常系" do
-        context "実行中の試験が既に存在する場合" do
-          let!(:old_exam) { create(:exam, user: user, completed_at: nil) }
+    it "Examレコードが1つ作成されること" do
+      expect { service.call }.to change(Exam, :count).by(1)
+    end
 
-          it "古い試験を破棄すること" do
-            service_call
-            expect(Exam.exists?(old_exam.id)).to be false
-          end
+    it "作成されたExamに、Selectorから取得した問題が紐付けられていること" do
+      exam = service.call
 
-          it "新しい試験を作成すること" do
-            new_exam = service_call
-            expect(new_exam).to be_a(Exam)
-          end
+      expect(exam.questions).to match_array(mock_questions)
+      expect(exam.user).to eq user
+    end
 
-          it "試験の総数は変わらないこと" do
-            expect { service_call }.not_to change(Exam, :count)
-          end
-        end
-
-        context "実行中の試験がない場合" do
-            it "新しい試験を一つ作成すること" do
-              expect { service_call }.to change(Exam, :count).by(1)
-            end
-          end
-
-        it "作成された試験に問題が正しく紐付けられていること" do
-          new_exam = service_call
-
-          expect(new_exam.exam_questions.count).to eq(3)
-          expect(new_exam.exam_questions.pluck(:question_id)).to match_array(question_ids)
-        end
-      end
-
-    context "異常系: 途中でエラーが発生した場合" do
+    context "既に進行中の試験がある場合" do
       let!(:old_exam) { create(:exam, user: user, completed_at: nil) }
+      let!(:old_exam_question) { create(:exam_question, exam: old_exam) }
 
+      it "古い試験から新しい試験へ切り替わること" do
+        expect(user.active_exam).to eq old_exam
+
+        new_exam = service.call
+
+        expect(user.active_exam).to eq new_exam
+        expect(user.active_exam).not_to eq old_exam
+      end
+    end
+
+    context "処理中にエラーが発生した場合" do
       before do
-        allow_any_instance_of(Exam).to receive(:attach_questions!).and_raise(ActiveRecord::RecordInvalid)
+        allow(selector_double).to receive(:call).and_raise(ActiveRecord::ActiveRecordError)
       end
 
-      it "トランザクションがロールバックされ、古い試験が削除されないこと" do
-        expect { service_call }.to raise_error(ActiveRecord::RecordInvalid)
-        expect(Exam.exists?(old_exam.id)).to be true
-        expect(Exam.count).to eq(1)
+      it "例外が発生し、Examは作成されないこと（ロールバック）" do
+        expect {
+          service.call
+        }.to raise_error(ActiveRecord::ActiveRecordError)
+
+        expect(Exam.count).to eq 0
+      end
+
+      it "古い試験の削除もロールバックされること" do
+        create(:exam, user: user, completed_at: nil)
+
+        expect {
+          service.call
+        }.to raise_error(ActiveRecord::ActiveRecordError)
+
+        expect(user.exams.count).to eq 1
       end
     end
   end

@@ -7,10 +7,12 @@ class Question::Versioner
   end
 
   def create_version!
-    @old_question.update_columns(deleted_at: Time.current)
-    new_params = params_for_new_version(@raw_params.to_h)
+    Question.transaction do
+      @old_question.update_columns(deleted_at: Time.current)
+      new_params = params_for_new_version(@raw_params.to_h)
 
-    Question.create!(new_params)
+      Question.create!(new_params)
+    end
   end
 
   private

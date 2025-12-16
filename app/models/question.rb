@@ -16,9 +16,12 @@ class Question < ApplicationRecord
     assign_attributes(params)
     return false unless valid?
 
-    transaction do
-      in_use? ? Question::Versioner.new(self, params).create_version! : (save! && self)
+    if in_use?
+      Question::Versioner.new(self, params).create_version!
+    else
+      save! && self
     end
+
   rescue ActiveRecord::RecordInvalid
     false
   end

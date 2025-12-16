@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :question do
-    association :category
+    association :category, strategy: :create
     content { Faker::Lorem.paragraph(sentence_count: 3) }
     explanation { Faker::Lorem.paragraph(sentence_count: 2) }
     official_page { Faker::Number.between(from: 1, to: 300) }

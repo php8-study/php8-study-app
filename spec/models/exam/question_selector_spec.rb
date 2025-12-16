@@ -2,82 +2,107 @@
 
 require "rails_helper"
 
-RSpec.describe Exam::QuestionSelector do
+RSpec.describe Exam::QuestionSelector, type: :model do
   describe "#call" do
-    let(:selected_ids) { described_class.new.call }
-    let!(:category_heavy) { create(:category, chapter_number: 1, weight: 80.0) }
-    let!(:category_light) { create(:category, chapter_number: 2, weight: 20.0) }
+    let(:selector) { described_class.new }
 
-    context "問題数が十分に存在する場合" do
+    let(:category1) { create(:category, chapter_number: 1, weight: 10) }
+    let(:category2) { create(:category, chapter_number: 2, weight: 10) }
+
+    context "十分な数の問題がある場合" do
       before do
-        create_list(:question, 50, category: category_heavy)
-        create_list(:question, 50, category: category_light)
+        create_list(:question, 25, category: category1)
+        create_list(:question, 25, category: category2)
       end
 
-      it "合計で40問の問題IDが返されること" do
-        expect(selected_ids.count).to eq(40)
+      it "合計数が定数(TOTAL_QUESTIONS)と一致すること" do
+        result_ids = selector.call
+        expect(result_ids.count).to eq Exam::QuestionSelector::TOTAL_QUESTIONS
       end
 
-      it "重みに応じて問題数が配分されること" do
-        selected_questions = Question.where(id: selected_ids)
-        heavy_count = selected_questions.where(category: category_heavy).count
-        light_count = selected_questions.where(category: category_light).count
+      it "チャプター順（昇順）に並んでいること" do
+        result_ids = selector.call
 
-        expect(heavy_count).to be_within(2).of(32)
-        expect(light_count).to be_within(2).of(8)
+        questions_map = Question.where(id: result_ids)
+                                .includes(:category)
+                                .index_by(&:id)
+
+        result_chapters = result_ids.map { |id| questions_map[id].category.chapter_number }
+
+        half_count = result_ids.size / 2
+        first_half = result_chapters.first(half_count)
+        second_half = result_chapters.last(half_count)
+
+        expect(first_half).to all(eq 1)
+        expect(second_half).to all(eq 2)
       end
 
-      it "カテゴリの章番号順にソートされていること" do
-        questions_by_id = Question.where(id: selected_ids)
-                          .includes(:category)
-                          .index_by(&:id)
-        ordered_questions = selected_ids.map { |id| questions_by_id[id] }
-        chapters = ordered_questions.map { |q| q.category.chapter_number }
+      it "重み付けに従って配分されること（等しい重みなら等しい数）" do
+        result_ids = selector.call
+        questions = Question.where(id: result_ids)
 
-        expect(chapters).to eq(chapters.sort)
+        count_cat1 = questions.where(category_id: category1.id).count
+        count_cat2 = questions.where(category_id: category2.id).count
+
+        expect(count_cat1).to eq count_cat2
+
+        expect(count_cat1 + count_cat2).to eq Exam::QuestionSelector::TOTAL_QUESTIONS
       end
     end
 
-    context "特定カテゴリの問題数が不足している場合" do
+    context "重みによる配分で端数が出る場合" do
+      # カテゴリ1(重み10), カテゴリ2(重み20) -> 1:2
+      # 全40問 -> 13.33問 : 26.66問 -> floorして 13 : 26 (計39)
+      # 残り1問が adjust_remaining で埋められる
+      let(:category1) { create(:category, chapter_number: 1, weight: 10) }
+      let(:category2) { create(:category, chapter_number: 2, weight: 20) }
+
       before do
-        create_list(:question, 5, category: category_heavy)
-        create_list(:question, 100, category: category_light)
+        create_list(:question, 20, category: category1)
+        create_list(:question, 30, category: category2)
       end
 
-      it "不足分を他から補って40問返すこと" do
-        expect(selected_ids.count).to eq(40)
+      it "不足分が補充され、合計数が仕様通りになること" do
+        result_ids = selector.call
+        expect(result_ids.count).to eq Exam::QuestionSelector::TOTAL_QUESTIONS
       end
 
-      it "不足しているカテゴリの問題は全て選ばれていること" do
-        selected_questions = Question.where(id: selected_ids)
-        heavy_count = selected_questions.where(category: category_heavy).count
+      it "配分がおおよそ 1:2 になっていること" do
+        result_ids = selector.call
+        questions = Question.where(id: result_ids)
 
-        expect(heavy_count).to eq(5)
+        count_cat1 = questions.where(category_id: category1.id).count
+        count_cat2 = questions.where(category_id: category2.id).count
+
+        expected_cat1 = Exam::QuestionSelector::TOTAL_QUESTIONS / 3
+
+        expect(count_cat1).to be_within(1).of(expected_cat1)
+
+        expect(count_cat1 + count_cat2).to eq Exam::QuestionSelector::TOTAL_QUESTIONS
       end
     end
 
-    context "そもそも問題総数が40問未満の場合" do
+    context "問題数が不足している場合" do
       before do
-        create_list(:question, 10, category: category_heavy)
-        create_list(:question, 10, category: category_light)
+        create_list(:question, 5, category: category1)
+        create_list(:question, 5, category: category2)
       end
 
-      it "存在する全問題を返し、エラーにならないこと" do
-        expect(selected_ids.count).to eq(20)
+      it "存在する全問題のIDを返すこと" do
+        result_ids = selector.call
+        expect(result_ids.count).to eq 10
       end
     end
 
-    context "論理削除された（アーカイブ済みの）問題が存在する場合" do
-      let!(:active_questions)   { create_list(:question, 30, category: category_heavy) }
-      let!(:archived_questions) { create_list(:question, 10, :archived, category: category_heavy) }
+    context "論理削除された問題が含まれる場合" do
+      let!(:active_q) { create(:question, category: category1) }
+      let!(:archived_q) { create(:question, :archived, category: category1) }
 
-      it "アーカイブ済みの問題は選出リストに含まれないこと" do
-        archived_ids = archived_questions.map(&:id)
-        expect(selected_ids).not_to include(*archived_ids)
-      end
+      it "activeな問題のみ選定されること" do
+        result_ids = selector.call
 
-      it "アクティブな問題のみから選出されること" do
-        expect(selected_ids.count).to eq(30)
+        expect(result_ids).to include(active_q.id)
+        expect(result_ids).not_to include(archived_q.id)
       end
     end
   end
