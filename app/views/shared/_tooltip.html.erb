@@ -5,13 +5,15 @@
   <button type="button"
           class="cursor-help text-slate-400 hover:text-indigo-600 transition-all duration-200 hover:scale-110 bg-slate-200/50 rounded-full p-0.5 border-none outline-none focus:ring-2 focus:ring-indigo-500"
           data-tooltip-target="trigger"
-          aria-label="公式テキスト参照箇所">
+          aria-label="公式テキスト参照箇所"
+          aria-describedby="reference-tooltip-content">
     <%= inline_svg_tag "icons/info_circle.svg", class: "w-5 h-5", aria_hidden: true %>
   </button>
 
   <div role="tooltip"
        class="opacity-0 invisible transition-opacity duration-200 w-96 max-w-[90vw] min-w-[320px] pointer-events-auto"
-       data-tooltip-target="content">
+       data-tooltip-target="content"
+       id="reference-tooltip-content">
 
     <div class="bg-slate-800 text-white rounded-lg p-5 shadow-xl relative text-left leading-relaxed border border-slate-700 w-full">
 
