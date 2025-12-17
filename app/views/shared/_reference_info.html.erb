@@ -55,7 +55,8 @@
                     </p>
                   </div>
 
-                  <%= link_to "https://ourl.jp/z91LZ", class: "flex items-center text-xs text-indigo-400 hover:text-indigo-300 transition-colors mt-3 font-bold whitespace-nowrap ml-auto group/link", target: "_blank" do %>
+                  <%= link_to "https://ourl.jp/z91LZ", class: "flex items-center text-xs text-indigo-400 hover:text-indigo-300 transition-colors mt-3 font-bold whitespace-nowrap ml-auto group/link", target: "_blank", rel: "noopener noreferrer" do %>
+
                     詳細を見る
                     <%= inline_svg_tag "icons/arrow_long_right.svg", class: "w-4 h-4 ml-1 transform transition-transform group-hover/link:translate-x-1", aria_hidden: true %>
                   <% end %>
