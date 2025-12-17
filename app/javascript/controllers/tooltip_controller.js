@@ -24,9 +24,10 @@ export default class extends Controller {
     const contentRect = this.contentTarget.getBoundingClientRect();
 
     const top = triggerRect.top - contentRect.height - 10;
-    const left = triggerRect.left + triggerRect.width / 2 - contentRect.width / 2;
+    const left =
+      triggerRect.left + triggerRect.width / 2 - contentRect.width / 2;
 
-        if (left < 10) {
+    if (left < 10) {
       left = 10;
     }
 
