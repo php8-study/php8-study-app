@@ -3,11 +3,11 @@
 Rails.application.routes.draw do
   root "home#index"
 
-  get "terms", to: "pages#terms"
-  get "privacy", to: "pages#privacy"
-
   get "/auth/github/callback", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
+
+  resource :terms, only: %i[show], controller: "terms"
+  resource :privacy, only: %i[show], controller: "privacy"
 
   namespace :admin do
     root to: "home#index"
