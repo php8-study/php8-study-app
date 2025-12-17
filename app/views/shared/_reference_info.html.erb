@@ -15,15 +15,19 @@
 
         <div class="relative inline-flex ml-1"
              data-controller="tooltip"
-             data-action="mouseenter->tooltip#show mouseleave->tooltip#hide">
+             data-action="mouseenter->tooltip#show mouseleave->tooltip#hide focusin->tooltip#show focusout->tooltip#hide keydown.esc->tooltip#hide">
 
-          <div class="cursor-help text-slate-400 hover:text-indigo-600 transition-all duration-200 hover:scale-110 bg-slate-200/50 rounded-full p-0.5"
-               data-tooltip-target="trigger">
+          <button type="button"
+                  class="cursor-help text-slate-400 hover:text-indigo-600 transition-all duration-200 hover:scale-110 bg-slate-200/50 rounded-full p-0.5 border-none outline-none focus:ring-2 focus:ring-indigo-500"
+                  data-tooltip-target="trigger"
+                  aria-label="公式テキスト参照箇所"
+                  aria-describedby="tooltip-content-<%= question.id %>">
             <%= inline_svg_tag "icons/info_circle.svg", class: "w-5 h-5", aria_hidden: true %>
-          </div>
+          </button>
 
-          <div class="absolute opacity-0 invisible transition-opacity duration-200 w-96 max-w-[90vw] pointer-events-auto z-50"
-               style="min-width: 320px;"
+          <div id="tooltip-content-<%= question.id %>"
+               role="tooltip"
+               class="opacity-0 invisible transition-opacity duration-200 w-96 max-w-[90vw] min-w-[320px] pointer-events-auto"
                data-tooltip-target="content">
 
             <div class="bg-slate-800 text-white rounded-lg p-5 shadow-xl relative text-left leading-relaxed border border-slate-700 w-full">
@@ -56,7 +60,6 @@
                   </div>
 
                   <%= link_to "https://ourl.jp/z91LZ", class: "flex items-center text-xs text-indigo-400 hover:text-indigo-300 transition-colors mt-3 font-bold whitespace-nowrap ml-auto group/link", target: "_blank", rel: "noopener noreferrer" do %>
-
                     詳細を見る
                     <%= inline_svg_tag "icons/arrow_long_right.svg", class: "w-4 h-4 ml-1 transform transition-transform group-hover/link:translate-x-1", aria_hidden: true %>
                   <% end %>
