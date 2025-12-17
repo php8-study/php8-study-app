@@ -23,8 +23,6 @@ registry:
     - KAMAL_REGISTRY_PASSWORD
 
 env:
-  clear:
-    DB_HOST: 133.125.53.173
   secret:
     - RAILS_MASTER_KEY
     - GITHUB_CLIENT_ID
