@@ -1,0 +1,54 @@
+<% if Rails.env.development? %>
+  <style>
+    .dev-tools-emoji {
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    }
+    .dev-tools-container summary { list-style: none; }
+    .dev-tools-container summary::-webkit-details-marker { display: none; }
+  </style>
+
+  <div class="dev-tools-container fixed bottom-5 right-5 z-[9999] font-sans">
+    <details class="group relative">
+
+      <summary class="flex items-center justify-center shadow-2xl cursor-pointer hover:scale-105 transition-all duration-200 border-2 border-white rounded-full"
+               style="background-color: #1f2937; color: white; width: 56px; height: 56px; border-radius: 50%;">
+        <span class="text-2xl select-none dev-tools-emoji">🛠</span>
+      </summary>
+
+      <div class="fixed bottom-24 right-5 w-72 bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden">
+
+        <div class="bg-gray-50 px-4 py-3 border-b border-gray-200">
+          <span class="text-xs font-bold text-gray-600 uppercase tracking-wider">開発用ログイン</span>
+        </div>
+
+        <div class="max-h-[60vh] overflow-y-auto p-2 space-y-1 bg-white">
+          <% development_users.each do |user| %>
+            <%= link_to development_sign_in_as_path(user_id: user.id),
+                class: "flex items-center p-2 rounded-lg hover:bg-blue-50 transition-colors group/item decoration-0 text-current no-underline" do %>
+
+              <span class="inline-flex items-center justify-center bg-gray-100 text-gray-500 text-[10px] font-mono w-8 h-6 rounded mr-3 border border-gray-200">
+                ID:<%= user.id %>
+              </span>
+
+              <div class="flex-1">
+                <div class="flex items-center justify-between leading-tight">
+                  <span class="text-sm font-bold text-gray-700 group-hover/item:text-blue-600">
+                    <%= user.admin? ? "👑 管理者" : "👤 一般" %>
+                  </span>
+                </div>
+                <div class="text-[10px] text-gray-400 font-mono mt-0.5">
+                  Github: <%= user.github_id %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="bg-gray-50 p-2 text-center border-t border-gray-100">
+          <span class="text-[10px] text-gray-400">Development Mode Only</span>
+        </div>
+      </div>
+
+    </details>
+  </div>
+<% end %>

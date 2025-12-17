@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   get "/auth/github/callback", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
+  if Rails.env.development?
+    get "/development/login_as/:user_id", to: "development/sessions#sign_in_as", as: :development_sign_in_as
+  end
+
   resource :terms, only: %i[show], controller: "terms"
   resource :privacy, only: %i[show], controller: "privacy"
 
