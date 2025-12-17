@@ -26,7 +26,8 @@
         <div class="p-8 md:p-12 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
 
           <figure class="relative w-48 h-48 md:w-56 md:h-56" aria-label="スコアチャート">
-            <%= inline_svg_tag "icons/circle.svg", class: "w-full h-full transform -rotate-90", aria_hidden: true %>
+            <%= render "result_circle", chart: chart %>
+
             <figcaption class="absolute inset-0 flex flex-col items-center justify-center">
               <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Score</span>
               <div class="flex items-baseline">
