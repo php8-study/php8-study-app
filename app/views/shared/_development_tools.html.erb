@@ -17,7 +17,7 @@
 
   <div class="dev-tools-fixed-container">
     <details class="dev-tools-no-marker group">
-      
+
       <summary class="flex items-center justify-center shadow-2xl cursor-pointer hover:scale-105 transition-all duration-200 border-2 border-white rounded-full"
                style="background-color: #1f2937; color: white; width: 56px; height: 56px; border-radius: 50%;">
         <span class="text-2xl select-none dev-tools-emoji" style="font-size: 24px;">🛠</span>
@@ -25,26 +25,26 @@
 
       <div class="dev-tools-menu-position w-72 bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden"
            style="width: 300px; background-color: white; border: 1px solid #e5e7eb; border-radius: 12px;">
-        
+
         <div class="bg-gray-50 px-4 py-3 border-b border-gray-200" style="background-color: #f9fafb; padding: 12px 16px; border-bottom: 1px solid #e5e7eb;">
           <span class="text-xs font-bold text-gray-600 uppercase tracking-wider" style="font-size: 12px; font-weight: bold; color: #4b5563;">開発用ログイン</span>
         </div>
 
         <div class="max-h-[60vh] overflow-y-auto p-2 space-y-1 bg-white" style="max-height: 60vh; overflow-y: auto; padding: 8px;">
           <% User.order(:id).each do |user| %>
-            <%= link_to development_sign_in_as_path(user_id: user.id), 
+            <%= link_to development_sign_in_as_path(user_id: user.id),
                 class: "flex items-center p-2 rounded-lg hover:bg-blue-50 transition-colors group/item decoration-0",
                 style: "display: flex; align-items: center; padding: 8px; text-decoration: none; color: inherit; margin-bottom: 4px;" do %>
-              
+
               <span class="inline-flex items-center justify-center bg-gray-100 text-gray-500 text-[10px] font-mono w-8 h-6 rounded mr-3 border border-gray-200"
                     style="background-color: #f3f4f6; color: #6b7280; font-size: 10px; width: 32px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; margin-right: 12px; border: 1px solid #e5e7eb;">
                 ID:<%= user.id %>
               </span>
-              
+
               <div class="flex-1">
                 <div class="flex items-center justify-between">
                   <span class="text-sm font-bold text-gray-700 group-hover/item:text-blue-600" style="font-size: 14px; font-weight: bold; color: #374151;">
-                    <%= user.admin? ? '👑 管理者' : '👤 一般' %>
+                    <%= user.admin? ? "👑 管理者" : "👤 一般" %>
                   </span>
                 </div>
                 <div class="text-[10px] text-gray-400 font-mono mt-0.5" style="font-size: 10px; color: #9ca3af;">
