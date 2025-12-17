@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 puts "🧹 既存のデータを削除中..."
 ExamAnswer.destroy_all
 ExamQuestion.destroy_all
@@ -10,7 +12,7 @@ User.destroy_all
 
 puts "👤 ユーザーを作成中..."
 
-admin_user = User.create!(
+User.create!(
   github_id: 100_001,
   admin: true
 )
@@ -27,11 +29,11 @@ puts "  - 一般ユーザー (github_id: 100002)"
 puts "📚 カテゴリを作成中..."
 
 categories_data = [
-  { name: 'PHPの基礎と構文', chapter_number: 1, weight: 1.0 },
-  { name: '関数と配列', chapter_number: 2, weight: 1.0 },
-  { name: 'オブジェクト指向', chapter_number: 3, weight: 1.5 },
-  { name: 'セキュリティとデータベース', chapter_number: 4, weight: 1.2 },
-  { name: 'Web技術とHTTP', chapter_number: 5, weight: 0.8 }
+  { name: "PHPの基礎と構文", chapter_number: 1, weight: 1.0 },
+  { name: "関数と配列", chapter_number: 2, weight: 1.0 },
+  { name: "オブジェクト指向", chapter_number: 3, weight: 1.5 },
+  { name: "セキュリティとデータベース", chapter_number: 4, weight: 1.2 },
+  { name: "Web技術とHTTP", chapter_number: 5, weight: 0.8 }
 ]
 
 categories = categories_data.map do |data|
@@ -85,15 +87,15 @@ puts "📊 模擬試験の履歴データを作成中..."
       position: idx + 1
     )
 
- 
+
     correct_choice = question.question_choices.find_by(correct: true)
     incorrect_choices = question.question_choices.where(correct: false)
-    
+
     picked_choice = if rand < 0.8
-                      correct_choice
-                    else
-                      incorrect_choices.sample
-                    end
+      correct_choice
+    else
+      incorrect_choices.sample
+    end
 
     ExamAnswer.create!(
       exam_question: exam_question,
