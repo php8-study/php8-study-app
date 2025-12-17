@@ -10,7 +10,6 @@ module Development
         raise ActionController::RoutingError, "Not Found" unless Rails.env.development?
       end
 
-
       def sign_in_as
         user = User.find(params[:user_id])
         unless user
