@@ -43,8 +43,6 @@
 .kamal/secrets
 
 # Yarn (Berry) configuration
-# .yarnフォルダ内のファイルは基本無視するが、
-# 実行に必要なリリースファイルやプラグインだけは例外的に許可する設定
 .pnp.*
 .yarn/*
 !.yarn/patches
