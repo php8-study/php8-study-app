@@ -41,6 +41,6 @@
     </div>
 
     <div id="modal-frame" class="fixed inset-0 pointer-events-none"></div>
-    <%= render "shared/development_tools" %>
+    <%= render "shared/development_tools" if Rails.env.development? %>
   </body>
 </html>
