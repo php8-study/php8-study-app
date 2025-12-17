@@ -6,7 +6,7 @@ module Development
     skip_before_action :require_login, raise: false
 
       def sign_in_as
-        user = User.find(params[:user_id])
+        user = User.find_by(params[:user_id])
         unless user
           redirect_to root_path, alert: "指定されたユーザーが見つかりません"
           return
