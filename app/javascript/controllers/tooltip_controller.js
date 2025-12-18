@@ -20,7 +20,7 @@ export default class extends Controller {
   }
 
   disconnect() {
-    if (this.showTimeout) clearTimeout(this.showTimeout);
+    if (this.resetPositionTimeout) clearTimeout(this.resetPositionTimeout);
     if (this.hideTimeout) clearTimeout(this.hideTimeout);
   }
 
@@ -41,7 +41,7 @@ export default class extends Controller {
     this.hideTimeout = setTimeout(() => {
       this.contentTarget.classList.add("invisible", "opacity-0");
 
-      this.showTimeout = setTimeout(() => {
+      this.resetPositionTimeout = setTimeout(() => {
         if (this.contentTarget.classList.contains("invisible")) {
           this.contentTarget.style.top = "-9999px";
           this.contentTarget.style.left = "-9999px";
