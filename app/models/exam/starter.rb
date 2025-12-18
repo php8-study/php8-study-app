@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Exam::Start
+class Exam::Starter
   def initialize(user:)
     @user = user
   end
