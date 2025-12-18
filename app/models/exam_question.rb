@@ -3,6 +3,8 @@
 class ExamQuestion < ApplicationRecord
   belongs_to :exam, inverse_of: :exam_questions
   belongs_to :question, inverse_of: :exam_questions
+  # 親(Exam)削除時はDBのcascade機能で自動削除されるため、Railsは何もしない
+  # (単体削除時の整合性とドキュメントも兼ねて :delete_all を設定)
   has_many :exam_answers, inverse_of: :exam_question, dependent: :delete_all
   has_many :user_choices, through: :exam_answers, source: :question_choice
 

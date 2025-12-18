@@ -2,7 +2,7 @@
 
 class Exam < ApplicationRecord
   belongs_to :user
-
+  # ※ 紐付くExamAnswerは、DB側の外部キー制約(on_delete: :cascade)により連鎖削除されるため安全
   has_many :exam_questions, -> { order(position: :asc) }, dependent: :delete_all
   has_many :exam_answers, through: :exam_questions
   has_many :questions, through: :exam_questions
