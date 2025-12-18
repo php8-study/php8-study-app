@@ -56,10 +56,10 @@ export default class extends Controller {
     const viewportWidth = window.innerWidth;
 
     let top = triggerRect.top - contentRect.height - OFFSET;
-    let left = triggerRect.left + (triggerRect.width / 2) - (contentRect.width / 2);
+    let left = triggerRect.left + triggerRect.width / 2 - contentRect.width / 2;
 
     left = Math.max(OFFSET, left);
-    
+
     const maxLeft = viewportWidth - contentRect.width - OFFSET;
     left = Math.min(left, maxLeft);
 

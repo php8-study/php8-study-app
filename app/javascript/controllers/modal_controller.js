@@ -18,7 +18,7 @@ export default class extends Controller {
     if (e.key === "Escape") {
       this.close();
     }
-  }
+  };
 
   disconnect() {
     document.body.classList.remove("overflow-hidden");

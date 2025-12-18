@@ -26,7 +26,6 @@ export default class extends Controller {
       if (entry.isIntersecting) {
         this.element.classList.remove("fixed");
         this.element.classList.add("absolute");
-
       } else {
         this.element.classList.remove("absolute");
         this.element.classList.add("fixed");
