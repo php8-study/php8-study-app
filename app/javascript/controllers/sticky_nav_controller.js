@@ -6,44 +6,41 @@ export default class extends Controller {
   };
 
   connect() {
-    this.ticking = false;
+    this.observer = new IntersectionObserver(this.handleIntersect.bind(this), {
+      root: null,
+      threshold: 0,
+    });
 
-    this.onScroll = () => {
-      if (!this.ticking) {
-        window.requestAnimationFrame(() => {
-          this.handleScroll();
-          this.ticking = false;
-        });
-        this.ticking = true;
+    const footer = document.querySelector(this.footerSelectorValue);
+
+    if (footer) {
+      this.observer.observe(footer);
+
+      const rect = footer.getBoundingClientRect();
+      const isIntersecting = rect.top < window.innerHeight;
+
+      if (isIntersecting) {
+        this.element.classList.remove("fixed");
+        this.element.classList.add("absolute");
+      } else {
+        this.element.classList.remove("absolute");
+        this.element.classList.add("fixed");
       }
-    };
-
-    window.addEventListener("scroll", this.onScroll);
-    window.addEventListener("resize", this.onScroll);
-
-    this.handleScroll();
+    } else {
+      console.warn(
+        `[sticky-nav] Footer not found: ${this.footerSelectorValue}`,
+      );
+    }
   }
 
   disconnect() {
-    window.removeEventListener("scroll", this.onScroll);
-    window.removeEventListener("resize", this.onScroll);
+    if (this.observer) this.observer.disconnect();
   }
 
-  handleScroll() {
-    const footerElement = document.querySelector(this.footerSelectorValue);
-    if (!footerElement) return;
-
-    const footerTop = footerElement.getBoundingClientRect().top;
-    const windowHeight = window.innerHeight;
-
-    const shouldUnfix = footerTop < windowHeight;
-
-    if (shouldUnfix) {
-      this.element.classList.remove("fixed");
-      this.element.classList.add("absolute");
-    } else {
-      this.element.classList.remove("absolute");
-      this.element.classList.add("fixed");
-    }
+  handleIntersect(entries) {
+    entries.forEach((entry) => {
+      this.element.classList.toggle("fixed", !entry.isIntersecting);
+      this.element.classList.toggle("absolute", entry.isIntersecting);
+    });
   }
 }

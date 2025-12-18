@@ -7,13 +7,13 @@ class ExamsController < ApplicationController
   def index
     @exams = current_user.exams
                          .where.not(completed_at: nil)
-                         .includes(exam_questions: [{ question: :question_choices }, :exam_answers])
+                         .preload(exam_questions: [{ question: :question_choices }, :exam_answers])
                          .order(completed_at: :desc)
   end
 
   def show
     @exam_questions = @exam.exam_questions
-                           .includes({ question: [:question_choices, :category] }, :exam_answers)
+                           .preload({ question: [:question_choices, :category] }, :exam_answers)
                            .order(:position)
 
     @needs_reveal_animation = params[:reveal].present?

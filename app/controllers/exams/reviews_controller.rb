@@ -7,7 +7,7 @@ module Exams
 
     def show
       @exam_questions = @exam.exam_questions
-                             .includes(:exam_answers, question: :question_choices)
+                             .preload(:exam_answers, question: :question_choices)
                              .order(position: :asc)
     end
 
