@@ -6,44 +6,31 @@ export default class extends Controller {
   };
 
   connect() {
-    this.ticking = false;
+    this.observer = new IntersectionObserver(this.handleIntersect.bind(this), {
+      root: null,
+      threshold: 0,
+    });
 
-    this.onScroll = () => {
-      if (!this.ticking) {
-        window.requestAnimationFrame(() => {
-          this.handleScroll();
-          this.ticking = false;
-        });
-        this.ticking = true;
-      }
-    };
-
-    window.addEventListener("scroll", this.onScroll);
-    window.addEventListener("resize", this.onScroll);
-
-    this.handleScroll();
+    const footer = document.querySelector(this.footerSelectorValue);
+    if (footer) {
+      this.observer.observe(footer);
+    }
   }
 
   disconnect() {
-    window.removeEventListener("scroll", this.onScroll);
-    window.removeEventListener("resize", this.onScroll);
+    this.observer.disconnect();
   }
 
-  handleScroll() {
-    const footerElement = document.querySelector(this.footerSelectorValue);
-    if (!footerElement) return;
+  handleIntersect(entries) {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        this.element.classList.remove("fixed");
+        this.element.classList.add("absolute");
 
-    const footerTop = footerElement.getBoundingClientRect().top;
-    const windowHeight = window.innerHeight;
-
-    const shouldUnfix = footerTop < windowHeight;
-
-    if (shouldUnfix) {
-      this.element.classList.remove("fixed");
-      this.element.classList.add("absolute");
-    } else {
-      this.element.classList.remove("absolute");
-      this.element.classList.add("fixed");
-    }
+      } else {
+        this.element.classList.remove("absolute");
+        this.element.classList.add("fixed");
+      }
+    });
   }
 }
