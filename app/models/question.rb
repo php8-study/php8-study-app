@@ -33,7 +33,7 @@ class Question < ApplicationRecord
   end
 
   def correct_choice_ids
-    question_choices.where(correct: true).pluck(:id).sort
+    question_choices.select(&:correct?).map(&:id).sort
   end
 
   def answer_correct?(input_choice_ids)
