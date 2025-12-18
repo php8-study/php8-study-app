@@ -39,7 +39,7 @@ module OmniAuthHelpers
       click_link "ログアウト"
       expect(page).to have_content "GitHubでログイン"
     else
-      delete logout_path
+      delete session_path
     end
   end
 

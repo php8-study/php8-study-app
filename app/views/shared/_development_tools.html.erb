@@ -4,8 +4,9 @@
       <span class="font-bold border-r border-slate-700 pr-4">🛠 開発ログイン:</span>
       <div class="flex gap-3">
         <% development_users.each do |user| %>
-          <%= link_to development_sign_in_as_path(user_id: user.id),
-              class: "hover:text-blue-400 underline decoration-slate-600 underline-offset-4 transition-colors" do %>
+          <%= button_to development_login_as_path(user_id: user.id),
+              form: { class: "inline-block" },
+              class: "bg-transparent border-none p-0 cursor-pointer text-inherit font-inherit hover:text-blue-400 underline decoration-slate-600 underline-offset-4 transition-colors" do %>
             <%= user.admin? ? "👑管理者" : "👤一般" %>(ID:<%= user.id %>)
           <% end %>
         <% end %>

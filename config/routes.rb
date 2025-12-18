@@ -4,18 +4,23 @@ Rails.application.routes.draw do
   root "home#index"
 
   get "/auth/github/callback", to: "sessions#create"
-  delete "/logout", to: "sessions#destroy"
+
+  resource :session, only: [:destroy]
+
 
   if Rails.env.development?
-    get "/development/login_as/:user_id", to: "development/sessions#sign_in_as", as: :development_sign_in_as
+    namespace :development do
+      post "login_as/:user_id", to: "sessions#sign_in_as", as: :login_as
+    end
   end
 
-  resource :terms, only: %i[show], controller: "terms"
-  resource :privacy, only: %i[show], controller: "privacy"
+  with_options only: :show do
+    resource :terms, controller: :terms
+    resource :privacy, controller: :privacy
+  end
 
   namespace :admin do
     root to: "home#index"
-
     resources :questions
     resources :categories
   end
@@ -25,15 +30,19 @@ Rails.application.routes.draw do
   end
 
   resources :questions, only: [:show] do
-    resource :solution, only: [:show], module: :questions
+    scope module: :questions do
+      resource :solution, only: [:show]
+    end
   end
 
   resources :exams, only: [:index, :show, :create] do
-    resource :review, only: [:show], module: :exams
-    resource :submission, only: [:create], module: :exams
+    scope module: :exams do
+      resource :review, only: [:show]
+      resource :submission, only: [:create]
 
-    collection do
-      get :check, to: "exams/checks#index"
+      collection do
+        get :check, to: "checks#index"
+      end
     end
 
     resources :exam_questions, only: [:show] do
@@ -42,7 +51,6 @@ Rails.application.routes.draw do
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
-
   match "/404", to: "errors#not_found", via: :all
   match "/500", to: "errors#internal_server_error", via: :all
   match "*path", to: "errors#not_found", via: :all
