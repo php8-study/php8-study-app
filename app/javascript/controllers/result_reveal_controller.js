@@ -1,6 +1,8 @@
 import { Controller } from "@hotwired/stimulus";
 import confetti from "canvas-confetti";
 
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export default class extends Controller {
   static targets = [
     "bar",
@@ -23,130 +25,112 @@ export default class extends Controller {
   };
 
   disconnect() {
-    if (this.confettiFrameId) {
-      cancelAnimationFrame(this.confettiFrameId);
-    }
-    if (this.numberFrameId) {
-      cancelAnimationFrame(this.numberFrameId);
-    }
+    if (this.confettiFrameId) cancelAnimationFrame(this.confettiFrameId);
+    if (this.numberFrameId) cancelAnimationFrame(this.numberFrameId);
   }
 
-  connect() {
-    setTimeout(() => {
-      this.summaryTarget.classList.remove("opacity-0", "translate-y-4");
-    }, this.constructor.TIMINGS.INITIAL_REVEAL);
+  async connect() {
+    const t = this.constructor.TIMINGS;
 
-    setTimeout(() => {
-      this.animateChart();
-    }, this.constructor.TIMINGS.CHART_START);
+    await wait(t.INITIAL_REVEAL);
+    this.summaryTarget.classList.remove("opacity-0", "translate-y-4");
+
+    await wait(t.CHART_START);
+    await this.animateChartSequence();
   }
 
-  animateChart() {
-    const score = this.scoreValue;
-    const passed = this.passedValue;
-    const duration = this.constructor.TIMINGS.ANIMATION_DURATION;
+  async animateChartSequence() {
+    const t = this.constructor.TIMINGS;
+    const { score, passed } = this;
 
-    const radius = parseFloat(this.barTarget.getAttribute("r")) || 45; // default 45
+    const radius = parseFloat(this.barTarget.getAttribute("r")) || 45;
     const circumference = 2 * Math.PI * radius;
     const offset = circumference - (score / 100) * circumference;
 
     this.barTarget.style.strokeDasharray = `${circumference} ${circumference}`;
     this.barTarget.style.strokeDashoffset = offset;
 
-    this.animateNumber(0, score, duration);
+    this.animateNumber(0, score, t.ANIMATION_DURATION);
 
-    setTimeout(() => {
-      this.revealResultColor(passed);
-    }, duration);
+    await wait(t.ANIMATION_DURATION);
+    this.revealResultColor(passed);
 
-    setTimeout(
-      () => this.showNextElements(),
-      duration + this.constructor.TIMINGS.NEXT_ELEMENTS_DELAY,
-    );
+    await wait(t.NEXT_ELEMENTS_DELAY);
+    this.showNextElements();
   }
 
   revealResultColor(passed) {
-    this.barTarget.classList.remove("text-slate-200");
+    const t = this.constructor.TIMINGS;
 
-    if (passed) {
-      this.barTarget.classList.add("text-emerald-500");
-      this.fireConfetti();
-    } else {
-      this.barTarget.classList.add("text-red-500");
-    }
+    this.barTarget.classList.remove("text-slate-200");
+    this.barTarget.classList.add(passed ? "text-emerald-500" : "text-red-500");
+
+    if (passed) this.fireConfetti();
 
     this.barTarget.classList.add("scale-105");
-    setTimeout(() => {
-      this.barTarget.classList.remove("scale-105");
-    }, this.constructor.TIMINGS.SCALE_EFFECT);
+    setTimeout(
+      () => this.barTarget.classList.remove("scale-105"),
+      t.SCALE_EFFECT,
+    );
   }
 
-  fireConfetti() {
-    const duration = 3000;
-    const end = Date.now() + duration;
+  async showNextElements() {
+    const t = this.constructor.TIMINGS;
 
-    const frame = () => {
-      confetti({
-        particleCount: 5,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 },
-        colors: ["#34D399", "#60A5FA", "#FBBF24"],
-      });
-      confetti({
-        particleCount: 5,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 },
-        colors: ["#34D399", "#60A5FA", "#FBBF24"],
-      });
+    const show = (el) => el?.classList.remove("opacity-0", "translate-y-full");
 
-      if (Date.now() < end) {
-        this.confettiFrameId = requestAnimationFrame(frame);
-      }
-    };
+    if (this.hasMessageTarget) show(this.messageTarget);
 
-    frame();
+    await wait(t.STAGGER);
+    if (this.hasScoreDetailTarget) show(this.scoreDetailTarget);
+
+    await wait(t.STAGGER);
+    if (this.hasActionButtonsTarget) {
+      this.actionButtonsTargets.forEach(show);
+    }
+
+    await wait(t.STAGGER);
+    if (this.hasDetailTableTarget) show(this.detailTableTarget);
   }
 
   animateNumber(start, end, duration) {
     if (!this.hasScoreTextTarget) return;
 
     let startTimestamp = null;
+
     const step = (timestamp) => {
       if (!startTimestamp) startTimestamp = timestamp;
       const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      const currentScore = Math.floor(progress * (end - start) + start);
-
-      this.scoreTextTarget.innerText = currentScore;
-
-      if (progress < 1) {
-        this.numberFrameId = requestAnimationFrame(step);
-      }
+      this.scoreTextTarget.innerText = Math.floor(
+        progress * (end - start) + start,
+      );
+      if (progress < 1) this.numberFrameId = requestAnimationFrame(step);
     };
+
     this.numberFrameId = requestAnimationFrame(step);
   }
 
-  showNextElements() {
-    const stagger = this.constructor.TIMINGS.STAGGER;
-    if (this.hasMessageTarget) this.messageTarget.classList.remove("opacity-0");
+  fireConfetti() {
+    const duration = 3000;
+    const end = Date.now() + duration;
+    const frame = () => {
+      const defaults = {
+        particleCount: 5,
+        spread: 55,
+        colors: ["#34D399", "#60A5FA", "#FBBF24"],
+      };
+      confetti({ ...defaults, angle: 60, origin: { x: 0 } });
+      confetti({ ...defaults, angle: 120, origin: { x: 1 } });
 
-    setTimeout(() => {
-      if (this.hasScoreDetailTarget)
-        this.scoreDetailTarget.classList.remove("opacity-0");
-    }, stagger);
+      if (Date.now() < end) this.confettiFrameId = requestAnimationFrame(frame);
+    };
+    frame();
+  }
 
-    setTimeout(() => {
-      if (this.hasActionButtonsTarget) {
-        this.actionButtonsTargets.forEach((el) => {
-          el.classList.remove("opacity-0", "translate-y-full");
-        });
-      }
-    }, stagger * 2);
-
-    setTimeout(() => {
-      if (this.hasDetailTableTarget)
-        this.detailTableTarget.classList.remove("opacity-0");
-    }, stagger * 3);
+  get score() {
+    return this.scoreValue;
+  }
+  get passed() {
+    return this.passedValue;
   }
 }
