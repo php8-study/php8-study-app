@@ -27,9 +27,7 @@ class ExamsController < ApplicationController
 
   private
     def set_exam
-      @exam = current_user.exams
-                          .includes(exam_questions: [{ question: :question_choices }, :exam_answers])
-                          .find(params[:id])
+      @exam = current_user.exams.find(params[:id])
     end
 
     def ensure_completed
