@@ -11,8 +11,6 @@ module Exams
       else
         redirect_to root_path
       end
-    rescue ActiveRecord::RecordInvalid
-      redirect_to root_path
     end
 
     private

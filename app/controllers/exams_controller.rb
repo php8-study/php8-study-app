@@ -23,9 +23,6 @@ class ExamsController < ApplicationController
     exam = Exam::Start.new(user: current_user).call
 
     redirect_to exam_exam_question_path(exam, exam.exam_questions.first)
-  rescue => e
-    Rails.logger.error "Exam Start Failed: #{e.message}\n#{e.backtrace.join("\n")}"
-    redirect_to root_path
   end
 
   private
