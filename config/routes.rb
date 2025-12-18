@@ -20,11 +20,11 @@ Rails.application.routes.draw do
     resources :categories
   end
 
-  resources :questions, only: [:show] do
-    collection do
-      get :random, to: "questions/randoms#index"
-    end
+  namespace :questions do
+    resource :random, only: [:show], controller: :random
+  end
 
+  resources :questions, only: [:show] do
     resource :solution, only: [:show], module: :questions
   end
 

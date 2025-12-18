@@ -5,7 +5,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Questions::Randoms", type: :request do
+RSpec.describe "Questions::Random", type: :request do
   let(:user) { create(:user) }
   let!(:question) { create(:question, :with_choices) }
 
@@ -15,7 +15,7 @@ RSpec.describe "Questions::Randoms", type: :request do
 
       context "利用可能な問題が存在する場合" do
         it "ランダムに選ばれた問題詳細ページへリダイレクトする" do
-          get random_questions_path
+          get questions_random_path
           expect(response).to redirect_to(%r{/questions/\d+})
         end
       end
@@ -26,7 +26,7 @@ RSpec.describe "Questions::Randoms", type: :request do
         end
 
         it "ルートパスへリダイレクトされ、アラートが表示される" do
-          get random_questions_path
+          get questions_random_path
 
           expect(response).to redirect_to(root_path)
           expect(flash[:alert]).to eq "現在利用可能な問題がありません"
@@ -36,7 +36,7 @@ RSpec.describe "Questions::Randoms", type: :request do
 
     context "未ログインの場合" do
       it "ルートパスへリダイレクトされる" do
-        get random_questions_path
+        get questions_random_path
         expect(response).to redirect_to(root_path)
       end
     end
