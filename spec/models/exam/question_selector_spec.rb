@@ -24,7 +24,7 @@ RSpec.describe Exam::QuestionSelector, type: :model do
         result_ids = selector.call
 
         questions_map = Question.where(id: result_ids)
-                                .includes(:category)
+                                .preload(:category)
                                 .index_by(&:id)
 
         result_chapters = result_ids.map { |id| questions_map[id].category.chapter_number }
