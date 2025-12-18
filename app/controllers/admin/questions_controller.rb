@@ -25,8 +25,8 @@ class Admin::QuestionsController < AdminController
   end
 
   def update
-    if @new_question = @question.safe_update(question_params) # 使用中であれば論理削除して新verを作成、そうでなければ更新するメソッド
-      redirect_to edit_admin_question_path(@new_question), notice: "問題を保存しました"
+    if (@saved_question = @question.safe_update(question_params)) # 使用中であれば論理削除して新verを作成、そうでなければ更新するメソッド
+      redirect_to edit_admin_question_path(@saved_question), notice: "問題を保存しました"
     else
       render :edit, status: :unprocessable_entity
     end
