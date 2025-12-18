@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::CategoriesController < ::AdminController
-  before_action :set_category, only: [:edit, :update, :destroy, :render_row]
+  before_action :set_category, only: [:edit, :update, :destroy, :show]
   def index
     @categories = Category.order(:chapter_number)
   end
@@ -48,7 +48,7 @@ class Admin::CategoriesController < ::AdminController
   def edit
   end
 
-  def render_row
+  def show
     render partial: "admin/categories/category", locals: { category: @category }
   end
 

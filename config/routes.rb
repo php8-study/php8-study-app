@@ -17,12 +17,7 @@ Rails.application.routes.draw do
     root to: "home#index"
 
     resources :questions
-
-    resources :categories do
-      member do
-        get :render_row
-      end
-    end
+    resources :categories
   end
 
   resources :questions, only: [:show] do

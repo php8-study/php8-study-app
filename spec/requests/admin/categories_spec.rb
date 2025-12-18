@@ -149,12 +149,12 @@ RSpec.describe "Admin::Categories", type: :request do
     end
   end
 
-  describe "GET /admin/categories/:id/render_row" do
+  describe "GET /admin/categories/:id/" do
     context "管理者としてアクセスした場合" do
       before { sign_in_as(admin) }
 
       it "指定したカテゴリーのパーシャルHTMLが返る" do
-        get render_row_admin_category_path(category)
+        get admin_category_path(category)
         expect(response).to have_http_status(:ok)
 
         expect(response.body).to include(%(id="category_#{category.id}"))
@@ -163,7 +163,7 @@ RSpec.describe "Admin::Categories", type: :request do
 
       context "存在しないIDを指定した場合" do
         it "404 Not Found になる" do
-          get render_row_admin_category_path(0)
+          get admin_category_path(0)
           expect(response).to have_http_status(:not_found)
         end
       end
@@ -172,14 +172,14 @@ RSpec.describe "Admin::Categories", type: :request do
     context "一般ユーザーの場合" do
       before { sign_in_as(user) }
       it "404 Not Found になる" do
-        get render_row_admin_category_path(category)
+        get admin_category_path(category)
         expect(response).to have_http_status(:not_found)
       end
     end
 
     context "未ログインの場合" do
       it "ログイン画面等へリダイレクトされる" do
-        get render_row_admin_category_path(category)
+        get admin_category_path(category)
         expect(response).to redirect_to(root_path)
       end
     end
