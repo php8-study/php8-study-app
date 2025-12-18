@@ -7,6 +7,12 @@ export default class extends Controller {
     }, 4000);
   }
 
+  disconnect() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+  }
+
   dismiss() {
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
