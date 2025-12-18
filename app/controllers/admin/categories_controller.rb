@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::CategoriesController < ::AdminController
-  before_action :set_category, only: [:edit, :update, :destroy, :render_row]
+  before_action :set_category, only: [:edit, :update, :destroy, :show]
   def index
     @categories = Category.order(:chapter_number)
   end
@@ -21,7 +21,11 @@ class Admin::CategoriesController < ::AdminController
 
   def update
     if @category.update(category_params)
-      render partial: "admin/categories/category", locals: { category: @category }
+      flash.now[:notice] = "カテゴリーを更新しました"
+      render turbo_stream: [
+        turbo_stream.replace(@category, partial: "admin/categories/category", locals: { category: @category }),
+        turbo_stream.update("flash", partial: "layouts/flash")
+      ]
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,7 +48,7 @@ class Admin::CategoriesController < ::AdminController
   def edit
   end
 
-  def render_row
+  def show
     render partial: "admin/categories/category", locals: { category: @category }
   end
 

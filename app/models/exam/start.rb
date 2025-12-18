@@ -7,7 +7,7 @@ class Exam::Start
 
   def call
     ActiveRecord::Base.transaction do
-      @user.discard_active_exam
+      @user.active_exam&.destroy!
       exam = @user.exams.create!
 
       question_ids = Exam::QuestionSelector.new.call

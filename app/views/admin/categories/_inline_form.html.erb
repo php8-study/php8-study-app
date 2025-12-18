@@ -25,7 +25,7 @@
           <%= inline_svg_tag "icons/check.svg", class: "w-5 h-5", aria_hidden: true %>
         <% end %>
 
-        <%= link_to render_row_admin_category_path(category),
+        <%= link_to admin_category_path(category),
             data: { turbo_frame: dom_id(category) },
             class: "text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors",
             title: "キャンセル",

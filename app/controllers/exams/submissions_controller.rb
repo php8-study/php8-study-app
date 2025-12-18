@@ -6,13 +6,8 @@ module Exams
     before_action :ensure_in_progress
 
     def create
-      if @exam.finish!
-        redirect_to exam_path(@exam, reveal: true)
-      else
-        redirect_to root_path
-      end
-    rescue ActiveRecord::RecordInvalid
-      redirect_to root_path
+      @exam.finish!
+      redirect_to exam_path(@exam, reveal: true)
     end
 
     private

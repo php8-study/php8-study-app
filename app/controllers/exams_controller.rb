@@ -23,16 +23,11 @@ class ExamsController < ApplicationController
     exam = Exam::Start.new(user: current_user).call
 
     redirect_to exam_exam_question_path(exam, exam.exam_questions.first)
-  rescue => e
-    Rails.logger.error "Exam Start Failed: #{e.message}\n#{e.backtrace.join("\n")}"
-    redirect_to root_path
   end
 
   private
     def set_exam
-      @exam = current_user.exams
-                          .includes(exam_questions: [{ question: :question_choices }, :exam_answers])
-                          .find(params[:id])
+      @exam = current_user.exams.find(params[:id])
     end
 
     def ensure_completed

@@ -65,22 +65,6 @@ RSpec.describe "Exams", type: :request do
       end
     end
 
-    context "異常系（サービス層でのエラー）" do
-      before do
-        allow_any_instance_of(Exam::Start).to receive(:call).and_raise(StandardError, "Something went wrong")
-      end
-
-      it "エラーログを出力し、ルートパスへリダイレクトする" do
-        expect(Rails.logger).to receive(:error).with(/Exam Start Failed/)
-
-        expect {
-          post exams_path
-        }.not_to change(Exam, :count)
-
-        expect(response).to redirect_to(root_path)
-      end
-    end
-
     context "未ログインの場合" do
       before { sign_out }
 

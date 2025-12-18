@@ -17,19 +17,14 @@ Rails.application.routes.draw do
     root to: "home#index"
 
     resources :questions
+    resources :categories
+  end
 
-    resources :categories do
-      member do
-        get :render_row
-      end
-    end
+  namespace :questions do
+    resource :random, only: [:show], controller: :random
   end
 
   resources :questions, only: [:show] do
-    collection do
-      get :random, to: "questions/randoms#index"
-    end
-
     resource :solution, only: [:show], module: :questions
   end
 

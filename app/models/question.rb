@@ -20,9 +20,6 @@ class Question < ApplicationRecord
     else
       save! && self
     end
-
-  rescue ActiveRecord::RecordInvalid
-    false
   end
 
   def safe_destroy
