@@ -20,7 +20,7 @@ class ExamsController < ApplicationController
   end
 
   def create
-    exam = Exam::Start.new(user: current_user).call
+    exam = Exam::Starter.new(user: current_user).call
 
     redirect_to exam_exam_question_path(exam, exam.exam_questions.first)
   end

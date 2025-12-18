@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Exam::Start, type: :model do
+RSpec.describe Exam::Starter, type: :model do
   describe "#call" do
     let(:user) { create(:user) }
     let(:service) { described_class.new(user: user) }

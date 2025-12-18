@@ -34,14 +34,14 @@ class Exam::QuestionSelector
       selected_ids = selected_questions.map(&:id)
       remaining_count = TOTAL_QUESTIONS - selected_ids.count
       return selected_questions if remaining_count <= 0
-      extra_questions = Question.active
-                                .where.not(id: selected_ids)
-                                .joins(:category)
-                                .select("questions.id", "categories.chapter_number")
-                                .order("RANDOM()")
-                                .limit(remaining_count)
+      candidates = Question.active
+                           .where.not(id: selected_ids)
+                           .joins(:category)
+                           .pluck("questions.id", "categories.chapter_number")
 
-      extras = extra_questions.map { |q| build_data(q.id, q.chapter_number) }
+      extras = candidates.sample(remaining_count).map do |id, chapter|
+        build_data(id, chapter)
+      end
       selected_questions.concat(extras)
     end
 
