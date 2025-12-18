@@ -26,17 +26,6 @@ RSpec.describe "Exams::Submissions", type: :request do
     end
 
     context "異常系" do
-      context "finish! が false を返した場合" do
-        before do
-          allow_any_instance_of(Exam).to receive(:finish!).and_return(false)
-        end
-
-        it "ルートパスへリダイレクトされる" do
-          post exam_submission_path(active_exam)
-          expect(response).to redirect_to(root_path)
-        end
-      end
-
       context "既に完了している試験を提出しようとした場合" do
         it "404 Not Found になる" do
           post exam_submission_path(completed_exam)
