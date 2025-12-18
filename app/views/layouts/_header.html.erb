@@ -21,7 +21,7 @@
             <%= image_tag session.dig(:github_info, "image"), alt: "#{session.dig(:github_info, "nickname")}のアバター", class: "w-9 h-9 rounded-full border border-slate-200 shadow-sm" %>
           <% end %>
 
-          <%= link_to logout_path, data: { turbo_method: :delete }, class: "text-slate-400 hover:text-red-500 transition-colors p-1", title: "ログアウト", aria: { label: "ログアウト" } do %>
+          <%= link_to session_path, data: { turbo_method: :delete }, class: "text-slate-400 hover:text-red-500 transition-colors p-1", title: "ログアウト", aria: { label: "ログアウト" } do %>
              <%= inline_svg_tag "icons/logout.svg", class: "w-5 h-5", aria_hidden: true %>
           <% end %>
 
