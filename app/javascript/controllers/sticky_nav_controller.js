@@ -14,6 +14,8 @@ export default class extends Controller {
     const footer = document.querySelector(this.footerSelectorValue);
     if (footer) {
       this.observer.observe(footer);
+    } else {
+      console.warn(`[sticky_nav_controller] Footer not found: ${this.footerSelectorValue}`);
     }
   }
 
