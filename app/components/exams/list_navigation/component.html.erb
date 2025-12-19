@@ -1,0 +1,22 @@
+<nav class="flex flex-col sm:flex-row justify-center gap-4" aria-label="試験メニュー">
+  <%= render Common::Button::Component.new(
+    href: root_path,
+    variant: :secondary,
+    size: :lg,
+    class: "flex items-center justify-center text-slate-600 font-bold"
+  ) do %>
+    <%= helpers.inline_svg_tag "icons/home.svg", class: "w-5 h-5 mr-2 text-slate-400", aria_hidden: true %>
+    ダッシュボードへ
+  <% end %>
+
+  <%= render Common::Button::Component.new(
+    href: check_exams_path,
+    variant: :primary,
+    size: :md,
+    class: "flex items-center justify-center hover:-translate-y-0.5 hover:shadow-lg transition-all"
+  ) do %>
+    新しい模擬試験を受ける
+    <%= helpers.inline_svg_tag "icons/plus.svg", class: "w-5 h-5 ml-2", aria_hidden: true %>
+  <% end %>
+
+</nav>

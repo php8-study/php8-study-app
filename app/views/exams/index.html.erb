@@ -13,7 +13,7 @@
 
     <% if @exams.any? %>
       <div class="mb-6">
-        <%= render "index_navigation" %>
+        <%= render Exams::ListNavigation::Component.new %>
       </div>
 
       <div class="space-y-4">
@@ -21,7 +21,7 @@
       </div>
 
       <div class="mt-8 pt-8 border-t border-slate-200">
-        <%= render "index_navigation" %>
+        <%= render Exams::ListNavigation::Component.new %>
       </div>
 
     <% else %>
@@ -34,7 +34,14 @@
 
         <p class="text-slate-500 mb-6">模擬試験を受けて、実力を試してみましょう。</p>
 
-        <%= link_to "模擬試験を受ける", check_exams_path, class: "inline-flex items-center px-6 py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition-colors shadow-md hover:shadow-lg" %>
+        <%= render Common::Button::Component.new(
+          href: check_exams_path,
+          variant: :primary,
+          size: :lg,
+          class: "shadow-md hover:shadow-lg"
+        ) do %>
+          模擬試験を受ける
+        <% end %>
       </section>
     <% end %>
 
