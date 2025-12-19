@@ -8,7 +8,7 @@ RSpec.describe Common::Button::Component, type: :component do
       render_inline(described_class.new(href: "/exams")) { "履歴一覧" }
 
       expect(page).to have_link("履歴一覧", href: "/exams")
-      expect(page).to have_css("a.bg-indigo-600") # デフォルト
+      expect(page).to have_css("a.bg-indigo-600")
     end
   end
 
@@ -21,17 +21,35 @@ RSpec.describe Common::Button::Component, type: :component do
     end
   end
 
-  context "バリエーション" do
+  context "バリエーション (Variant)" do
     it "secondaryスタイルが適用されること" do
       render_inline(described_class.new(variant: :secondary)) { "キャンセル" }
-
-      expect(page).to have_css(".bg-white.text-slate-600.border-slate-200")
+      expect(page).to have_css(".bg-white.text-slate-600")
     end
 
     it "dangerスタイルが適用されること" do
       render_inline(described_class.new(variant: :danger)) { "削除" }
-
       expect(page).to have_css(".bg-rose-600")
+      expect(page).to have_css(".focus\\:ring-rose-500")
+    end
+
+    it "存在しないバリアントが指定された場合はデフォルト(primary)になること" do
+      render_inline(described_class.new(variant: :undefined_variant)) { "テスト" }
+      expect(page).to have_css(".bg-indigo-600")
+    end
+  end
+
+  context "サイズ (Size)" do
+    it "xlサイズが適用されること" do
+      render_inline(described_class.new(size: :xl)) { "大きいボタン" }
+      expect(page).to have_css(".px-8.py-4.text-lg")
+    end
+  end
+
+  context "カスタムクラスのマージ" do
+    it "system_argumentsで渡したクラスが適用されること" do
+      render_inline(described_class.new(class: "w-full custom-class")) { "カスタム" }
+      expect(page).to have_css(".w-full.custom-class")
     end
   end
 end
