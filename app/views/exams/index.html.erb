@@ -17,7 +17,7 @@
       </div>
 
       <div class="space-y-4">
-        <%= render partial: "history_card", collection: @exams, as: :exam %>
+        <%= render Exams::HistoryItem::Component.with_collection(@exams) %>
       </div>
 
       <div class="mt-8 pt-8 border-t border-slate-200">
