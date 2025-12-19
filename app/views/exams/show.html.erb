@@ -15,9 +15,7 @@
 
       <%= render Exams::QuestionList::Component.new(questions: @exam_questions, animation: @needs_reveal_animation) %>
 
-      <%= render Exams::StickyNav::Component.new(animation: @needs_reveal_animation) do %>
-        <%= render "result_navigation" %>
-      <% end %>
+      <%= render Exams::StickyNav::Component.new(animation: @needs_reveal_animation) %>
 
     <% end %>
 
