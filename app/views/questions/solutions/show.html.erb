@@ -10,9 +10,10 @@
       <%= render Questions::ResultStatus::Component.new(is_correct: @is_correct) %>
     <% end %>
 
-    <%= render "shared/terminal_display",
-        content: @question.content,
-        label: "Question.php (Review)" %>
+    <%= render Common::TerminalDisplay::Component.new(
+        body: @question.content,
+        label: "Question.php (Review)" 
+    )%>
 
     <%= render "shared/choices_feedback",
         question: @question,
