@@ -1,12 +1,12 @@
 <div data-controller="answer-guard" data-answer-guard-active-value="<%= @guard_answer %>">
   <%= form_with url: @url, method: @method, local: true, class: "space-y-8" do |f| %>
 
-    <%# 後でComponentに切り替える %>
-    <%= render "shared/choices",
-        question: @question,
-        input_name: @input_name,
-        selected_choice_ids: @selected_choice_ids,
-        disabled: false %>
+    <%= render Common::Choices::Component.new(
+      question: @question,
+      input_name: @input_name,
+      selected_choice_ids: @selected_choice_ids,
+      disabled: false
+    ) %>
 
     <div class="flex justify-end pt-4">
       <%= render Common::Button::Component.new(

@@ -36,11 +36,12 @@
     ) %>
     <% else %>
       <div class="pt-8 border-t border-slate-200">
-        <%= render "shared/choices",
-            question: @question,
-            input_name: nil,
-            selected_choice_ids: [],
-            disabled: true %>
+        <%= render Common::Choices::Component.new(
+          question: @question,
+          input_name: nil,
+          selected_choice_ids: [],
+          disabled: true
+        ) %>
 
         <div class="mt-6">
           <%= link_to root_path, class: "w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-md" do %>
