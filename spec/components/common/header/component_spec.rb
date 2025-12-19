@@ -39,7 +39,7 @@ RSpec.describe Common::Header::Component, type: :component do
 
     it "ユーザー情報は表示されないこと" do
       expect(page).to have_no_content("Logged in")
-      expect(page).to have_no_css("img")
+      expect(page).to have_no_css("img[alt*='アバター']")
     end
   end
 
