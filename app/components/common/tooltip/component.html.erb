@@ -6,7 +6,7 @@
           class="cursor-help text-slate-400 hover:text-indigo-600 transition-all duration-200 hover:scale-110 bg-slate-200/50 rounded-full p-0.5 border-none outline-none focus:ring-2 focus:ring-indigo-500"
           data-tooltip-target="trigger"
           aria-label="公式テキスト参照箇所">
-    <%= inline_svg_tag "icons/info_circle.svg", class: "w-5 h-5", aria_hidden: true %>
+    <%= helpers.inline_svg_tag "icons/info_circle.svg", class: "w-5 h-5", aria_hidden: true %>
   </button>
 
   <div role="tooltip"
@@ -18,13 +18,13 @@
       <div class="flex justify-between items-start mb-4 border-b border-slate-700 pb-2 w-full">
         <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider whitespace-nowrap">Official Textbook</span>
         <button type="button" class="text-slate-500 hover:text-slate-300 cursor-pointer border-none bg-transparent p-0" data-action="click->tooltip#hide" aria-label="ツールチップを閉じる">
-          <%= inline_svg_tag "icons/x.svg", class: "w-4 h-4", aria_hidden: true %>
+          <%= helpers.inline_svg_tag "icons/x.svg", class: "w-4 h-4", aria_hidden: true %>
         </button>
       </div>
 
       <div class="flex gap-4 items-start w-full">
         <div class="w-14 h-20 bg-indigo-900 rounded border border-indigo-700 flex items-center justify-center flex-shrink-0 shadow-inner">
-          <%= inline_svg_tag "icons/book_open.svg", class: "w-7 h-7 text-indigo-400", aria_hidden: true %>
+          <%= helpers.inline_svg_tag "icons/book_open.svg", class: "w-7 h-7 text-indigo-400", aria_hidden: true %>
         </div>
 
         <div class="flex flex-col w-full min-w-0">
@@ -46,7 +46,7 @@
           <div class="mt-auto pt-3 ml-auto">
              <%= link_to "https://ourl.jp/z91LZ", class: "flex items-center text-xs text-indigo-400 hover:text-indigo-300 transition-colors font-bold whitespace-nowrap group/link", target: "_blank", rel: "noopener noreferrer" do %>
               詳細を見る
-              <%= inline_svg_tag "icons/arrow_long_right.svg", class: "w-4 h-4 ml-1 transform transition-transform group-hover/link:translate-x-1", aria_hidden: true %>
+              <%= helpers.inline_svg_tag "icons/arrow_long_right.svg", class: "w-4 h-4 ml-1 transform transition-transform group-hover/link:translate-x-1", aria_hidden: true %>
             <% end %>
           </div>
         </div>
