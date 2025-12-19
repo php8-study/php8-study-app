@@ -3,8 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Exams::HistoryItem::Component, type: :component do
-  let(:exam_date) { Time.zone.parse("2024-01-15 10:00:00") }
-
   context "合格 (Passed) の場合" do
     let(:passed_exam) { create(:exam, :passed, created_at: Time.zone.parse("2024-01-15 10:00:00")) }
 
