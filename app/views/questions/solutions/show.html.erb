@@ -24,7 +24,12 @@
 
     <% unless current_user %>
       <div class="mt-8 pt-8 border-t border-slate-200">
-        <%= link_to root_path, class: "w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-md" do %>
+        <%= render Common::Button::Component.new(
+              href: root_path,
+              variant: :primary,
+              size: :lg,
+              class: "w-full py-3"
+            ) do %>
           <%= inline_svg_tag "icons/logout.svg", class: "w-5 h-5 mr-2", aria_hidden: true %>
           ログインして学習をはじめる
         <% end %>
