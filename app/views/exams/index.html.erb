@@ -13,7 +13,7 @@
 
     <% if @exams.any? %>
       <div class="mb-6">
-        <%= render "index_navigation" %>
+        <%= render Exams::ListNavigation::Component.new %>
       </div>
 
       <div class="space-y-4">
@@ -21,7 +21,7 @@
       </div>
 
       <div class="mt-8 pt-8 border-t border-slate-200">
-        <%= render "index_navigation" %>
+        <%= render Exams::ListNavigation::Component.new %>
       </div>
 
     <% else %>
