@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Exams::StickyNav::Component, type: :component do
-
   context "コンテンツの描画" do
     before do
       render_inline(described_class.new)

@@ -8,16 +8,15 @@ module Exams
       end
 
       private
+        def nav_classes
+          classes = %w[fixed bottom-0 left-0 w-full z-50 transition-transform duration-500]
 
-      def nav_classes
-        classes = %w[fixed bottom-0 left-0 w-full z-50 transition-transform duration-500]
+          if @animation
+            classes << "translate-y-full opacity-0 translate-y-4"
+          end
 
-        if @animation
-          classes << "translate-y-full opacity-0 translate-y-4"
+          classes.join(" ")
         end
-
-        classes.join(" ")
-      end
     end
   end
 end
