@@ -12,15 +12,11 @@ RSpec.describe Exams::StickyNav::Component, type: :component do
       expect(page).to have_link("トップへ戻る")
       expect(page).to have_link("履歴一覧へ戻る")
     end
-
-    it "スコアが表示されること" do
-      expect(page).to have_content("#{exam.score_percentage}%")
-    end
   end
 
   context "アニメーション設定" do
     it "animation: true の場合、非表示クラスが付与されること" do
-      render_inline(described_class.new(exam: exam, animation: true))
+      render_inline(described_class.new(animation: true))
 
       wrapper = page.find("[data-controller='sticky-nav']")
       expect(wrapper[:class]).to include("opacity-0")
