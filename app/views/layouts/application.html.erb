@@ -14,9 +14,11 @@
 
     <div id="page-content" class="page-content-wrapper flex-1 flex flex-col bg-gradient-to-b from-slate-100 to-slate-200">
 
-      <% unless content_for?(:hide_header_footer) %>
-        <%= render "layouts/header" %>
-      <% end %>
+      <%= render Common::Header::Component.new(
+        current_user: current_user,
+        github_info: session[:github_info],
+        hide: content_for?(:hide_header_footer)
+      ) %>
 
       <div class="max-w-screen-xl mx-auto w-full" id="flash">
         <%= render "layouts/flash" %>
@@ -34,9 +36,9 @@
 
       </div>
 
-      <% unless content_for?(:hide_header_footer) %>
-        <%= render "layouts/footer" %>
-      <% end %>
+      <%= render Common::Footer::Component.new(
+          hide: content_for?(:hide_header_footer)
+        ) %>
 
     </div>
 

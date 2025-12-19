@@ -10,19 +10,18 @@
       </div>
 
       <div class="flex items-center gap-4">
-
-        <% if current_user %>
+        <% if logged_in? %>
           <div class="text-right hidden sm:block">
             <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Logged in</div>
-            <div class="text-sm font-bold text-slate-700 leading-none"><%= session.dig(:github_info, "nickname") %></div>
+            <div class="text-sm font-bold text-slate-700 leading-none"><%= nickname %></div>
           </div>
 
-          <% if session.dig(:github_info, "image") %>
-            <%= image_tag session.dig(:github_info, "image"), alt: "#{session.dig(:github_info, "nickname")}のアバター", class: "w-9 h-9 rounded-full border border-slate-200 shadow-sm" %>
+          <% if avatar_url %>
+            <%= image_tag avatar_url, alt: "#{nickname}のアバター", class: "w-9 h-9 rounded-full border border-slate-200 shadow-sm" %>
           <% end %>
 
           <%= link_to session_path, data: { turbo_method: :delete }, class: "text-slate-400 hover:text-red-500 transition-colors p-1", title: "ログアウト", aria: { label: "ログアウト" } do %>
-             <%= inline_svg_tag "icons/logout.svg", class: "w-5 h-5", aria_hidden: true %>
+             <%= helpers.inline_svg_tag "icons/logout.svg", class: "w-5 h-5", aria_hidden: true %>
           <% end %>
 
         <% else %>
