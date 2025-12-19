@@ -9,8 +9,8 @@ RSpec.describe Exams::ListNavigation::Component, type: :component do
 
   it "ダッシュボードへのボタンが表示され、正しいリンクが設定されていること" do
     expect(page).to have_link("ダッシュボードへ", href: root_path)
-    
-    expect(page).to have_css("a.bg-white") 
+
+    expect(page).to have_css("a.bg-white")
   end
 
   it "新規試験作成へのボタンが表示され、正しいリンクが設定されていること" do
