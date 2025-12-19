@@ -1,6 +1,6 @@
 <div class="rounded-2xl border <%= theme[:border] %> <%= theme[:bg] %> p-6 flex items-center gap-5 shadow-sm">
   <div class="flex-shrink-0 w-14 h-14 rounded-full <%= theme[:icon_bg] %> flex items-center justify-center">
-    <%= inline_svg_tag "icons/#{theme[:icon_name]}.svg",
+    <%= helpers.inline_svg_tag "icons/#{theme[:icon_name]}.svg",
         class: "w-8 h-8 #{theme[:sub_text]}",
         aria_hidden: true %>
   </div>
