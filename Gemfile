@@ -32,6 +32,8 @@ gem "omniauth-rails_csrf_protection"
 gem "rails-i18n"
 gem "meta-tags", "~> 2.22"
 
+gem "view_component", "~> 4.1"
+
 group :development, :test do
   gem "debug", platforms: %i[mri windows]
   gem "dotenv-rails"

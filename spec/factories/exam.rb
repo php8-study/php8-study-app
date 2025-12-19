@@ -47,5 +47,31 @@ FactoryBot.define do
         end
       end
     end
+
+    # 使用例: create(:exam, :with_score, correct_count: 8, question_count: 10) -> 80点
+    trait :with_score do
+      completed
+
+      transient do
+        correct_count { 8 }
+        question_count { 10 }
+      end
+
+      after(:create) do |exam, evaluator|
+        questions = create_list(:question, evaluator.question_count, :with_choices)
+
+        questions.each_with_index do |question, index|
+          eq = create(:exam_question, exam: exam, question: question, position: index + 1)
+
+          target_choice = if index < evaluator.correct_count
+            question.question_choices.find_by(correct: true)
+          else
+            question.question_choices.where(correct: false).first
+          end
+
+          create(:exam_answer, exam_question: eq, question_choice: target_choice)
+        end
+      end
+    end
   end
 end

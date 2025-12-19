@@ -1,10 +1,5 @@
 <% title "模擬試験結果" %>
 <% noindex %>
-<%
-  anim = reveal_animation_classes(@needs_reveal_animation)
-  chart = exam_chart_attributes(@exam, @needs_reveal_animation)
-  result_msg = exam_result_message(@exam.passed?)
-%>
 
 <main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 font-sans">
   <div class="max-w-4xl mx-auto">
@@ -14,124 +9,15 @@
       <p class="text-slate-500 mt-2">お疲れ様でした。今回の成績を確認しましょう。</p>
     </header>
 
-    <div data-controller="<%= "result-reveal" if @needs_reveal_animation %>"
-         data-result-reveal-score-value="<%= @exam.score_percentage %>"
-         data-result-reveal-passed-value="<%= @exam.passed? %>"
-         class="relative pb-24">
+    <%= render Exams::ResultReveal::Component.new(exam: @exam, animation: @needs_reveal_animation) do %>
 
-      <section aria-label="総合成績"
-               data-result-reveal-target="summary"
-               class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100 mb-12 transition-all duration-700 ease-out <%= anim[:wrapper] %>">
+      <%= render Exams::ScoreCard::Component.new(exam: @exam, animation: @needs_reveal_animation) %>
 
-        <div class="p-8 md:p-12 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+      <%= render Exams::QuestionList::Component.new(questions: @exam_questions, animation: @needs_reveal_animation) %>
 
-          <figure class="relative w-48 h-48 md:w-56 md:h-56" aria-label="スコアチャート">
-            <%= render "result_circle", chart: chart %>
+      <%= render Exams::StickyNav::Component.new(animation: @needs_reveal_animation) %>
 
-            <figcaption class="absolute inset-0 flex flex-col items-center justify-center">
-              <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Score</span>
-              <div class="flex items-baseline">
-                <span data-result-reveal-target="scoreText" class="text-5xl md:text-6xl font-black text-slate-800">
-                  <%= chart[:initial_score] %>
-                </span>
-                <span class="text-2xl font-bold text-slate-400 ml-1">%</span>
-              </div>
-            </figcaption>
-          </figure>
+    <% end %>
 
-          <div class="text-center md:text-left">
-            <div data-result-reveal-target="message" class="transition-opacity duration-500 delay-300 <%= anim[:fade] %>">
-              <h2 class="text-4xl font-black mb-2 tracking-tight <%= result_msg[:title_class] %>">
-                <%= result_msg[:title] %>
-              </h2>
-              <p class="text-lg text-slate-600 font-medium">
-                <%= result_msg[:description].html_safe %>
-              </p>
-            </div>
-
-            <dl data-result-reveal-target="scoreDetail" class="mt-6 flex items-center justify-center md:justify-start gap-6 transition-opacity duration-500 delay-500 <%= anim[:fade] %>">
-              <div class="text-center">
-                <dt class="text-xs font-bold text-slate-400 uppercase">Correct</dt>
-                <dd class="text-xl font-black text-slate-700">
-                  <%= @exam.correct_count %><span class="text-sm text-slate-400 font-medium mx-1" aria-hidden="true">/</span><%= @exam.total_questions %>
-                </dd>
-              </div>
-              <div class="w-px h-8 bg-slate-200" aria-hidden="true"></div>
-              <div class="text-center">
-                <dt class="text-xs font-bold text-slate-400 uppercase">Required</dt>
-                <dd class="text-xl font-black text-slate-700">
-                  <%= Exam::PASSING_SCORE_PERCENTAGE %><span aria-hidden="true">%</span>
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </section>
-
-      <section aria-labelledby="detail-heading"
-               data-result-reveal-target="detailTable"
-               class="transition-opacity duration-700 delay-1000 <%= anim[:fade] %>">
-
-        <h3 id="detail-heading" class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
-          <div class="flex-shrink-0 p-1 bg-indigo-50 rounded-lg">
-            <%= inline_svg_tag "icons/check_board.svg", class: "w-6 h-6 text-indigo-500", aria_hidden: true %>
-          </div>
-          <span>回答詳細</span>
-        </h3>
-
-        <ul class="space-y-4">
-          <% @exam_questions.each do |eq| %>
-            <li>
-              <%= link_to exam_exam_question_answer_path(@exam, eq),
-                          class: "block group bg-white rounded-xl p-5 shadow-sm border border-slate-100 hover:border-indigo-200 hover:shadow-md transition-all duration-200 cursor-pointer",
-                          data: { turbo_stream: true } do %>
-
-                <div class="flex items-start gap-4">
-                  <div class="flex-shrink-0 mt-1">
-                    <% if eq.correct? %>
-                      <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                        <%= inline_svg_tag "icons/check.svg", class: "w-5 h-5", aria_hidden: true %>
-                      </div>
-                    <% else %>
-                      <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
-                        <%= inline_svg_tag "icons/x.svg", class: "w-5 h-5", aria_hidden: true %>
-                      </div>
-                    <% end %>
-                  </div>
-
-                  <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class="text-xs font-bold text-slate-400 uppercase">Q.<%= eq.position %></span>
-                      <% if eq.question.category %>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
-                          <%= eq.question.category.name %>
-                        </span>
-                      <% end %>
-                    </div>
-                    <p class="text-sm text-slate-700 font-medium line-clamp-2 leading-relaxed">
-                      <%= eq.question.content.truncate(100) %>
-                    </p>
-                  </div>
-
-                  <div class="flex-shrink-0 self-center">
-                    <div class="w-8 h-8 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors" aria-hidden="true">
-                      <%= inline_svg_tag "icons/right_arrow.svg", class: "w-4 h-4", aria_hidden: true %>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      </section>
-
-      <div data-controller="sticky-nav"
-          data-result-reveal-target="actionButtons"
-          data-sticky-nav-footer-selector-value="#global-footer"
-          class="fixed bottom-0 left-0 w-full z-50 transition-transform duration-500 <%= "translate-y-full" if @needs_reveal_animation %> <%= anim[:wrapper] %>">
-        <%= render "result_navigation" %>
-      </div>
-
-    </div>
   </div>
 </main>

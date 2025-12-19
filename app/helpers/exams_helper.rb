@@ -25,51 +25,6 @@ module ExamsHelper
     end
   end
 
-  def reveal_animation_classes(needs_animation)
-    {
-      wrapper: needs_animation ? "opacity-0 translate-y-4" : "",
-      fade:    needs_animation ? "opacity-0" : ""
-    }
-  end
-
-  def exam_chart_attributes(exam, needs_animation)
-    percentage = exam.score_percentage
-    passed = exam.passed?
-    circumference = 283 # 2 * PI * 45 ≈ 282.7
-    offset = circumference - (percentage / 100.0 * circumference)
-
-    if needs_animation
-      {
-        initial_color: "text-slate-200",
-        style: "stroke-dasharray: 0, #{circumference};",
-        initial_score: "0"
-      }
-    else
-      color_class = passed ? "text-emerald-500" : "text-red-500"
-      {
-        initial_color: color_class,
-        style: "stroke-dasharray: #{circumference}, #{circumference}; stroke-dashoffset: #{offset};",
-        initial_score: percentage
-      }
-    end
-  end
-
-  def exam_result_message(passed)
-    if passed
-      {
-        title: "PASSED!",
-        title_class: "text-emerald-500",
-        description: "おめでとうございます！<br>合格ラインを突破しました。"
-      }
-    else
-      {
-        title: "FAILED...",
-        title_class: "text-red-500",
-        description: "残念ながら不合格です。<br>復習して再挑戦しましょう。"
-      }
-    end
-  end
-
   def exam_progress_percentage(exam)
     return 0 if exam.total_questions.zero?
     (exam.answered_count.to_f / exam.total_questions * 100).round

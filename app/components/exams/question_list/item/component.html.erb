@@ -1,0 +1,34 @@
+<li>
+  <%= link_to exam_exam_question_answer_path(@exam_question.exam, @exam_question),
+              class: "block group bg-white rounded-xl p-5 shadow-sm border border-slate-100 hover:border-indigo-200 hover:shadow-md transition-all duration-200 cursor-pointer",
+              data: { turbo_stream: true } do %>
+
+    <div class="flex items-start gap-4">
+      <div class="flex-shrink-0 mt-1">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center <%= status_color_class %>">
+          <%= helpers.inline_svg_tag status_icon, class: "w-5 h-5", aria_hidden: true %>
+        </div>
+      </div>
+
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 mb-1">
+          <span class="text-xs font-bold text-slate-400 uppercase">Q.<%= @exam_question.position %></span>
+          <% if has_category? %>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
+              <%= category_name %>
+            </span>
+          <% end %>
+        </div>
+        <p class="text-sm text-slate-700 font-medium line-clamp-2 leading-relaxed">
+          <%= question_summary %>
+        </p>
+      </div>
+
+      <div class="flex-shrink-0 self-center">
+        <div class="w-8 h-8 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors" aria-hidden="true">
+          <%= helpers.inline_svg_tag "icons/right_arrow.svg", class: "w-4 h-4", aria_hidden: true %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</li>
