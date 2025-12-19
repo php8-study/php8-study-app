@@ -20,7 +20,7 @@
       user_choice_ids: @user_answer_ids
     ) %>
 
-    <%= render "shared/reference_info", question: @question %>
+    <%= render Questions::ReferenceInfo::Component.new(question: @question) %>
 
     <% unless current_user %>
       <div class="mt-8 pt-8 border-t border-slate-200">
