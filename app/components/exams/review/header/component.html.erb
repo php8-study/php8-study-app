@@ -1,0 +1,21 @@
+<section class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm" aria-label="進捗状況">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4">
+    <div class="flex items-center justify-between mb-2">
+      <h1 class="text-xl font-bold text-slate-800">回答状況の確認</h1>
+
+      <p class="text-sm font-bold text-indigo-600">
+        <span class="text-2xl"><%= answered_count %></span> / <%= total_questions %>
+      </p>
+    </div>
+
+    <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden"
+         role="progressbar"
+         aria-valuenow="<%= progress_percentage %>"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         aria-label="回答の進捗率">
+      <div class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500 ease-out"
+           style="width: <%= progress_percentage %>%"></div>
+    </div>
+  </div>
+</section>

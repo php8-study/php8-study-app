@@ -33,6 +33,7 @@ FactoryBot.define do
       transient do
         questions { [] }
         question_count { 3 }
+        answered_count { 0 }
       end
 
       after(:create) do |exam, evaluator|
@@ -43,7 +44,12 @@ FactoryBot.define do
         end
 
         target_questions.each_with_index do |question, index|
-          create(:exam_question, exam: exam, question: question, position: index + 1)
+          eq = create(:exam_question, exam: exam, question: question, position: index + 1)
+
+          if index < evaluator.answered_count
+            choice = question.question_choices.first
+            create(:exam_answer, exam_question: eq, question_choice: choice)
+          end
         end
       end
     end
