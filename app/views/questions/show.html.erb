@@ -19,8 +19,8 @@
       </div>
     </header>
 
-    <%= render Common::TerminalDisplayComponent.new(
-      content: @question.content,
+    <%= render Common::TerminalDisplay::Component.new(
+      body: @question.content,
       label: "RandomQuestion.php"
     ) %>
 
@@ -44,7 +44,12 @@
         ) %>
 
         <div class="mt-6">
-          <%= link_to root_path, class: "w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-md" do %>
+          <%= render Common::Button::Component.new(
+            href: root_path,
+            variant: :primary,
+            size: :md,
+            class: "w-full py-3"
+          ) do %>
             ログインして学習をはじめる
           <% end %>
         </div>
