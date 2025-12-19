@@ -21,7 +21,7 @@
       ) %>
 
       <div class="max-w-screen-xl mx-auto w-full" id="flash">
-        <%= render "layouts/flash" %>
+        <%= render Common::Flash::Component.new(flash: flash) %>
       </div>
 
       <div class="main-content-wrapper flex-1 w-full">
