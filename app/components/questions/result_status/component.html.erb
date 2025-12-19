@@ -1,0 +1,11 @@
+<div class="rounded-2xl border <%= theme[:border] %> <%= theme[:bg] %> p-6 flex items-center gap-5 shadow-sm">
+  <div class="flex-shrink-0 w-14 h-14 rounded-full <%= theme[:icon_bg] %> flex items-center justify-center">
+    <%= helpers.inline_svg_tag "icons/#{theme[:icon_name]}.svg",
+        class: "w-8 h-8 #{theme[:sub_text]}",
+        aria_hidden: true %>
+  </div>
+  <div>
+    <h2 class="text-2xl font-black <%= theme[:text] %> tracking-tight"><%= theme[:label] %></h2>
+    <p class="text-sm font-bold <%= theme[:sub_text] %> mt-1"><%= theme[:message] %></p>
+  </div>
+</div>

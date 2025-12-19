@@ -1,0 +1,43 @@
+<section class="space-y-4">
+  <div class="flex items-center gap-2 mb-2">
+    <div class="w-1 h-6 bg-indigo-500 rounded-full" aria-hidden="true"></div>
+    <h3 class="text-lg font-bold text-slate-800">選択肢の正誤</h3>
+  </div>
+
+  <ul class="space-y-3">
+    <% choices.each do |choice| %>
+      <li class="<%= container_classes(choice) %>">
+
+        <div class="flex-shrink-0 mt-0.5">
+          <% if correct?(choice) %>
+            <div class="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+              <%= helpers.inline_svg_tag "icons/check.svg", class: "w-4 h-4", aria_hidden: true %>
+            </div>
+          <% elsif selected?(choice) %>
+            <div class="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center text-red-500">
+              <%= helpers.inline_svg_tag "icons/x.svg", class: "w-4 h-4", aria_hidden: true %>
+            </div>
+          <% else %>
+            <div class="w-6 h-6 rounded-full border-2 border-slate-300"></div>
+          <% end %>
+        </div>
+
+        <div class="ml-4 flex-1">
+          <div class="flex flex-wrap items-center gap-2 mb-1">
+            <% if correct?(choice) %>
+              <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 rounded-md">Correct Answer</span>
+            <% end %>
+
+            <% if selected?(choice) %>
+              <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-slate-200 rounded-md">Your Choice</span>
+            <% end %>
+          </div>
+
+          <p class="<%= text_classes(choice) %>">
+            <%= choice.content %>
+          </p>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</section>
