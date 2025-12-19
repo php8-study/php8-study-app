@@ -24,7 +24,7 @@ class Admin::CategoriesController < ::AdminController
       flash.now[:notice] = "カテゴリーを更新しました"
       render turbo_stream: [
         turbo_stream.replace(@category, partial: "admin/categories/category", locals: { category: @category }),
-        turbo_stream.update("flash", partial: "layouts/flash")
+        turbo_stream.update("flash", Common::Flash::Component.new(flash: flash))
       ]
     else
       render :edit, status: :unprocessable_entity
@@ -36,11 +36,11 @@ class Admin::CategoriesController < ::AdminController
       flash.now[:notice] = "カテゴリー「#{ @category.name }」を削除しました"
       render turbo_stream: [
         turbo_stream.remove(@category),
-        turbo_stream.update("flash", partial: "layouts/flash")
+        turbo_stream.update("flash", Common::Flash::Component.new(flash: flash))
       ]
     else
       flash.now[:alert] = "削除できません：紐付く問題が存在します"
-      render turbo_stream: turbo_stream.update("flash", partial: "layouts/flash"),
+      render turbo_stream: turbo_stream.update("flash", Common::Flash::Component.new(flash: flash)),
       status: :unprocessable_entity
     end
   end
