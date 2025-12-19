@@ -15,7 +15,7 @@ module Exams
       end
 
       def created_month
-        created_at.strftime("%b")
+        created_at.strftime("%b") # 英表記にしたいのでstrftimeを採用
       end
 
       def wrapper_class
