@@ -19,19 +19,21 @@
       </div>
     </header>
 
-    <%= render "shared/terminal_display",
-        content: @question.content,
-        label: "RandomQuestion.php" %>
+    <%= render Common::TerminalDisplayComponent.new(
+      content: @question.content,
+      label: "RandomQuestion.php"
+    ) %>
 
     <% if current_user.present? %>
-      <%= render "shared/answer_form",
-            question: @question,
-            url: question_solution_path(@question),
-            method: :get,
-            button_text: "解答する",
-            input_name: "user_answer_ids[]",
-            selected_choice_ids: [],
-            guard_answer: false %>
+    <%= render Common::AnswerForm::Component.new(
+      question: @question,
+      url: question_solution_path(@question),
+      method: :get,
+      button_text: "解答する",
+      input_name: "user_answer_ids[]",
+      selected_choice_ids: [],
+      guard_answer: false
+    ) %>
     <% else %>
       <div class="pt-8 border-t border-slate-200">
         <%= render "shared/choices",
