@@ -19,29 +19,37 @@
       </div>
     </header>
 
-    <%= render "shared/terminal_display",
-        content: @question.content,
-        label: "RandomQuestion.php" %>
+    <%= render Common::TerminalDisplay::Component.new(
+      body: @question.content,
+      label: "RandomQuestion.php"
+    ) %>
 
     <% if current_user.present? %>
-      <%= render "shared/answer_form",
-            question: @question,
-            url: question_solution_path(@question),
-            method: :get,
-            button_text: "解答する",
-            input_name: "user_answer_ids[]",
-            selected_choice_ids: [],
-            guard_answer: false %>
+    <%= render Common::AnswerForm::Component.new(
+      question: @question,
+      url: question_solution_path(@question),
+      method: :get,
+      button_text: "解答する",
+      input_name: "user_answer_ids[]",
+      selected_choice_ids: [],
+      guard_answer: false
+    ) %>
     <% else %>
       <div class="pt-8 border-t border-slate-200">
-        <%= render "shared/choices",
-            question: @question,
-            input_name: nil,
-            selected_choice_ids: [],
-            disabled: true %>
+        <%= render Common::Choices::Component.new(
+          question: @question,
+          input_name: nil,
+          selected_choice_ids: [],
+          disabled: true
+        ) %>
 
         <div class="mt-6">
-          <%= link_to root_path, class: "w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-md" do %>
+          <%= render Common::Button::Component.new(
+            href: root_path,
+            variant: :primary,
+            size: :md,
+            class: "w-full py-3"
+          ) do %>
             ログインして学習をはじめる
           <% end %>
         </div>
