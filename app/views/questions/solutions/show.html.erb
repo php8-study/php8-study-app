@@ -12,12 +12,13 @@
 
     <%= render Common::TerminalDisplay::Component.new(
         body: @question.content,
-        label: "Question.php (Review)" 
-    )%>
+        label: "Question.php (Review)"
+      ) %>
 
-    <%= render "shared/choices_feedback",
-        question: @question,
-        user_choice_ids: @user_answer_ids %>
+    <%= render Questions::ChoicesFeedback::Component.new(
+      question: @question,
+      user_choice_ids: @user_answer_ids
+    ) %>
 
     <%= render "shared/reference_info", question: @question %>
 
