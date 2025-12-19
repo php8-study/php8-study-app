@@ -1,0 +1,17 @@
+<section aria-labelledby="detail-heading"
+         data-result-reveal-target="detailTable"
+         class="transition-opacity duration-700 delay-1000 <%= animation_class %>">
+
+  <h3 id="detail-heading" class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+    <div class="flex-shrink-0 p-1 bg-indigo-50 rounded-lg">
+      <%= helpers.inline_svg_tag "icons/check_board.svg", class: "w-6 h-6 text-indigo-500", aria_hidden: true %>
+    </div>
+    <span>回答詳細</span>
+  </h3>
+
+  <ul class="space-y-4">
+    <% @questions.each do |exam_question| %>
+      <%= render Exams::QuestionList::Item::Component.new(exam_question: exam_question) %>
+    <% end %>
+  </ul>
+</section>

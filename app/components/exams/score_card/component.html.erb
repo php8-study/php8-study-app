@@ -1,0 +1,56 @@
+<section aria-label="総合成績"
+         data-result-reveal-target="summary" 
+         class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100 mb-12 transition-all duration-700 ease-out <%= wrapper_animation_class %>">
+
+  <div class="p-8 md:p-12 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+
+    <figure class="relative w-48 h-48 md:w-56 md:h-56" aria-label="スコアチャート">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" focusable="false" class="w-full h-full transform -rotate-90" aria-hidden="true">
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#f1f5f9" stroke-width="8"></circle>
+
+        <circle data-result-reveal-target="bar"
+                cx="50" cy="50" r="45" fill="none"
+                stroke="currentColor" stroke-width="8" stroke-linecap="round"
+                class="transition-all duration-1000 ease-out <%= chart_color_class %>"
+                style="<%= chart_style %>"></circle>
+      </svg>
+
+      <figcaption class="absolute inset-0 flex flex-col items-center justify-center">
+        <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Score</span>
+        <div class="flex items-baseline">
+          <span data-result-reveal-target="scoreText" class="text-5xl md:text-6xl font-black text-slate-800">
+            <%= initial_score_display %>
+          </span>
+          <span class="text-2xl font-bold text-slate-400 ml-1">%</span>
+        </div>
+      </figcaption>
+    </figure>
+
+    <div class="text-center md:text-left">
+      <div data-result-reveal-target="message" class="transition-opacity duration-500 delay-300 <%= fade_animation_class %>">
+        <h2 class="text-4xl font-black mb-2 tracking-tight <%= result_title_class %>">
+          <%= result_title %>
+        </h2>
+        <p class="text-lg text-slate-600 font-medium">
+          <%= result_description.html_safe %>
+        </p>
+      </div>
+
+      <dl data-result-reveal-target="scoreDetail" class="mt-6 flex items-center justify-center md:justify-start gap-6 transition-opacity duration-500 delay-500 <%= fade_animation_class %>">
+        <div class="text-center">
+          <dt class="text-xs font-bold text-slate-400 uppercase">Correct</dt>
+          <dd class="text-xl font-black text-slate-700">
+            <%= correct_count %><span class="text-sm text-slate-400 font-medium mx-1" aria-hidden="true">/</span><%= total_questions %>
+          </dd>
+        </div>
+        <div class="w-px h-8 bg-slate-200" aria-hidden="true"></div>
+        <div class="text-center">
+          <dt class="text-xs font-bold text-slate-400 uppercase">Required</dt>
+          <dd class="text-xl font-black text-slate-700">
+            <%= Exam::PASSING_SCORE_PERCENTAGE %><span aria-hidden="true">%</span>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
