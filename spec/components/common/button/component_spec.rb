@@ -21,7 +21,7 @@ RSpec.describe Common::Button::Component, type: :component do
     end
   end
 
-  context "バリエーション (Variant)" do
+  context "バリエーション" do
     it "secondaryスタイルが適用されること" do
       render_inline(described_class.new(variant: :secondary)) { "キャンセル" }
       expect(page).to have_css(".bg-white.text-slate-600")
@@ -39,7 +39,7 @@ RSpec.describe Common::Button::Component, type: :component do
     end
   end
 
-  context "サイズ (Size)" do
+  context "サイズ" do
     it "xlサイズが適用されること" do
       render_inline(described_class.new(size: :xl)) { "大きいボタン" }
       expect(page).to have_css(".px-8.py-4.text-lg")
