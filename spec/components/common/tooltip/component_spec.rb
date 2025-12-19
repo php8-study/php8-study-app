@@ -9,7 +9,7 @@ RSpec.describe Common::Tooltip::Component, type: :component do
 
   it "トリガーボタンが表示され、適切な属性を持っていること" do
     button = page.find("button[data-tooltip-target='trigger']")
-
+    
     expect(button).to be_present
     expect(button[:class]).to include("cursor-help")
     expect(button["aria-label"]).to eq "公式テキスト参照箇所"
@@ -17,10 +17,12 @@ RSpec.describe Common::Tooltip::Component, type: :component do
 
   it "ツールチップ本体が表示され（DOMに存在し）、Stimulusのターゲット設定があること" do
     content = page.find("div[data-tooltip-target='content']", visible: false)
-
+    
     expect(content).to be_present
     expect(content["role"]).to eq "tooltip"
-    expect(content[:class]).to include("opacity-0", "invisible", "fixed")
+
+    expect(content[:class]).to include("opacity-0", "invisible")
+    expect(content[:class]).to include("w-96", "min-w-[320px]")
   end
 
   it "Stimulusコントローラーが設定されていること" do
