@@ -1,0 +1,25 @@
+<div data-controller="answer-guard" data-answer-guard-active-value="<%= @guard_answer %>">
+  <%= form_with url: @url, method: @method, local: true, class: "space-y-8" do |f| %>
+
+    <%# 後でComponentに切り替える %>
+    <%= render "shared/choices",
+        question: @question,
+        input_name: @input_name,
+        selected_choice_ids: @selected_choice_ids,
+        disabled: false %>
+
+    <div class="flex justify-end pt-4">
+      <%= render Common::Button::Component.new(
+            type: :submit,
+            variant: :primary,
+            size: :xl,
+            class: "group shadow-lg",
+            data: { action: "click->answer-guard#submit" }
+          ) do %>
+        <span><%= @button_text %></span>
+        <%= helpers.inline_svg_tag "icons/right_arrow.svg", class: "w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1", aria_hidden: true %>
+      <% end %>
+    </div>
+
+  <% end %>
+</div>
