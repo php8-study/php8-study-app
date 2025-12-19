@@ -23,7 +23,7 @@ RSpec.describe Exams::StickyNav::Component, type: :component do
 
     it "animation: falseの場合、非表示クラスが付与されないこと" do
       render_inline(described_class.new(animation: false))
-      
+
       expect(page).to have_no_css(".opacity-0")
       expect(page).to have_no_css(".translate-y-full")
     end
