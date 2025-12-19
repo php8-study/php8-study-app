@@ -29,6 +29,7 @@ RSpec.describe Common::Choices::Component, type: :component do
   it "disabledの場合、入力が無効化されること" do
     render_inline(described_class.new(
       question: question,
+      input_name: "answers[]",
       disabled: true
     ))
 
