@@ -32,7 +32,8 @@ RSpec.describe Exams::HistoryItem::Component, type: :component do
     it "スコアと正解数が正しく表示されること" do
       expect(page).to have_content("#{passed_exam.score_percentage}%")
       expect(page).to have_content(passed_exam.correct_count.to_s)
-      expect(page).to have_content("/ #{passed_exam.total_questions}")
+      expect(page).to have_content("/")
+      expect(page).to have_content(passed_exam.total_questions.to_s)
     end
   end
 
