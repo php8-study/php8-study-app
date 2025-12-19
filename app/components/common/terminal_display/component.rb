@@ -4,7 +4,7 @@ module Common
   module TerminalDisplay
     class Component < ViewComponent::Base
       def initialize(body:, label: "Question.php")
-        @content = body
+        @body = body
         @label = label
       end
     end
