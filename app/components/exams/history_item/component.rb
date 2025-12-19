@@ -18,6 +18,10 @@ module Exams
         created_at.strftime("%b") # 英表記にしたいのでstrftimeを採用
       end
 
+      def link_classes
+        "group block bg-white rounded-xl p-5 border shadow-sm hover:shadow-md transition-all duration-200 border-l-[6px] #{accent_border_class} #{wrapper_class} hover:-translate-y-0.5"
+      end
+
       def wrapper_class
         base = "border-slate-100"
         if passed?
