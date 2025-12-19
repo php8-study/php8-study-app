@@ -7,7 +7,7 @@
   <div class="max-w-3xl mx-auto space-y-8">
 
     <% if current_user %>
-      <%= render "shared/result_status", is_correct: @is_correct %>
+      <%= render Questions::ResultStatus::Component.new(is_correct: @is_correct) %>
     <% end %>
 
     <%= render "shared/terminal_display",
