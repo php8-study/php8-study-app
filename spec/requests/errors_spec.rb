@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "Errors", type: :request do
@@ -14,7 +16,7 @@ RSpec.describe "Errors", type: :request do
 
   describe "500 Internal Server Error" do
     it "500ページが正しく表示されること" do
-      get "/500" 
+      get "/500"
 
       expect(response).to have_http_status(:internal_server_error)
       expect(response.body).to include("サーバーエラーが発生しました")
