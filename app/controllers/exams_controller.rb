@@ -13,9 +13,6 @@ class ExamsController < ApplicationController
 
   def show
     @exam_questions = @exam.exam_questions
-                           .preload({ question: [:question_choices, :category] }, :exam_answers)
-                           .order(:position)
-
     @needs_reveal_animation = params[:reveal].present?
   end
 
@@ -26,8 +23,11 @@ class ExamsController < ApplicationController
   end
 
   private
+    # 使用アクションが増えたら関連読み込みが適切か確認する事
     def set_exam
-      @exam = current_user.exams.find(params[:id])
+      @exam = current_user.exams
+                          .includes(exam_questions: [{ question: [:question_choices, :category] }, :exam_answers])
+                          .find(params[:id])
     end
 
     def ensure_completed
