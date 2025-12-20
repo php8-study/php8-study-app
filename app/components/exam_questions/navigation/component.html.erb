@@ -6,7 +6,7 @@
           variant: :secondary,
           class: "col-span-2 sm:col-span-1 border-slate-300 text-slate-600"
         ) do %>
-      <%= inline_svg_tag "icons/chevron-left.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
+      <%= helpers.inline_svg_tag "icons/chevron-left.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
       前へ
     <% end %>
   <% else %>
@@ -18,7 +18,7 @@
         variant: :secondary,
         class: "bg-slate-100 hover:bg-slate-200 border-transparent text-slate-600"
       ) do %>
-    <%= inline_svg_tag "icons/hamburger.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
+    <%= helpers.inline_svg_tag "icons/hamburger.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
     回答状況一覧へ
   <% end %>
 
@@ -29,7 +29,7 @@
           class: "text-indigo-700 bg-indigo-50 border-indigo-200 hover:bg-indigo-100"
         ) do %>
       後で回答する
-      <%= inline_svg_tag "icons/chevron-right.svg", class: "w-4 h-4 ml-2", aria_hidden: true %>
+      <%= helpers.inline_svg_tag "icons/chevron-right.svg", class: "w-4 h-4 ml-2", aria_hidden: true %>
     <% end %>
   <% else %>
     <%= render Common::Button::Component.new(
@@ -38,7 +38,7 @@
           class: "shadow-md hover:shadow-lg"
         ) do %>
       回答せずに確認画面へ
-      <%= inline_svg_tag "icons/check.svg", class: "w-4 h-4 ml-2", aria_hidden: true %>
+      <%= helpers.inline_svg_tag "icons/check.svg", class: "w-4 h-4 ml-2", aria_hidden: true %>
     <% end %>
   <% end %>
 
