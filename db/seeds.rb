@@ -1,4 +1,6 @@
-require 'faker'
+# frozen_string_literal: true
+
+require "faker"
 
 puts "🧹 既存のデータを削除中..."
 ExamAnswer.destroy_all
