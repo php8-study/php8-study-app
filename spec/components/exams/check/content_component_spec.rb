@@ -20,10 +20,10 @@ RSpec.describe Exams::Check::ContentComponent, type: :component do
 
   it "「破棄して新規開始」ボタンがPOSTフォームとして存在し、確認ダイアログが設定されていること" do
     form = page.find("form[action='/exams'][method='post']")
-    
+
     submit_button = form.find("button[type='submit']")
     expect(submit_button).to have_content("破棄して新規開始")
-    
+
     expect(submit_button["data-turbo-confirm"]).to eq "本当に現在の進捗を破棄してよろしいですか？"
   end
 end

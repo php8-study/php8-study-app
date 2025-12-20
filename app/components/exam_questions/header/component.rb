@@ -9,7 +9,6 @@ module ExamQuestions
       end
 
       private
-
         def position
           @exam_question.position
         end
