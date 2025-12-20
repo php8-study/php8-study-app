@@ -37,6 +37,9 @@ jobs:
           echo "SERVER_IP=${{ secrets.SERVER_IP }}" >> .kamal/secrets
           echo "GITHUB_CLIENT_ID=${{ secrets.GH_CLIENT_ID }}" >> .kamal/secrets
           echo "GITHUB_CLIENT_SECRET=${{ secrets.GH_CLIENT_SECRET }}" >> .kamal/secrets
+          echo "LITESTREAM_ACCESS_KEY_ID=${{ secrets.LITESTREAM_ACCESS_KEY_ID }}" >> .kamal/secrets
+          echo "LITESTREAM_SECRET_ACCESS_KEY=${{ secrets.LITESTREAM_SECRET_ACCESS_KEY }}" >> .kamal/secrets
+          echo "LITESTREAM_ENDPOINT=${{ secrets.LITESTREAM_ENDPOINT }}" >> .kamal/secrets
           
       - name: Add known hosts
         run: |
