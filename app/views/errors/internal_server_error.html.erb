@@ -1,32 +1,27 @@
 <% title "サーバーエラー (500)" %>
 <% noindex %>
 
-<main class="min-h-[calc(100vh-64px)] bg-slate-50 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-  <div class="max-w-md w-full text-center">
+<%= render Common::ErrorPage::Component.new(
+      code: "500",
+      title: "サーバーエラーが発生しました",
+      badge_text: "System Error",
+      badge_classes: "bg-red-100 text-red-600 border border-red-200 rotate-3"
+    ) do %>
 
-    <div class="relative" aria-hidden="true">
-      <span class="block text-9xl font-black text-slate-200 select-none">500</span>
+  <p>
+    予期せぬエラーが発生しました。<br>
+    しばらく時間を置いてから再度お試しください。
+  </p>
 
-      <div class="absolute inset-0 flex items-center justify-center">
-        <div class="px-4 py-2 bg-red-100 text-red-600 text-sm font-mono rounded shadow-sm border border-red-200 transform rotate-3">
-          System Error
-        </div>
-      </div>
-    </div>
-
-    <h1 class="mt-8 text-2xl font-bold text-slate-900">サーバーエラーが発生しました</h1>
-
-    <p class="mt-2 text-slate-500">
-      予期せぬエラーが発生しました。<br>
-      しばらく時間を置いてから再度お試しください。
-    </p>
-
-    <div class="mt-8 flex justify-center gap-4">
-      <%= link_to root_path, class: "group inline-flex items-center justify-center px-6 py-3 border border-slate-300 text-base font-bold rounded-xl text-slate-700 bg-white hover:bg-slate-50 transition-all shadow-sm" do %>
-        <%= inline_svg_tag "icons/home.svg", class: "w-5 h-5 mr-2 text-slate-400 group-hover:text-slate-500 transition-colors", aria_hidden: true %>
-        ダッシュボードへ戻る
-      <% end %>
-    </div>
-
+  <div class="mt-8 flex justify-center">
+    <%= render Common::Button::Component.new(
+          href: root_path,
+          variant: :secondary,
+          class: "shadow-sm"
+        ) do %>
+      <%= inline_svg_tag "icons/home.svg", class: "w-5 h-5 mr-2 text-slate-400", aria_hidden: true %>
+      ダッシュボードへ戻る
+    <% end %>
   </div>
-</main>
+
+<% end %>
