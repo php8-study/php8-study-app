@@ -2,7 +2,7 @@
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
 ARG RUBY_VERSION=3.4.7
-FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim AS base
 
 # Rails app lives here
 WORKDIR /rails
@@ -15,7 +15,7 @@ ENV RAILS_ENV="production" \
 
 
 # Throw-away build stage to reduce size of final image
-FROM base as build
+FROM base AS build
 
 # Install packages needed to build gems and assets
 RUN apt-get update -qq && \
@@ -49,7 +49,7 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y libvips libyaml-0-2 curl ca-certificates && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-ADD https://github.com/benbjohnson/litestream/releases/download/v0.5.5/litestream-v0.5.5-linux-amd64.tar.gz /tmp/litestream.tar.gz
+ADD https://github.com/benbjohnson/litestream/releases/download/v0.5.5/litestream-0.5.5-linux-x86_64.tar.gz /tmp/litestream.tar.gz
 RUN tar -C /usr/local/bin -xzf /tmp/litestream.tar.gz && \
     rm /tmp/litestream.tar.gz
 
