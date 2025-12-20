@@ -17,6 +17,9 @@
     <% end %>
   </header>
 
-  <%= render "admin/categories/inline_form", category: @category %>
+    <%= render Admin::Categories::List::Row::Form::Component.new(
+        category: @category,
+        grid_cols: Admin::Categories::List::Component::GRID_COLS
+      ) %>
 
 </main>
