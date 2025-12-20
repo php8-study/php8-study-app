@@ -18,7 +18,7 @@ module ExamQuestions
       if (next_q = @exam_question.next_question)
         redirect_to exam_exam_question_path(@exam, next_q)
       else
-        redirect_to review_exam_path(@exam)
+        redirect_to exam_review_path(@exam)
       end
     end
 
