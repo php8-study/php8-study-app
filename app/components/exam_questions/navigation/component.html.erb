@@ -34,11 +34,11 @@
   <% else %>
     <%= render Common::Button::Component.new(
           href: exam_review_path(@exam),
-          variant: :danger,
+          variant: :ghost,
           class: "shadow-md hover:shadow-lg"
         ) do %>
       回答せずに確認画面へ
-      <%= helpers.inline_svg_tag "icons/check.svg", class: "w-4 h-4 ml-2", aria_hidden: true %>
+      <%= helpers.inline_svg_tag "icons/caution.svg", class: "w-4 h-4 ml-2 text-red-500", aria_hidden: true %>
     <% end %>
   <% end %>
 
