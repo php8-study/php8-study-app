@@ -9,7 +9,7 @@ module Exams
 
       private
         def formatted_date
-          @active_exam.created_at.strftime("%Y年%m月%d日 %H:%M")
+          @active_exam&.created_at.strftime("%Y年%m月%d日 %H:%M")
         end
     end
   end
