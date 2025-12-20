@@ -9,8 +9,8 @@
       <%= render Common::Button::Component.new(
             href: root_path,
             variant: :secondary,
-            size: :xl,
-            class: "w-full sm:w-auto"
+            size: :lg,
+            class: "w-full sm:w-auto pointer-events-auto"
           ) do %>
         <span>トップへ戻る</span>
       <% end %>
@@ -18,8 +18,8 @@
       <%= render Common::Button::Component.new(
             href: exams_path,
             variant: :primary,
-            size: :xl,
-            class: "w-full sm:w-auto hover:-translate-y-0.5 hover:shadow-lg"
+            size: :lg,
+            class: "w-full sm:w-auto hover:-translate-y-0.5 hover:shadow-lg pointer-events-auto"
           ) do %>
         <span>履歴一覧へ戻る</span>
         <%= helpers.inline_svg_tag "icons/right_arrow.svg", class: "w-5 h-5 ml-2", aria_hidden: true %>
