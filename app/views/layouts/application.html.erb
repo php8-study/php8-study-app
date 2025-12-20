@@ -2,7 +2,6 @@
 <html>
   <head>
     <%= display_meta_tags(default_meta_tags) %>
-
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -10,37 +9,29 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col bg-gradient-to-b from-slate-100 to-slate-200">
 
-    <div id="page-content" class="page-content-wrapper flex-1 flex flex-col bg-gradient-to-b from-slate-100 to-slate-200">
+    <%= render Common::Header::Component.new(
+      current_user: current_user,
+      github_info: session[:github_info],
+      hide: content_for?(:hide_header_footer)
+    ) %>
 
-      <%= render Common::Header::Component.new(
-        current_user: current_user,
-        github_info: session[:github_info],
+    <div class="max-w-screen-xl mx-auto w-full" id="flash">
+      <%= render Common::Flash::Component.new(flash: flash) %>
+    </div>
+
+    <% if content_for?(:full_width) %>
+      <%= yield %>
+    <% else %>
+      <div class="max-w-screen-xl mx-auto w-full flex-1">
+        <%= yield %>
+      </div>
+    <% end %>
+
+    <%= render Common::Footer::Component.new(
         hide: content_for?(:hide_header_footer)
       ) %>
-
-      <div class="max-w-screen-xl mx-auto w-full" id="flash">
-        <%= render Common::Flash::Component.new(flash: flash) %>
-      </div>
-
-      <div class="main-content-wrapper flex-1 w-full">
-
-        <% if content_for?(:full_width) %>
-          <%= yield %>
-        <% else %>
-          <div class="max-w-screen-xl mx-auto w-full">
-            <%= yield %>
-          </div>
-        <% end %>
-
-      </div>
-
-      <%= render Common::Footer::Component.new(
-          hide: content_for?(:hide_header_footer)
-        ) %>
-
-    </div>
 
     <div id="modal-frame" class="fixed inset-0 pointer-events-none"></div>
     <%= render Common::DevelopmentTools::Component.new if Rails.env.development? %>
