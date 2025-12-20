@@ -1,0 +1,45 @@
+<nav class="pt-8 border-t border-slate-200 grid grid-cols-2 sm:grid-cols-3 gap-4" aria-label="問題移動">
+
+  <% if prev_question %>
+    <%= render Common::Button::Component.new(
+          href: exam_exam_question_path(@exam, prev_question),
+          variant: :secondary,
+          class: "col-span-2 sm:col-span-1 border-slate-300 text-slate-600"
+        ) do %>
+      <%= inline_svg_tag "icons/chevron-left.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
+      前へ
+    <% end %>
+  <% else %>
+    <div class="hidden sm:block sm:invisible" aria-hidden="true"></div>
+  <% end %>
+
+  <%= render Common::Button::Component.new(
+        href: exam_review_path(@exam),
+        variant: :secondary,
+        class: "bg-slate-100 hover:bg-slate-200 border-transparent text-slate-600"
+      ) do %>
+    <%= inline_svg_tag "icons/hamburger.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
+    回答状況一覧へ
+  <% end %>
+
+  <% if next_question %>
+    <%= render Common::Button::Component.new(
+          href: exam_exam_question_path(@exam, next_question),
+          variant: :secondary,
+          class: "text-indigo-700 bg-indigo-50 border-indigo-200 hover:bg-indigo-100"
+        ) do %>
+      後で回答する
+      <%= inline_svg_tag "icons/chevron-right.svg", class: "w-4 h-4 ml-2", aria_hidden: true %>
+    <% end %>
+  <% else %>
+    <%= render Common::Button::Component.new(
+          href: exam_review_path(@exam),
+          variant: :danger,
+          class: "shadow-md hover:shadow-lg"
+        ) do %>
+      回答せずに確認画面へ
+      <%= inline_svg_tag "icons/check.svg", class: "w-4 h-4 ml-2", aria_hidden: true %>
+    <% end %>
+  <% end %>
+
+</nav>
