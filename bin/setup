@@ -13,10 +13,8 @@ FileUtils.chdir APP_ROOT do
   system! "gem install bundler --conservative"
   system("bundle check") || system!("bundle install")
 
-  if File.exist?("package.json")
-    puts "\n== Installing Node.js dependencies =="
-    system! "npm install"
-  end
+  puts "\n== Installing Node.js dependencies =="
+  system! "yarn install"
 
   puts "\n== Preparing .env file =="
   unless File.exist?(".env")
