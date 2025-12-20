@@ -3,11 +3,11 @@
 require "rails_helper"
 
 RSpec.describe ExamQuestions::Navigation::Component, type: :component do
-  let(:exam) { create(:exam) }
-  
-  let!(:question1) { create(:exam_question, exam: exam, position: 1) }
-  let!(:question2) { create(:exam_question, exam: exam, position: 2) }
-  let!(:question3) { create(:exam_question, exam: exam, position: 3) }
+  let(:exam) { create(:exam, :with_questions) }
+
+  let(:question1) { exam.exam_questions.find_by(position: 1) }
+  let(:question2) { exam.exam_questions.find_by(position: 2) }
+  let(:question3) { exam.exam_questions.find_by(position: 3) }
 
   context "最初の問題の場合 (position: 1)" do
     before do
@@ -22,7 +22,7 @@ RSpec.describe ExamQuestions::Navigation::Component, type: :component do
       expect(page).to have_link("回答状況一覧へ", href: "/exams/#{exam.id}/review")
     end
 
-    it "「後で回答する(次へ)」ボタンが表示されること" do
+    it "「後で回答する」ボタンが表示されること" do
       expect(page).to have_link("後で回答する", href: "/exams/#{exam.id}/exam_questions/#{question2.id}")
     end
   end
@@ -36,7 +36,7 @@ RSpec.describe ExamQuestions::Navigation::Component, type: :component do
       expect(page).to have_link("前へ", href: "/exams/#{exam.id}/exam_questions/#{question1.id}")
     end
 
-    it "「後で回答する(次へ)」ボタンが表示されること" do
+    it "「後で回答する」ボタンが表示されること" do
       expect(page).to have_link("後で回答する", href: "/exams/#{exam.id}/exam_questions/#{question3.id}")
     end
   end
@@ -52,8 +52,8 @@ RSpec.describe ExamQuestions::Navigation::Component, type: :component do
 
     it "「回答せずに確認画面へ」ボタンが表示され、「後で回答する」は表示されないこと" do
       expect(page).not_to have_link("後で回答する")
-      
-      confirm_link = page.find_link("回答せずに確認画面へ", href: "/exams/#{exam.id}/review")
+
+      page.find_link("回答せずに確認画面へ", href: "/exams/#{exam.id}/review")
     end
   end
 end
