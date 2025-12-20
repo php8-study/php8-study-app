@@ -8,6 +8,6 @@
     <p class="text-slate-500 mt-2">新しいカテゴリーの情報を入力してください</p>
   </header>
 
-  <%= render "form", category: @category %>
+  <%= render Admin::Categories::Form::Component.new(category: @category) %>
 
 </main>

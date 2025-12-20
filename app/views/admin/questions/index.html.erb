@@ -10,51 +10,28 @@
     </div>
 
     <nav class="flex gap-3" aria-label="管理メニュー">
-      <%= link_to admin_root_path, class: "inline-flex items-center px-4 py-2 text-sm font-bold text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-sm" do %>
+      <%= render Common::Button::Component.new(
+            href: admin_root_path,
+            variant: :secondary,
+            size: :sm,
+            class: "shadow-sm px-4 py-2"
+          ) do %>
         <%= inline_svg_tag "icons/left_arrow.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
         管理トップ
       <% end %>
 
-      <%= link_to new_admin_question_path, class: "inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm hover:shadow" do %>
+      <%= render Common::Button::Component.new(
+            href: new_admin_question_path,
+            variant: :primary,
+            size: :sm,
+            class: "shadow-sm hover:shadow px-4 py-2"
+          ) do %>
         <%= inline_svg_tag "icons/plus.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
         新規作成
       <% end %>
     </nav>
   </header>
 
-  <% if @questions.any? %>
-    <section class="bg-white shadow-sm rounded-xl border border-slate-200 overflow-hidden" aria-label="問題一覧">
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-slate-200">
-          <thead class="bg-slate-50">
-            <tr>
-              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-xs font-bold uppercase tracking-wider text-slate-500 sm:pl-6">ID</th>
-              <th scope="col" class="py-3.5 px-3 text-left text-xs font-bold uppercase tracking-wider text-slate-500">問題文</th>
-              <th scope="col" class="py-3.5 px-3 text-left text-xs font-bold uppercase tracking-wider text-slate-500">カテゴリー</th>
-              <th scope="col" class="py-3.5 px-3 text-center text-xs font-bold uppercase tracking-wider text-slate-500">参照</th>
-              <th scope="col" class="py-3.5 px-3 text-center text-xs font-bold uppercase tracking-wider text-slate-500">解説</th>
-              <th scope="col" class="py-3.5 px-3 text-right text-xs font-bold uppercase tracking-wider text-slate-500 pr-6">操作</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-200 bg-white">
-            <%= render @questions %>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  <% else %>
-    <div class="text-center py-16 bg-white rounded-xl border border-slate-200 border-dashed">
-      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-50 mb-4" aria-hidden="true">
-        <%= inline_svg_tag "icons/memo.svg", class: "w-8 h-8 text-slate-400" %>
-      </div>
-      <h3 class="mt-2 text-sm font-bold text-slate-900">問題が登録されていません</h3>
-      <p class="mt-1 text-sm text-slate-500">新しい問題を作成してデータベースに追加しましょう。</p>
-      <div class="mt-6">
-        <%= link_to new_admin_question_path, class: "inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm" do %>
-          <%= inline_svg_tag "icons/plus.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
-          問題を新規作成
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+  <%= render Admin::Questions::List::Component.new(questions: @questions) %>
+
 </main>

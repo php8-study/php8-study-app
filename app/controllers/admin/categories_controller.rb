@@ -23,7 +23,13 @@ class Admin::CategoriesController < ::AdminController
     if @category.update(category_params)
       flash.now[:notice] = "カテゴリーを更新しました"
       render turbo_stream: [
-        turbo_stream.replace(@category, partial: "admin/categories/category", locals: { category: @category }),
+        turbo_stream.replace(
+          @category,
+          Admin::Categories::List::Row::Component.new(
+            category: @category,
+            grid_cols: Admin::Categories::List::Component::GRID_COLS
+          )
+        ),
         turbo_stream.update("flash", Common::Flash::Component.new(flash: flash))
       ]
     else
@@ -49,7 +55,10 @@ class Admin::CategoriesController < ::AdminController
   end
 
   def show
-    render partial: "admin/categories/category", locals: { category: @category }
+    render Admin::Categories::List::Row::Component.new(
+      category: @category,
+      grid_cols: Admin::Categories::List::Component::GRID_COLS
+    )
   end
 
 

@@ -17,5 +17,5 @@
     <% end %>
   </header>
 
-  <%= render "form", question: @question %>
+  <%= render Admin::Questions::Form::Component.new(question: @question) %>
 </main>

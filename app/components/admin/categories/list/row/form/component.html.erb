@@ -1,0 +1,39 @@
+<%= helpers.turbo_frame_tag @category do %>
+  <%= form_with(model: [:admin, @category], class: "contents") do |f| %>
+
+    <%= render Common::ErrorMessages::Component.new(object: @category, classes: "col-span-5") %>
+
+    <div class="grid items-center px-4 py-4 rounded border-2 border-blue-400 shadow-md bg-blue-50/10 <%= @grid_cols %>" role="listitem">
+
+      <span class="ml-2">
+        <%= f.number_field :chapter_number, class: input_classes(align: :center), required: true, aria: { label: "章番号" } %>
+      </span>
+
+      <span class="pl-2">
+        <%= f.text_field :name, class: input_classes, required: true, aria: { label: "タイトル" } %>
+      </span>
+
+      <div></div>
+
+      <div class="flex items-center gap-2 justify-end">
+        <%= f.number_field :weight, class: "border border-slate-300 rounded p-1 w-16 text-right text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500", min: 0, max: 100, step: 0.1, aria: { label: "出題割合(%)" } %>
+        <span class="text-sm text-slate-600 pr-2" aria-hidden="true">%</span>
+      </div>
+
+      <div class="flex items-center gap-2 justify-center">
+        <%= button_tag type: "submit", class: "text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-lg cursor-pointer transition-colors shadow-sm", title: "保存", aria: { label: "変更を保存" } do %>
+          <%= helpers.inline_svg_tag "icons/check.svg", class: "w-5 h-5", aria_hidden: true %>
+        <% end %>
+
+        <%= link_to admin_category_path(@category),
+            data: { turbo_frame: dom_id(@category) },
+            class: "text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors",
+            title: "キャンセル",
+            aria: { label: "編集をキャンセル" } do %>
+          <%= helpers.inline_svg_tag "icons/x.svg", class: "w-5 h-5", aria_hidden: true %>
+        <% end %>
+      </div>
+
+    </div>
+  <% end %>
+<% end %>

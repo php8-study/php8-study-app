@@ -1,0 +1,43 @@
+<%= helpers.turbo_frame_tag @category do %>
+  <div class="grid items-center hover:bg-slate-50 transition-colors duration-150 px-4 py-4 <%= @grid_cols %>" role="listitem">
+
+    <div class="flex justify-center">
+      <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-slate-100 text-slate-600 font-bold text-sm">
+        <%= @category.chapter_number %>
+      </span>
+    </div>
+
+    <div class="pl-4 font-bold text-slate-700">
+      <%= @category.name %>
+    </div>
+
+    <div></div>
+
+    <div class="flex items-center justify-end gap-3 pr-4">
+      <span class="text-sm font-mono font-bold text-slate-600 tabular-nums w-12 text-right">
+        <%= @category.weight %>%
+      </span>
+      <div class="w-24 h-1.5 bg-slate-100 rounded-full overflow-hidden" aria-hidden="true">
+        <div class="h-full bg-indigo-500 rounded-full" style="<%= progress_bar_style %>"></div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-end gap-2 pr-2">
+      <%= link_to edit_admin_category_path(@category),
+          data: { turbo_frame: dom_id(@category) },
+          class: "p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors",
+          title: "編集",
+          aria: { label: "#{@category.name}を編集" } do %>
+        <%= helpers.inline_svg_tag "icons/edit.svg", class: "w-5 h-5", aria_hidden: true %>
+      <% end %>
+
+      <%= link_to admin_category_path(@category),
+          data: { turbo_method: :delete, turbo_confirm: "カテゴリー「#{@category.name}」を削除しますか？" },
+          class: "p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors",
+          title: "削除",
+          aria: { label: "#{@category.name}を削除" } do %>
+        <%= helpers.inline_svg_tag "icons/trash.svg", class: "w-5 h-5", aria_hidden: true %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

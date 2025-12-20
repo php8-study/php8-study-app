@@ -10,29 +10,28 @@
     </div>
 
     <nav class="flex gap-3" aria-label="管理メニュー">
-      <%= link_to admin_root_path, class: "inline-flex items-center px-4 py-2 text-sm font-bold text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-sm" do %>
+      <%= render Common::Button::Component.new(
+            href: admin_root_path,
+            variant: :secondary,
+            size: :sm,
+            class: "shadow-sm px-4 py-2"
+          ) do %>
         <%= inline_svg_tag "icons/left_arrow.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
         管理トップ
       <% end %>
 
-      <%= link_to new_admin_category_path, class: "inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm hover:shadow" do %>
+      <%= render Common::Button::Component.new(
+            href: new_admin_category_path,
+            variant: :primary,
+            size: :sm,
+            class: "shadow-sm hover:shadow px-4 py-2"
+          ) do %>
         <%= inline_svg_tag "icons/plus.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
         新規作成
       <% end %>
     </nav>
   </header>
 
-  <section class="bg-white shadow-sm rounded-xl border border-slate-200 overflow-hidden" aria-label="カテゴリー一覧">
-    <div class="grid items-center bg-slate-50 border-b border-slate-200 px-4 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider <%= category_grid_cols %>" aria-hidden="true">
-      <div class="text-center">章番号</div>
-      <div class="pl-4">タイトル</div>
-      <div></div> <div class="text-right pr-4">出題割合</div>
-      <div class="text-right pr-4">操作</div>
-    </div>
-
-    <div class="divide-y divide-slate-100" role="list">
-      <%= render @categories %>
-    </div>
-  </section>
+  <%= render Admin::Categories::List::Component.new(categories: @categories) %>
 
 </main>
