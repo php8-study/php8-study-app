@@ -5,6 +5,8 @@ require "rails_helper"
 RSpec.describe "Exam Result (試験結果)", type: :system do
   let(:user) { create(:user) }
 
+  before { sign_in_as(user) }
+
   describe "合格時の表示（100点）" do
     let!(:exam) { create(:exam, :passed, user: user) }
 
@@ -13,12 +15,13 @@ RSpec.describe "Exam Result (試験結果)", type: :system do
     let(:correct_choice) { first_question.question_choices.find_by(correct: true) }
 
     before do
-      sign_in_as(user)
+      click_link "今までの模擬試験を振り返る"
+      expect(page).to have_content "模擬試験の履歴"
     end
 
     context "結果画面の表示" do
       before do
-        visit exam_path(exam)
+        find("#exam#{exam.id}").click
         expect(page).to have_content "試験結果"
       end
 
@@ -37,7 +40,8 @@ RSpec.describe "Exam Result (試験結果)", type: :system do
 
     context "回答詳細モーダル" do
       before do
-        visit exam_path(exam)
+        find("#exam#{exam.id}").click
+        expect(page).to have_content "試験結果"
       end
 
       it "モーダルを開くと、自分の回答が「正解」として扱われている" do
@@ -68,8 +72,10 @@ RSpec.describe "Exam Result (試験結果)", type: :system do
     let(:wrong_choice) { failed_exam_question.user_choices.first }
 
     before do
-      sign_in_as(user)
-      visit exam_path(failed_exam)
+      click_link "今までの模擬試験を振り返る"
+      expect(page).to have_content "模擬試験の履歴"
+      find("#exam#{failed_exam.id}").click
+      expect(page).to have_content "試験結果"
     end
 
     it "スコアが0点と表示されている" do
