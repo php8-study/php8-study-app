@@ -1,0 +1,14 @@
+<header class="flex items-center justify-between">
+  <div class="flex items-center gap-3">
+    <div class="p-2 bg-indigo-100 rounded-lg text-indigo-600" aria-hidden="true">
+      <%= helpers.inline_svg_tag "icons/check_board.svg", class: "w-6 h-6" %>
+    </div>
+    <h1 class="text-2xl font-bold text-slate-900 tracking-tight">模擬試験</h1>
+  </div>
+
+  <div class="flex items-center gap-2" role="group" aria-label="現在の問題: <%= position %>問目、全<%= total %>問中">
+    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider" aria-hidden="true">Question</span>
+    <span class="text-xl font-black text-indigo-600" aria-hidden="true"><%= position %></span>
+    <span class="text-sm text-slate-400 font-medium" aria-hidden="true">/ <%= total %></span>
+  </div>
+</header>
