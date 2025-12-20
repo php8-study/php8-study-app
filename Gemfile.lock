@@ -438,7 +438,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   capybara
-  cssbundling-rails (~> 1.4)
+  cssbundling-rails
   debug
   dotenv-rails
   erb_lint
@@ -447,11 +447,11 @@ DEPENDENCIES
   importmap-rails
   inline_svg
   jbuilder
-  meta-tags (~> 2.22)
-  omniauth (~> 2.1.4)
+  meta-tags
+  omniauth
   omniauth-github
   omniauth-rails_csrf_protection
-  puma (>= 5.0)
+  puma
   rails (~> 8.1.1)
   rails-i18n
   rspec-rails
@@ -460,11 +460,11 @@ DEPENDENCIES
   rubocop-rails_config
   selenium-webdriver
   sprockets-rails
-  sqlite3 (>= 1.4)
+  sqlite3
   stimulus-rails
   turbo-rails
   tzinfo-data
-  view_component (~> 4.1)
+  view_component
   web-console
 
 RUBY VERSION

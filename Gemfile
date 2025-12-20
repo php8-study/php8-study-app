@@ -6,33 +6,27 @@ ruby "3.4.7"
 
 gem "rails", "~> 8.1.1"
 
-# Database & Server
-gem "sqlite3", ">= 1.4"
-gem "puma", ">= 5.0"
+gem "sqlite3"
+gem "puma"
 
-# Assets & Frontend
 gem "sprockets-rails"
 gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
-gem "cssbundling-rails", "~> 1.4"
+gem "cssbundling-rails"
+gem "view_component"
 gem "inline_svg"
 
-# API & Utilities
 gem "jbuilder"
 gem "bootsnap", require: false
 gem "tzinfo-data", platforms: %i[windows jruby]
 
-# Auth & Security
-gem "omniauth", "~> 2.1.4"
+gem "omniauth"
 gem "omniauth-github"
 gem "omniauth-rails_csrf_protection"
 
-# i18n & SEO
 gem "rails-i18n"
-gem "meta-tags", "~> 2.22"
-
-gem "view_component", "~> 4.1"
+gem "meta-tags"
 
 group :development, :test do
   gem "debug", platforms: %i[mri windows]
