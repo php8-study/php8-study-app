@@ -26,7 +26,7 @@ class ExamsController < ApplicationController
     # 使用アクションが増えたら関連読み込みが適切か確認する事
     def set_exam
       @exam = current_user.exams
-                          .includes(exam_questions: [{ question: [:question_choices, :category] }, :exam_answers])
+                          .preload(exam_questions: [{ question: [:question_choices, :category] }, :exam_answers])
                           .find(params[:id])
     end
 
