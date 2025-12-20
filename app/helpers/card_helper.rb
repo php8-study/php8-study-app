@@ -1,4 +1,6 @@
-odule CardHelper
+# frozen_string_literal: true
+
+module CardHelper
   def card_theme_classes(theme_color)
     theme = theme_color.presence || "default"
 
