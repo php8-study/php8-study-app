@@ -4,6 +4,8 @@ dbs:
     replicas:
       - url: s3://php-study-backup/db
         endpoint: ${LITESTREAM_ENDPOINT}
+        force-path-style: true
+        region: auto
         sync-interval: 60s
         retention: 72h
 
