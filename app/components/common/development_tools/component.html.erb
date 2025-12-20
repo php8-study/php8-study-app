@@ -1,0 +1,16 @@
+<div class="bg-slate-900 text-white text-xs py-2 px-4 flex items-center justify-between gap-4 sticky top-0 z-[10000]">
+  <div class="flex items-center gap-4">
+    <span class="font-bold border-r border-slate-700 pr-4">🛠 開発ログイン:</span>
+    <div class="flex gap-3">
+      <% development_users.each do |user| %>
+        <%= button_to development_login_as_path(user_id: user.id),
+            method: :post,
+            form: { class: "inline-block" },
+            class: "bg-transparent border-none p-0 cursor-pointer text-inherit font-inherit hover:text-blue-400 underline decoration-slate-600 underline-offset-4 transition-colors" do %>
+          <%= user.admin? ? "👑管理者" : "👤一般" %>(ID:<%= user.id %>)
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="text-[10px] text-slate-500 uppercase tracking-widest">Development Mode</div>
+</div>
