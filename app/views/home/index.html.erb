@@ -14,34 +14,38 @@
 
   <nav class="max-w-2xl mx-auto px-4 space-y-8" aria-label="メインメニュー">
 
-    <%= render "shared/card",
-        title: "ランダム問題を解く",
-        description: "全問題からランダムに出題されます。隙間時間の学習に最適です。",
-        url: questions_random_path,
-        theme_color: "blue",
-        icon_key: "beaker" %>
+    <%= render Common::MenuCard::Component.new(
+          title: "ランダム問題を解く",
+          description: "全問題からランダムに出題されます。隙間時間の学習に最適です。",
+          url: questions_random_path,
+          theme: :blue,
+          icon: "beaker"
+        ) %>
 
-    <%= render "shared/card",
-        title: "模擬試験を受験する",
-        description: "本番と同じ40問。実力を試すのに最適です。",
-        url: check_exams_path,
-        theme_color: "indigo",
-        icon_key: "clipboard" %>
+    <%= render Common::MenuCard::Component.new(
+          title: "模擬試験を受験する",
+          description: "本番と同じ40問。実力を試すのに最適です。",
+          url: check_exams_path,
+          theme: :indigo,
+          icon: "clipboard"
+        ) %>
 
-    <%= render "shared/card",
-        title: "今までの模擬試験を振り返る",
-        description: "過去の受験結果を確認し、苦手を分析しましょう。",
-        url: exams_path,
-        theme_color: "slate",
-        icon_key: "chart" %>
+    <%= render Common::MenuCard::Component.new(
+          title: "今までの模擬試験を振り返る",
+          description: "過去の受験結果を確認し、苦手を分析しましょう。",
+          url: exams_path,
+          theme: :slate,
+          icon: "chart"
+        ) %>
 
     <% if current_user.admin? %>
-      <%= render "shared/card",
-          title: "管理画面",
-          description: "問題データの追加・編集、ユーザー管理を行います。",
-          url: admin_root_path,
-          theme_color: "orange",
-          icon_key: "cog" %>
+      <%= render Common::MenuCard::Component.new(
+            title: "管理画面",
+            description: "問題データの追加・編集、ユーザー管理を行います。",
+            url: admin_root_path,
+            theme: :orange,
+            icon: "cog"
+          ) %>
     <% end %>
 
   </nav>
