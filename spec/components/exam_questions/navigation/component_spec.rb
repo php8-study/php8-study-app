@@ -53,7 +53,7 @@ RSpec.describe ExamQuestions::Navigation::Component, type: :component do
     it "「回答せずに確認画面へ」ボタンが表示され、「後で回答する」は表示されないこと" do
       expect(page).not_to have_link("後で回答する")
 
-      page.find_link("回答せずに確認画面へ", href: "/exams/#{exam.id}/review")
+      expect(page).to have_link("回答せずに確認画面へ", href: "/exams/#{exam.id}/review")
     end
   end
 end
