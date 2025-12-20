@@ -193,13 +193,15 @@ RSpec.describe "Admin::Categories", type: :request do
       before { sign_in_as(admin) }
 
       context "有効なパラメータの場合" do
-        it "更新に成功し、Turbo Frame用のHTMLパーシャルが返る" do
-          patch admin_category_path(category), params: update_params
+        it "更新に成功し、Turbo Streamで置換処理が返る" do
+          patch admin_category_path(category), params: update_params, as: :turbo_stream
 
           expect(response).to have_http_status(:ok)
+          expect(response.media_type).to eq Mime[:turbo_stream]
           expect(category.reload.name).to eq "更新後の名前"
 
-          expect(response.body).to include(%(id="category_#{category.id}"))
+          expect(response.body).to include('<turbo-stream action="replace"')
+          expect(response.body).to include(%(target="category_#{category.id}"))
           expect(response.body).to include("更新後の名前")
         end
       end
