@@ -25,8 +25,8 @@ RSpec.describe Admin::Categories::List::Row::Form::Component, type: :component d
   end
 
   it "操作ボタンが表示されること" do
-  expect(page).to have_selector("button[aria-label='変更を保存']")
-  expect(page).to have_selector("a[aria-label='編集をキャンセル'][href='#{admin_category_path(category)}']")
-  expect(page).to have_selector("a[data-turbo-frame='#{dom_id(category)}']")
-end
+    expect(page).to have_selector("button[aria-label='変更を保存']")
+    expect(page).to have_selector("a[aria-label='編集をキャンセル'][href='#{admin_category_path(category)}']")
+    expect(page).to have_selector("a[data-turbo-frame='#{dom_id(category)}']")
+  end
 end
