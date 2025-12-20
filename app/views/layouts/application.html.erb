@@ -43,6 +43,6 @@
     </div>
 
     <div id="modal-frame" class="fixed inset-0 pointer-events-none"></div>
-    <%= render "shared/development_tools" if Rails.env.development? %>
+    <%= render Common::DevelopmentTools::Component.new if Rails.env.development? %>
   </body>
 </html>
