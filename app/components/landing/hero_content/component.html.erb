@@ -11,15 +11,15 @@
 
   <ul class="mb-10 space-y-3 text-slate-700 font-medium">
     <li class="flex items-center">
-      <%= inline_svg_tag "icons/blue_cicle_check.svg", class: "w-6 h-6 text-blue-500 mr-3 flex-shrink-0" %>
+      <%= helpers.inline_svg_tag "icons/blue_cicle_check.svg", class: "w-6 h-6 text-blue-500 mr-3 flex-shrink-0" %>
       公式出題範囲に完全準拠
     </li>
     <li class="flex items-center">
-      <%= inline_svg_tag "icons/blue_cicle_check.svg", class: "w-6 h-6 text-blue-500 mr-3 flex-shrink-0" %>
+      <%= helpers.inline_svg_tag "icons/blue_cicle_check.svg", class: "w-6 h-6 text-blue-500 mr-3 flex-shrink-0" %>
       本番比率の模擬試験モード搭載
     </li>
     <li class="flex items-center">
-      <%= inline_svg_tag "icons/blue_cicle_check.svg", class: "w-6 h-6 text-blue-500 mr-3 flex-shrink-0" %>
+      <%= helpers.inline_svg_tag "icons/blue_cicle_check.svg", class: "w-6 h-6 text-blue-500 mr-3 flex-shrink-0" %>
       アカウント作成から利用まで完全無料
     </li>
   </ul>
@@ -28,7 +28,7 @@
     <%= button_tag type: "submit", class: "group inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 active:scale-95 shadow-md hover:shadow-lg" do %>
       <i class="fab fa-github text-2xl mr-3" aria-hidden="true"></i>
       <span>GitHubでログイン</span>
-      <%= inline_svg_tag "icons/right_arrow.svg", class: "w-5 h-5 ml-3 -mr-1 transition-transform group-hover:translate-x-1", aria_hidden: true %>
+      <%= helpers.inline_svg_tag "icons/right_arrow.svg", class: "w-5 h-5 ml-3 -mr-1 transition-transform group-hover:translate-x-1", aria_hidden: true %>
     <% end %>
   <% end %>
 </div>
