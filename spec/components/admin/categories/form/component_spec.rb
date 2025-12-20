@@ -16,7 +16,7 @@ RSpec.describe Admin::Categories::Form::Component, type: :component do
       expect(page.find_field("タイトル").value).to be_blank
       expect(page.find_field("出題割合 (%)").value).to be_blank
 
-  
+
       expect(page).to have_button("保存する")
       expect(page).to have_link("キャンセル", href: admin_categories_path)
     end
