@@ -55,7 +55,6 @@ RSpec.describe "Exam(受験動作)", type: :system do
     let!(:old_exam) { create(:exam, user: user) }
 
     before do
-      visit root_path
       click_link "模擬試験を受験する"
     end
 
