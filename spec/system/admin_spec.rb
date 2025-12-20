@@ -7,10 +7,10 @@ RSpec.describe "Admin(管理画面ダッシュボード)", type: :system do
 
   before do
     sign_in_as(admin)
-    visit admin_root_path
   end
 
   it "管理メニューが表示され、各機能への正しいリンクが配置されている" do
+    click_link "管理画面"
     expect(page).to have_content "管理画面"
     expect(page).to have_content "管理する項目を選択してください"
 

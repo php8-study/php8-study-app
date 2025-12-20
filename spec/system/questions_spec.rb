@@ -9,7 +9,6 @@ RSpec.describe "Questions (ランダム出題)", type: :system do
   describe "学習サイクル" do
     before do
       sign_in_as(user)
-      visit root_path
     end
 
     it "出題を開始し、正解すると『正解』と表示され、次の問題へ遷移できる" do

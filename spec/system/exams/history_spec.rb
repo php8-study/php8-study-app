@@ -5,13 +5,13 @@ require "rails_helper"
 RSpec.describe "Exam History (試験履歴一覧)", type: :system do
   let(:user) { create(:user) }
 
-  before { sign_in_as(user) }
+  before do
+    sign_in_as(user)
+  end
 
   describe "一覧画面の表示" do
     context "受験履歴がない場合" do
-      before do
-        visit exams_path
-      end
+      before { click_link "今までの模擬試験を振り返る" }
 
       it "「まだ履歴がありません」と表示され、試験開始ボタンが表示される" do
         expect(page).to have_content "模擬試験の履歴"
@@ -34,11 +34,9 @@ RSpec.describe "Exam History (試験履歴一覧)", type: :system do
         create(:exam, :with_questions, user: user, created_at: 10.minutes.ago, completed_at: nil)
       end
 
-      before do
-        visit exams_path
-      end
+      before { click_link "今までの模擬試験を振り返る" }
 
-      it "完了済みの試験のみが、実施日の新しい順（降順）で表示される" do
+      it "完了済みの試験のみが、実施日の新しい順で表示される" do
         expect(page).to have_content "模擬試験の履歴"
         expect(page).not_to have_link href: exam_path(active_exam)
 
