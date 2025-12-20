@@ -1,0 +1,50 @@
+<section class="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 sm:p-12 text-center" aria-labelledby="confirm-heading">
+
+  <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-yellow-50 mb-6 ring-8 ring-yellow-50/50">
+    <%= helpers.inline_svg_tag "icons/caution.svg", class: "w-10 h-10 text-yellow-500", aria_hidden: true %>
+  </div>
+
+  <h1 id="confirm-heading" class="text-3xl font-black text-slate-900 mb-4 tracking-tight">
+    未完了の模擬試験があります
+  </h1>
+
+  <p class="text-lg text-slate-500 mb-8">
+    前回中断した箇所から試験を再開できます。<br>
+    新しい試験を始めるには、現在のデータを破棄する必要があります。
+  </p>
+
+  <dl class="bg-slate-50 rounded-2xl p-6 border border-slate-200 mb-10 max-w-lg mx-auto">
+    <dt class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Last Session Started</dt>
+    <dd class="text-xl font-bold text-slate-700 flex items-center justify-center gap-2">
+      <%= helpers.inline_svg_tag "icons/schedule.svg", class: "w-5 h-5 text-indigo-500", aria_hidden: true %>
+      <%= formatted_date %>
+    </dd>
+  </dl>
+
+  <div class="flex flex-col sm:flex-row gap-4 justify-center">
+
+    <%= render Common::Button::Component.new(
+          href: exam_review_path(@active_exam),
+          variant: :primary,
+          size: :lg,
+          class: "w-full sm:w-auto min-w-[200px] shadow-none hover:shadow-lg hover:-translate-y-0.5"
+        ) do %>
+      <span>続きから再開</span>
+      <%= helpers.inline_svg_tag "icons/right_arrow.svg", class: "w-5 h-5 ml-2 -mr-1 transition-transform duration-300 group-hover:translate-x-1", aria_hidden: true %>
+    <% end %>
+
+    <%= form_with url: exams_path, method: :post, class: "w-full sm:w-auto" do %>
+      <%= render Common::Button::Component.new(
+            type: :submit,
+            variant: :secondary,
+            size: :lg,
+            class: "w-full min-w-[200px] border-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600 focus:ring-red-500",
+            data: { turbo_confirm: "本当に現在の進捗を破棄してよろしいですか？" }
+          ) do %>
+        破棄して新規開始
+      <% end %>
+    <% end %>
+
+  </div>
+
+</section>
