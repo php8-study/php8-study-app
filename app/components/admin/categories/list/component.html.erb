@@ -2,12 +2,12 @@
   <div class="grid items-center bg-slate-50 border-b border-slate-200 px-4 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider <%= GRID_COLS %>" aria-hidden="true">
     <div class="text-center">章番号</div>
     <div class="pl-4">タイトル</div>
-    <div></div> 
+    <div></div>
     <div class="text-right pr-4">出題割合</div>
     <div class="text-right pr-4">操作</div>
   </div>
 
   <div class="divide-y divide-slate-100" role="list">
-    <%= render Admin::Categories::Row::Component.with_collection(@categories, grid_cols: GRID_COLS) %>
+    <%= render Admin::Categories::List::Row::Component.with_collection(@categories, grid_cols: GRID_COLS) %>
   </div>
 </section>

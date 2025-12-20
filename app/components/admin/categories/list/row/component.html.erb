@@ -27,7 +27,7 @@
           data: { turbo_frame: dom_id(@category) },
           class: "p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors",
           title: "編集",
-          aria: { label: "#{@category.name}を編集" } do %> 
+          aria: { label: "#{@category.name}を編集" } do %>
         <%= helpers.inline_svg_tag "icons/edit.svg", class: "w-5 h-5", aria_hidden: true %>
       <% end %>
 
@@ -35,7 +35,7 @@
           data: { turbo_method: :delete, turbo_confirm: "カテゴリー「#{@category.name}」を削除しますか？" },
           class: "p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors",
           title: "削除",
-          aria: { label: "#{@category.name}を削除" } do %> 
+          aria: { label: "#{@category.name}を削除" } do %>
         <%= helpers.inline_svg_tag "icons/trash.svg", class: "w-5 h-5", aria_hidden: true %>
       <% end %>
     </div>
