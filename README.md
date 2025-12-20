@@ -100,7 +100,7 @@ $ bundle exec rspec
 ```mermaid
 erDiagram
     users ||--o{ exams : "受験する"
-    
+
     users {
         bigint id PK
         bigint github_id "GitHub ID"
@@ -168,10 +168,10 @@ Rails 8の強みであるSQLiteを用いたシングルサーバー構成にす�
 ```mermaid
 graph TD
     User((User)) -->|HTTPS| VPS[VPS (Ubuntu)]
-    
+
     subgraph VPS
         Traefik[Traefik (Reverse Proxy)] -->|Routing| AppContainer[Rails App Container]
-        
+
         subgraph AppContainer
             Rails[Rails 8]
             SQLite[(SQLite3)]
