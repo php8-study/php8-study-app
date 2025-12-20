@@ -12,7 +12,6 @@ module Admin
           end
 
           private
-
             def truncate_content
               @question.content.truncate(40)
             end
