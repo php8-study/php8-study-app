@@ -1,12 +1,13 @@
 ![Ruby](https://img.shields.io/badge/ruby-3.4.7-CC342D.svg?logo=ruby&style=flat)
 ![Rails](https://img.shields.io/badge/rails-8.1.1-CC0000.svg?logo=rubyonrails&style=flat)
-![SQlite](https://img.shields.io/badge/sqlite-3.45-003B57.svg?logo=sqlite&style=flat)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-3.4-38B2AC.svg?logo=tailwind-css&style=flat)
+![SQlite](https://img.shields.io/badge/sqlite-3.51-003B57.svg?logo=sqlite&style=flat)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-4.1-38B2AC.svg?logo=tailwind-css&style=flat)
 ![Hotwire](https://img.shields.io/badge/hotwire-turbo%20%26%20stimulus-yellow.svg?style=flat)
 ![Kamal](https://img.shields.io/badge/deploy-kamal-blue.svg?style=flat)
 
 # PHP8技術者認定初級試験スタディ
-<img width="1705" height="716" alt="Image" src="https://github.com/user-attachments/assets/199d8504-570e-4b0a-b37a-2dc160dbf7ca" />
+<img width="1594" height="713" alt="image" src="https://github.com/user-attachments/assets/c46767fe-960d-4368-b734-86d2a1b0ebed" />
+
 
 ## 概要
 PHP8技術者認定初級試験スタディはPHP8技術者認定初級試験を受験する人に向けた、学習サポートアプリです。
@@ -27,13 +28,13 @@ https://php8-study
 ## デモ
 
 ### ランダム問題
-動画を添付予定
+https://github.com/user-attachments/assets/1b05f476-4551-42c1-b7f9-85b920c3c249
 
 ### 模擬試験
-動画を添付予定
+https://github.com/user-attachments/assets/2051db71-0492-4c33-b9a7-061a5f78372e
 
 ### 管理者画面
-動画を添付予定
+https://github.com/user-attachments/assets/9986f016-1afd-4219-b778-0e33c8a8ce4a
 
 ## 環境構築
 以下の手順でローカル環境を構築できます。
@@ -63,7 +64,7 @@ $ bin/dev
 開発環境においては、GitHub連携を行わずにワンクリックでログインできる開発者ツールが実装されています。
 1. `bin/dev`でサーバーを起動し、`http://localhost:3000/`にアクセスします。
 2. **画面最下部に固定表示されている黒いバー**を確認してください。
-3. **「👑管理者」または「👤一般」**をクリックすると、それぞれの権限で即座にログインできます。
+3. 「👑管理者」または「👤一般」をクリックすると、それぞれの権限で即座にログインできます。
 
 * 動作確認の際はこちらの使用を推奨します。
 
@@ -163,18 +164,18 @@ erDiagram
 
 ## インフラ構成
 Kamalを使用し、VPS上にコンテナベースでデプロイしています。
-Rails 8の強みであるSQLiteを用いたシングルサーバー構成にすることで、**「低コスト・低遅延・運用容易性」**を重視しました。
+Rails 8の強みであるSQLiteを用いたシングルサーバー構成にすることで、低コスト・低遅延・運用容易性を重視しました。
 
 ```mermaid
 graph TD
-    User((User)) -->|HTTPS| VPS[VPS (Ubuntu)]
+    User((User)) -->|HTTPS| VPS["VPS (Ubuntu)"]
 
     subgraph VPS
-        Traefik[Traefik (Reverse Proxy)] -->|Routing| AppContainer[Rails App Container]
+        Traefik["Traefik (Reverse Proxy)"] -->|Routing| AppContainer["Rails App Container"]
 
         subgraph AppContainer
-            Rails[Rails 8]
-            SQLite[(SQLite3)]
+            Rails["Rails 8"]
+            SQLite[("SQLite3")]
         end
     end
 
