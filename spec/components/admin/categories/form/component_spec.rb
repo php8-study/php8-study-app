@@ -14,6 +14,7 @@ RSpec.describe Admin::Categories::Form::Component, type: :component do
       expect(page).to have_selector("form[action='#{admin_categories_path}'][method='post']")
 
       expect(page.find_field("タイトル").value).to be_blank
+      expect(page.find_field("章番号").value).to be_blank
       expect(page.find_field("出題割合 (%)").value).to be_blank
 
 
