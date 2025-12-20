@@ -10,7 +10,7 @@ module Admin
 
         private
           def categories
-            Category.all
+            Category.order(:chapter_number)
           end
 
           def input_classes
