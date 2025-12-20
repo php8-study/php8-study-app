@@ -1,3 +1,5 @@
+[![Rails Tests and Lint](https://github.com/php8-study/php8-study-app/actions/workflows/ci.yml/badge.svg)](https://github.com/php8-study/php8-study-app/actions/workflows/ci.yml)
+[![Deploy](https://github.com/php8-study/php8-study-app/actions/workflows/deploy.yml/badge.svg)](https://github.com/php8-study/php8-study-app/actions/workflows/deploy.yml)
 ![Ruby](https://img.shields.io/badge/ruby-3.4.7-CC342D.svg?logo=ruby&style=flat)
 ![Rails](https://img.shields.io/badge/rails-8.1.1-CC0000.svg?logo=rubyonrails&style=flat)
 ![SQlite](https://img.shields.io/badge/sqlite-3.51-003B57.svg?logo=sqlite&style=flat)
