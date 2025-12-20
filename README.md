@@ -22,7 +22,7 @@ PHP8技術者認定初級試験の公式認定教材である 独習PHP 第4版 
 ※ 本アプリは非公式ツールです。
 
 ## URL
-https:://php8-study
+https://php8-study
 
 ## デモ
 
@@ -39,7 +39,7 @@ https:://php8-study
 以下の手順でローカル環境を構築できます。
 
 1. リポジトリのクローンとセットアップ
-```
+```bash
 $ git clone https://github.com/php8-study/php8-study-app.git
 $ cd php8_study
 $ bin/setup
@@ -48,18 +48,18 @@ $ bin/setup
 2. 環境変数の設定(GitHub OAuth)
 本番環境では GitHub OAuth を使用してログインを行います。
 `.env` ファイルを作成し、GitHub Developer Settings で取得した以下のキーを設定してください。
-```
+```bash
 GITHUB_KEY=your_client_id
 GITHUB_SECRET=your_client_secret
 ```
 
 3.アプリケーションの起動
-```
+```bash
 $ bin/dev
 ```
 
 ## 開発環境での利用
-**開発用ログイン (認証バイパス)
+**開発用ログイン (認証バイパス)**
 開発環境においては、GitHub連携を行わずにワンクリックでログインできる開発者ツールが実装されています。
 1. `bin/dev`でサーバーを起動し、`http://localhost:3000/`にアクセスします。
 2. **画面最下部に固定表示されている黒いバー**を確認してください。
@@ -69,11 +69,11 @@ $ bin/dev
 
 ## Lint・テスト
 1. Lintを実行する
-```
+```bash
 $ bin/lint
 ```
 2. テストを実行する
-```
+```bash
 $ bundle exec rspec
 ```
 
