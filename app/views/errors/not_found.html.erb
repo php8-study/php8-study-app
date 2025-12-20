@@ -1,32 +1,27 @@
 <% title "ページが見つかりません (404)" %>
 <% noindex %>
 
-<main class="min-h-[calc(100vh-64px)] bg-slate-50 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-  <div class="max-w-md w-full text-center">
+<%= render Common::ErrorPage::Component.new(
+      code: "404",
+      title: "ページが見つかりません",
+      badge_text: "Exception: NotFound",
+      badge_classes: "bg-slate-900 text-white shadow-lg -rotate-6"
+    ) do %>
 
-    <div class="relative" aria-hidden="true">
-      <span class="block text-9xl font-black text-slate-200 select-none">404</span>
+  <p>
+    お探しのページは削除されたか、URLが間違っている可能性があります。<br>
+    コードの書き間違いではありませんか？
+  </p>
 
-      <div class="absolute inset-0 flex items-center justify-center">
-        <div class="px-4 py-2 bg-slate-900 text-white text-sm font-mono rounded shadow-lg transform -rotate-6">
-          Exception: NotFound
-        </div>
-      </div>
-    </div>
-
-    <h1 class="mt-8 text-2xl font-bold text-slate-900">ページが見つかりません</h1>
-
-    <p class="mt-2 text-slate-500">
-      お探しのページは削除されたか、URLが間違っている可能性があります。<br>
-      コードの書き間違いではありませんか？
-    </p>
-
-    <div class="mt-8 flex justify-center gap-4">
-      <%= link_to root_path, class: "group inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5" do %>
-        <%= inline_svg_tag "icons/home.svg", class: "w-5 h-5 mr-2 -ml-1", aria_hidden: true %>
-        ダッシュボードへ戻る
-      <% end %>
-    </div>
-
+  <div class="mt-8 flex justify-center">
+    <%= render Common::Button::Component.new(
+          href: root_path,
+          variant: :primary,
+          class: "shadow-md hover:shadow-lg hover:-translate-y-0.5"
+        ) do %>
+      <%= inline_svg_tag "icons/home.svg", class: "w-5 h-5 mr-2 -ml-1", aria_hidden: true %>
+      ダッシュボードへ戻る
+    <% end %>
   </div>
-</main>
+
+<% end %>
