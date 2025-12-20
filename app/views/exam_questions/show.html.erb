@@ -4,62 +4,30 @@
 <main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6">
   <div class="max-w-3xl mx-auto space-y-8">
 
-    <header class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="p-2 bg-indigo-100 rounded-lg text-indigo-600" aria-hidden="true">
-          <%= inline_svg_tag "icons/check_board.svg", class: "w-6 h-6" %>
-        </div>
-        <h1 class="text-2xl font-bold text-slate-900 tracking-tight">模擬試験</h1>
-      </div>
+    <%= render ExamQuestions::HeaderComponent.new(
+          exam: @exam,
+          exam_question: @exam_question
+        ) %>
 
-      <div class="flex items-center gap-2" role="group" aria-label="現在の問題: <%= @exam_question.position %>問目、全<%= @exam.exam_questions.size %>問中">
-        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider" aria-hidden="true">Question</span>
-        <span class="text-xl font-black text-indigo-600" aria-hidden="true"><%= @exam_question.position %></span>
-        <span class="text-sm text-slate-400 font-medium" aria-hidden="true">/ <%= @exam.exam_questions.size %></span>
-      </div>
-    </header>
+    <%= render Common::TerminalDisplay::Component.new(
+          code: @exam_question.question.content,
+          label: "ExamQuestion_#{@exam_question.position}.php"
+        ) %>
 
-    <%= render "shared/terminal_display",
-        content: @exam_question.question.content,
-        label: "ExamQuestion_#{@exam_question.position}.php" %>
+    <%= render Common::AnswerForm::Component.new(
+          question: @exam_question.question,
+          url: exam_exam_question_answer_path(@exam, @exam_question),
+          method: :post,
+          button_text: @exam_question.answered? ? "回答を変更する" : "回答する",
+          input_name: "question_choice_ids[]",
+          selected_choice_ids: @exam_question.user_choice_ids,
+          guard_answer: true
+        ) %>
 
-    <%= render "shared/answer_form",
-        question: @exam_question.question,
-        url: exam_exam_question_answer_path(@exam, @exam_question),
-        method: :post,
-        button_text: @exam_question.answered? ? "回答を変更する" : "回答する",
-        input_name: "question_choice_ids[]",
-        selected_choice_ids: @exam_question.user_choice_ids,
-        guard_answer: true %>
+    <%= render ExamQuestions::NavigationComponent.new(
+          exam: @exam,
+          exam_question: @exam_question
+        ) %>
 
-    <nav class="pt-8 border-t border-slate-200 grid grid-cols-2 sm:grid-cols-3 gap-4" aria-label="問題移動">
-      <% prev_q = @exam_question.previous_question %>
-      <% if prev_q %>
-        <%= link_to exam_exam_question_path(@exam, prev_q), class: "col-span-2 sm:col-span-1 flex items-center justify-center px-4 py-3 text-sm font-bold text-slate-600 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-colors" do %>
-          <%= inline_svg_tag "icons/chevron-left.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
-          前へ
-        <% end %>
-      <% else %>
-        <div class="hidden sm:block sm:invisible" aria-hidden="true"></div>
-      <% end %>
-
-      <%= link_to exam_review_path(@exam), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-slate-600 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors" do %>
-        <%= inline_svg_tag "icons/hamburger.svg", class: "w-4 h-4 mr-2", aria_hidden: true %>
-        回答状況一覧へ
-      <% end %>
-
-      <% next_q = @exam_question.next_question %>
-      <% if next_q %>
-        <%= link_to exam_exam_question_path(@exam, next_q), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-xl hover:bg-indigo-100 transition-colors" do %>
-          後で回答する
-          <%= inline_svg_tag "icons/chevron-right.svg", class: "w-4 h-4 ml-2", aria_hidden: true %>
-        <% end %>
-      <% else %>
-        <%= link_to exam_review_path(@exam), class: "flex items-center justify-center px-4 py-3 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 shadow-md hover:shadow-lg transition-all" do %>
-          回答せずに確認画面へ
-          <%= inline_svg_tag "icons/check.svg", class: "w-4 h-4 ml-2", aria_hidden: true %>
-        <% end %>
-      <% end %>
-    </nav>
   </div>
 </main>
