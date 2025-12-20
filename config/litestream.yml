@@ -3,3 +3,7 @@ dbs:
   - path: /rails/storage/production.sqlite3
     replicas:
       - url: s3://php-study-backup/db
+        endpoint: ${LITESTREAM_ENDPOINT}
+        sync-interval: 60s
+        retention: 72h
+
