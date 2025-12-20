@@ -1,3 +1,3 @@
 <%= turbo_stream.append "modal-frame" do %>
-  <%= render partial: 'show_modal', locals: { exam_question: @exam_question, question: @exam_question.question } %>
+  <%= render ExamQuestions::Answers::ShowModal::Component.new(exam_question: @exam_question) %>
 <% end %>
