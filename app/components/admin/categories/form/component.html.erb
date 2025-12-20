@@ -1,6 +1,6 @@
 <%= form_with(model: [:admin, @category], class: "contents") do |f| %>
 
-  <%= render "shared/error_messages", object: f.object %>
+  <%= render Common::ErrorMessages::Component.new(object: f.object) %>
 
   <section class="max-w-3xl mx-auto" aria-label="カテゴリー情報入力">
     <div class="bg-white shadow-sm rounded-xl border border-slate-200 p-8 space-y-8">
