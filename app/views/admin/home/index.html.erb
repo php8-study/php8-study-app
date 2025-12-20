@@ -11,19 +11,21 @@
 
     <nav class="space-y-6" aria-label="管理メニュー">
 
-      <%= render "shared/card",
-          title: "問題一覧",
-          description: "問題の作成・編集・削除を行います。",
-          url: admin_questions_path,
-          theme_color: "blue",
-          icon_key: "clipboard" %>
+      <%= render Common::MenuCard::Component.new(
+            title: "問題一覧",
+            description: "問題の作成・編集・削除を行います。",
+            url: admin_questions_path,
+            theme: :blue,
+            icon: "clipboard"
+          ) %>
 
-      <%= render "shared/card",
-          title: "カテゴリー一覧",
-          description: "問題カテゴリーの管理を行います。",
-          url: admin_categories_path,
-          theme_color: "orange",
-          icon_key: "tag" %>
+      <%= render Common::MenuCard::Component.new(
+            title: "カテゴリー一覧",
+            description: "問題カテゴリーの管理を行います。",
+            url: admin_categories_path,
+            theme: :orange,
+            icon: "tag"
+          ) %>
 
     </nav>
 
