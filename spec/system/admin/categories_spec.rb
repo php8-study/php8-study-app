@@ -8,7 +8,9 @@ RSpec.describe "Admin (カテゴリー管理)", type: :system do
 
   before do
     sign_in_as(admin)
-    visit admin_categories_path
+    visit admin_root_path
+    click_link "カテゴリー一覧"
+    expect(page).to have_content "カテゴリー管理"
   end
 
   it "カテゴリーの一覧が表示されている" do
