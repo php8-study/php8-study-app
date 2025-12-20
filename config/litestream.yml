@@ -1,0 +1,5 @@
+# config/litestream.yml
+dbs:
+  - path: /rails/storage/production.sqlite3
+    replicas:
+      - url: s3://php-study-backup/db
