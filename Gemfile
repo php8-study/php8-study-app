@@ -8,6 +8,7 @@ gem "rails", "~> 8.1.1"
 
 gem "sqlite3"
 gem "puma"
+gem "thruster"
 
 gem "sprockets-rails"
 gem "importmap-rails"
