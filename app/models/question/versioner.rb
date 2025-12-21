@@ -9,6 +9,8 @@ class Question::Versioner
   def create_version!
     Question.transaction do
       @old_question.update_columns(deleted_at: Time.current)
+      
+      # .to_h でActionController::Parametersを標準ハッシュに変換
       new_params = params_for_new_version(@raw_params.to_h)
 
       Question.create!(new_params)
@@ -23,34 +25,31 @@ class Question::Versioner
       end
     end
 
-    def prune_marked_for_destruction!(obj)
-      case obj
-      when Hash
-        obj.delete_if do |_, value|
-          if value.is_a?(Hash) && marked_for_destruction?(value)
-            true
-          else
-            prune_marked_for_destruction!(value)
-            false
-          end
-        end
-      when Array
+    def prune_marked_for_destruction!(hash)
+      return unless hash.is_a?(Hash)
 
-        obj.reject! { |el| el.is_a?(Hash) && marked_for_destruction?(el) }
-        obj.each { |el| prune_marked_for_destruction!(el) }
+      hash.delete_if do |_, value|
+        if value.is_a?(Hash) && marked_for_destruction?(value)
+          true
+        elsif value.is_a?(Hash)
+          prune_marked_for_destruction!(value)
+          false
+        else
+          false
+        end
       end
     end
 
-    def strip_ids!(obj)
-      case obj
-      when Hash
-        obj.delete("id")
-        obj.delete("_destroy")
-        obj.delete(:id)
-        obj.delete(:_destroy)
-        obj.each_value { |v| strip_ids!(v) }
-      when Array
-        obj.each { |v| strip_ids!(v) }
+    def strip_ids!(hash)
+      return unless hash.is_a?(Hash)
+
+      hash.delete("id")
+      hash.delete("_destroy")
+      hash.delete(:id)
+      hash.delete(:_destroy)
+
+      hash.each_value do |value|
+        strip_ids!(value) if value.is_a?(Hash)
       end
     end
 
