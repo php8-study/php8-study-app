@@ -58,7 +58,7 @@ https://github.com/user-attachments/assets/9986f016-1afd-4219-b778-0e33c8a8ce4a
 
 ```bash
 $ git clone https://github.com/php8-study/php8-study-app.git
-$ cd php8_study
+$ cd php8-study-app/
 $ bin/setup
 ```
 
