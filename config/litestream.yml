@@ -5,7 +5,7 @@ dbs:
       - url: s3://php-study-backup/db
         endpoint: ${LITESTREAM_ENDPOINT}
         force-path-style: true
-        region: us-east-1
+        region: auto
         sync-interval: 60s
         retention: 72h
 
