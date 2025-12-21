@@ -31,7 +31,7 @@ PHP8技術者認定初級試験の公式認定教材である 独習PHP 第4版 
 - **オリジナル問題の作成**: 掲載されている200問以上の問題文は、公式認定教材（独習PHP 第4版）の掲載内容に基づき、作者が独自に作成したものです。教材の文章をそのまま転載・複写したものは含まれません。
 - **引用・参照の範囲**: 学習の利便性を高めるため、各問題には公式テキストの該当ページ番号を記載していますが、これは学習者の参照を助けるための索引（インデックス）としての利用に留めています。
 - **非公式ツール**: 本アプリは個人が開発した非公式の学習支援ツールであり、試験主催団体および出版社とは一切関係ありません。
-- 
+-
 ## URL
 
 https://php8-study.jp
@@ -232,7 +232,7 @@ graph TD
             direction TB
             Thruster["Thruster (Accelerator)"] -->|Proxy| Puma["Puma (App Server)"]
             Puma -->|"Read/Write"| SQLite[("SQLite3 (Production DB)")]
-            
+
             Litestream["Litestream (Sidecar process)"] -.->|Watch| SQLite
         end
     end

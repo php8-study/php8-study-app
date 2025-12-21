@@ -67,6 +67,11 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # Rails 8 / Propshaft で発生する "preloaded but not used" 警告を回避するための設定
+  # ブラウザ標準の読み込みで十分な速度が出るため、自動プリロードをオフにします
+  config.assets.preloading = false
+
   cloudflare_ips = %w[
     103.21.244.0/22
     103.22.200.0/22
