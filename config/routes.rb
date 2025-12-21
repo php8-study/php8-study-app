@@ -33,14 +33,10 @@ Rails.application.routes.draw do
     resource :solution, only: [:show], module: :questions
   end
 
-  resources :exams, only: [:index, :show, :create] do
+  resources :exams, only: [:index, :new, :show, :create] do
     scope module: :exams do
       resource :review, only: [:show]
       resource :submission, only: [:create]
-
-      collection do
-        get :check, to: "checks#index"
-      end
     end
 
     resources :exam_questions, only: [:show] do
