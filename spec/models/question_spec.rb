@@ -21,13 +21,13 @@ RSpec.describe Question, type: :model do
     end
   end
 
-  describe "削除ロジック (#safe_destroy)" do
+  describe "削除ロジック (#safe_destroy!)" do
     context "未使用の問題を削除する場合（物理削除）" do
       let!(:question) { create(:question) }
 
       it "レコード自体が削除され、true が返ること" do
         expect {
-          result = question.safe_destroy
+          result = question.safe_destroy!
           expect(result).to be_truthy
         }.to change(Question, :count).by(-1)
 
@@ -40,7 +40,7 @@ RSpec.describe Question, type: :model do
 
       it "レコード数は減らず、deleted_at が更新され、true が返ること" do
         expect {
-          result = question.safe_destroy
+          result = question.safe_destroy!
           expect(result).to be_truthy
         }.not_to change(Question, :count)
 
