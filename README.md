@@ -62,22 +62,13 @@ $ cd php8-study-app/
 $ bin/setup
 ```
 
-2. 環境変数の設定(GitHub OAuth)
-   本番環境では GitHub OAuth を使用してログインを行います。
-   `.env` ファイルを作成し、GitHub Developer Settings で取得した以下のキーを設定してください。
-
-```bash
-GITHUB_CLIENT_ID=your_client_id
-GITHUB_CLIENT_SECRET=your_client_secret
-```
-
-3.アプリケーションの起動
+2.アプリケーションの起動
 
 ```bash
 $ bin/dev
 ```
 
-## 開発環境での利用
+## ログイン
 
 ### 開発用ログイン (認証バイパス)
 
@@ -88,6 +79,15 @@ $ bin/dev
 3. 「👑管理者」または「👤一般」をクリックすると、それぞれの権限で即座にログインできます。
 
 - 動作確認の際はこちらの使用を推奨します。
+
+### 本番用ログイン (GitHub OAuth)
+
+`.env` ファイルに、GitHub Developer Settings で取得した以下のキーを設定してください。
+
+```bash
+GITHUB_CLIENT_ID=your_client_id
+GITHUB_CLIENT_SECRET=your_client_secret
+```
 
 ## Lint & Test
 
