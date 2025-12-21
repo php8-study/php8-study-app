@@ -1,1 +1,9 @@
-# See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+User-agent: *
+
+Allow: /$
+Allow: /question/*/solution$
+Allow: /question/*$
+
+Disallow: /
+
+Sitemap: https://php-study.jp/sitemap.xml.gz
