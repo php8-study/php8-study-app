@@ -220,7 +220,7 @@ graph TD
 
     subgraph VPS ["VPS (Ubuntu / Docker)"]
         direction TB
-        Traefik["Traefik (Reverse Proxy)"] -->|HTTP| Thruster
+        Traefik["Kamal Proxy (Reverse Proxy)"] -->|HTTP| Thruster
 
         subgraph AppContainer ["Rails 8 Container"]
             direction TB
