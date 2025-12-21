@@ -49,7 +49,7 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y libvips libyaml-0-2 curl ca-certificates && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-ADD https://github.com/benbjohnson/litestream/releases/download/v0.5.5/litestream-0.5.5-linux-x86_64.tar.gz /tmp/litestream.tar.gz
+ADD https://github.com/benbjohnson/litestream/releases/download/v0.5.2/litestream-0.5.2-linux-x86_64.tar.gz /tmp/litestream.tar.gz
 RUN tar -C /usr/local/bin -xzf /tmp/litestream.tar.gz && \
     rm /tmp/litestream.tar.gz
 
