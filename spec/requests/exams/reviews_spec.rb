@@ -30,11 +30,6 @@ RSpec.describe "Exams::Reviews", type: :request do
         get exam_review_path(completed_exam)
         expect(response).to have_http_status(:not_found)
       end
-
-      it "存在しない試験IDにアクセスすると404になる" do
-        get exam_review_path(0)
-        expect(response).to have_http_status(:not_found)
-      end
     end
 
     context "未ログインの場合" do

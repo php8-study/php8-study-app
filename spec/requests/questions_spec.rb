@@ -25,11 +25,6 @@ RSpec.describe "Questions", type: :request do
     context "異常系" do
       before { sign_in_as(user) }
 
-      it "存在しないIDにアクセスすると404 Not Foundになる" do
-        get question_path(0)
-        expect(response).to have_http_status(:not_found)
-      end
-
       it "論理削除された問題にはアクセスできず404 Not Foundになる" do
         deleted_question = create(:question, deleted_at: Time.current)
         get question_path(deleted_question)

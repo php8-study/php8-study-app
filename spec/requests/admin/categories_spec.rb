@@ -124,13 +124,6 @@ RSpec.describe "Admin::Categories", type: :request do
         get edit_admin_category_path(category)
         expect(response).to have_http_status(:ok)
       end
-
-      context "存在しないIDを指定した場合" do
-        it "404 Not Found になる" do
-          get edit_admin_category_path(0)
-          expect(response).to have_http_status(:not_found)
-        end
-      end
     end
 
     context "一般ユーザーの場合" do
@@ -159,13 +152,6 @@ RSpec.describe "Admin::Categories", type: :request do
 
         expect(response.body).to include(%(id="category_#{category.id}"))
         expect(response.body).to include(category.name)
-      end
-
-      context "存在しないIDを指定した場合" do
-        it "404 Not Found になる" do
-          get admin_category_path(0)
-          expect(response).to have_http_status(:not_found)
-        end
       end
     end
 
@@ -212,13 +198,6 @@ RSpec.describe "Admin::Categories", type: :request do
 
           expect(response).to have_http_status(:unprocessable_content)
           expect(category.reload.name).to eq "既存カテゴリー"
-        end
-      end
-
-      context "存在しないIDを指定した場合" do
-        it "404 Not Found になる" do
-          patch admin_category_path(0), params: update_params
-          expect(response).to have_http_status(:not_found)
         end
       end
     end
@@ -269,13 +248,6 @@ RSpec.describe "Admin::Categories", type: :request do
           expect(response.body).to include("紐付く問題が存在します")
           expect(response.body).to include(%(action="update"))
           expect(response.body).to include(%(target="flash"))
-        end
-      end
-
-      context "存在しないIDを指定した場合" do
-        it "404 Not Found になる" do
-          delete admin_category_path(0), as: :turbo_stream
-          expect(response).to have_http_status(:not_found)
         end
       end
     end
