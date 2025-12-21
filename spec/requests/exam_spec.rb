@@ -9,12 +9,13 @@ RSpec.describe "Exams", type: :request do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
 
+  # let! なのでテスト開始時点でDBに保存されます
   let!(:completed_exam) { create(:exam, :completed, :with_questions, user: user) }
   let!(:active_exam) { create(:exam, :with_questions, user: user) }
 
   before { sign_in_as(user) }
 
-  describe "GET /index" do
+  describe "GET /exams" do
     context "正常系" do
       it "完了済みの試験のみが表示され、進行中の試験は表示されない" do
         get exams_path
@@ -47,6 +48,39 @@ RSpec.describe "Exams", type: :request do
 
       it "LPへリダイレクトされる" do
         get exams_path
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  describe "GET /exams/new" do
+    context "正常系" do
+      context "進行中の試験がある場合" do
+        it "再開確認画面（resume_confirmation）が表示される" do
+          get new_exam_path
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include("未完了の模擬試験があります")
+        end
+      end
+
+      context "進行中の試験がない場合" do
+        before do
+          user.exams.destroy_all
+        end
+
+        it "自動開始画面（new）が表示される" do
+          get new_exam_path
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include("試験データを作成しています")
+        end
+      end
+    end
+
+    context "未ログインの場合" do
+      before { sign_out }
+
+      it "LPへリダイレクトされる" do
+        get new_exam_path
         expect(response).to redirect_to(root_path)
       end
     end
