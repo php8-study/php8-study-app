@@ -82,12 +82,13 @@ $ bin/dev
 
 ### 本番用ログイン (GitHub OAuth)
 
-`.env` ファイルに、GitHub Developer Settings で取得した以下のキーを設定してください。
+1. `.env` ファイルに、GitHub Developer Settings で取得した以下のキーを設定してください。
 
 ```bash
 GITHUB_CLIENT_ID=your_client_id
 GITHUB_CLIENT_SECRET=your_client_secret
 ```
+2. LP上の「GitHubでログイン」ボタンから連携認証を用いてログインできます。
 
 ## Lint & Test
 
