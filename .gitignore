@@ -50,3 +50,6 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Ignore all coverage files
+/coverage
