@@ -200,7 +200,7 @@ Rails 8 の標準機能を活用した、SQLiteベースのシングルサーバ
 - **Web Server**: Puma + Thruster (HTTP/2, Caching)
 - **Database**: SQLite
 - **Backup**: Litestream + Cloudflare R2 (リアルタイムレプリケーション)
-- **Reverse Proxy**: Traefik (SSL自動化)
+- **Reverse Proxy**: Kamal Proxy (SSL自動化)
 
 ```mermaid
 graph TD
