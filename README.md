@@ -93,7 +93,7 @@ $ bundle exec rspec
 * Tailwind CSS
 
 #### データベース
-* SQlite3
+* SQlite
 
 ##### テスト
 * RSpec
@@ -173,7 +173,7 @@ Rails 8 の標準機能を活用した、SQLiteベースのシングルサーバ
 ### 技術スタック
 * **Deployment**: Kamal (Docker on Ubuntu VPS)
 * **Web Server**: Puma + Thruster (HTTP/2, Caching)
-* **Database**: SQLite3
+* **Database**: SQLite
 * **Backup**: Litestream + Cloudflare R2 (リアルタイムレプリケーション)
 * **Reverse Proxy**: Traefik (SSL自動化)
 
@@ -192,7 +192,7 @@ graph TD
         subgraph AppContainer ["Rails 8 Container"]
             direction TB
             Thruster["Thruster (Accelerator)"] -->|Proxy| Puma["Puma (App Server)"]
-            Puma -->|"Read/Write"| SQLite[("SQLite3 (Production DB)")]
+            Puma -->|"Read/Write"| SQLite[("SQLite (Production DB)")]
 
             Litestream["Litestream (Sidecar process)"] -.->|Watch| SQLite
         end
