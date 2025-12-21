@@ -93,7 +93,7 @@ $ bundle exec rspec
 * Tailwind CSS
 
 #### データベース
-* SQlite
+* SQlite3
 
 ##### テスト
 * RSpec
