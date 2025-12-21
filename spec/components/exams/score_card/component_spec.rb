@@ -3,6 +3,9 @@
 require "rails_helper"
 
 RSpec.describe Exams::ScoreCard::Component, type: :component do
+  # 円グラフの円周 (2 * PI * 45 ≈ 282.7)
+  CIRCUMFERENCE = 283
+
   context "合格の場合" do
     let(:passed_exam) { create(:exam, :passed) }
 
@@ -51,19 +54,14 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
     end
 
     it "スコアのパーセンテージが表示されること" do
-      expect(page).to have_selector("[data-result-reveal-target='scoreText']", text: "80")
+      expect(page).to have_selector("#result-score-text", text: "80")
     end
 
     it "円グラフのスタイル（stroke-dashoffset）が正しく計算されていること" do
-      circle = page.find("[data-result-reveal-target='bar']")
-      style = circle[:style]
+      circle = page.find("#result-chart-bar")
+      expected_offset = (CIRCUMFERENCE * (1 - 0.8)).to_i
 
-      actual_offset = style[/stroke-dashoffset:\s*([\d.]+)/, 1].to_f
-
-      circumference = described_class::CIRCUMFERENCE
-      expected_offset = circumference - (80.0 / 100.0 * circumference)
-
-      expect(actual_offset).to be_within(0.1).of(expected_offset)
+      expect(circle[:style]).to include("stroke-dashoffset: #{expected_offset}")
     end
   end
 
@@ -74,10 +72,9 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
       before { render_inline(described_class.new(exam: exam)) }
 
       it "円グラフが完全に塗りつぶされること（オフセットが0に近いこと）" do
-        circle = page.find("[data-result-reveal-target='bar']")
-        actual_offset = circle[:style][/stroke-dashoffset:\s*([\d.]+)/, 1].to_f
-
-        expect(actual_offset).to be_within(0.1).of(0)
+        circle = page.find("#result-chart-bar")
+        # 100% なので offset は 0
+        expect(circle[:style]).to include("stroke-dashoffset: 0")
       end
     end
 
@@ -87,10 +84,9 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
       before { render_inline(described_class.new(exam: exam)) }
 
       it "円グラフが完全に空であること（オフセットが円周と同じであること）" do
-        circle = page.find("[data-result-reveal-target='bar']")
-        actual_offset = circle[:style][/stroke-dashoffset:\s*([\d.]+)/, 1].to_f
-
-        expect(actual_offset).to be_within(0.1).of(described_class::CIRCUMFERENCE)
+        circle = page.find("#result-chart-bar")
+        # 0% なので offset は円周(CIRCUMFERENCE)と同じ
+        expect(circle[:style]).to include("stroke-dashoffset: #{CIRCUMFERENCE}")
       end
     end
   end
@@ -110,7 +106,12 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
     end
 
     it "初期状態ではスコアが0表示であること" do
-      expect(page).to have_selector("[data-result-reveal-target='scoreText']", text: "0")
+      expect(page).to have_selector("#result-score-text", text: "0")
+    end
+
+    it "最終的なスコアがデータ属性として保持されていること" do
+      # passed_examは全問正解のデータを作る
+      expect(page).to have_selector("[data-number-animation-end-value='100.0']")
     end
 
     it "初期状態では透明かつ位置がずれていること" do
@@ -121,10 +122,10 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
     end
 
     it "円グラフが初期状態（空）になっていること" do
-      circle = page.find("[data-result-reveal-target='bar']")
-      actual_offset = circle[:style][/stroke-dashoffset:\s*([\d.]+)/, 1].to_f
+      circle = page.find("#result-chart-bar")
 
-      expect(actual_offset).to be_within(0.1).of(described_class::CIRCUMFERENCE)
+      expect(circle[:style]).to include("stroke-dasharray: #{CIRCUMFERENCE}, #{CIRCUMFERENCE}")
+      expect(circle[:style]).to include("stroke-dashoffset: #{CIRCUMFERENCE}")
     end
   end
 end

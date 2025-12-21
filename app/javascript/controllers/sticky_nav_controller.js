@@ -26,10 +26,6 @@ export default class extends Controller {
         this.element.classList.remove("absolute");
         this.element.classList.add("fixed");
       }
-    } else {
-      console.warn(
-        `[sticky-nav] Footer not found: ${this.footerSelectorValue}`,
-      );
     }
   }
 

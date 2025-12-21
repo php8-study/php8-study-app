@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Exams::ResultReveal::Component, type: :component do
-  # テストデータ (80点で合格)
   let(:exam) { create(:exam, :with_score, question_count: 10, correct_count: 8) }
 
   context "アニメーションが有効な場合" do
@@ -11,12 +10,13 @@ RSpec.describe Exams::ResultReveal::Component, type: :component do
       render_inline(described_class.new(exam: exam, animation: true)) { "中身のコンテンツ" }
     end
 
-    it "Stimulusコントローラー（result-reveal）が接続されること" do
-      expect(page).to have_selector("[data-controller='result-reveal']")
+    it "Stimulusコントローラー（result-reveal と confetti）が接続されること" do
+      element = page.find("#reveal-wrapper")
+      expect(element["data-controller"]).to include("result-reveal")
+      expect(element["data-controller"]).to include("confetti")
     end
 
-    it "JSに渡すデータ属性（スコア・合否）が正しくセットされていること" do
-      expect(page).to have_selector("[data-result-reveal-score-value='80.0']")
+    it "JSに渡すデータ属性（合否）が正しくセットされていること" do
       expect(page).to have_selector("[data-result-reveal-passed-value='true']")
     end
 
@@ -31,7 +31,8 @@ RSpec.describe Exams::ResultReveal::Component, type: :component do
     end
 
     it "Stimulusコントローラーが接続されないこと" do
-      expect(page).to have_no_selector("[data-controller='result-reveal']")
+      element = page.find("#reveal-wrapper")
+      expect(element["data-controller"]).to be_nil
     end
   end
 end

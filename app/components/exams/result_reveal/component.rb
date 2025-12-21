@@ -9,12 +9,21 @@ module Exams
       end
 
       def call
+        data_attributes = {
+          result_reveal_passed_value: @exam.passed?
+        }
+
+        if @animation
+          data_attributes[:controller] = "result-reveal confetti"
+
+          data_attributes[:result_reveal_confetti_outlet] = "#reveal-wrapper"
+          data_attributes[:result_reveal_chart_animation_outlet] = "#result-chart-bar"
+          data_attributes[:result_reveal_number_animation_outlet] = "#result-score-text"
+        end
+
         tag.div(
-          data: {
-            controller: stimulus_controller,
-            result_reveal_score_value: @exam.score_percentage,
-            result_reveal_passed_value: @exam.passed?
-          },
+          id: "reveal-wrapper",
+          data: data_attributes,
           class: "relative pb-24"
         ) do
           content
