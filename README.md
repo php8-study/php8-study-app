@@ -73,7 +73,7 @@ $ bin/dev
 
 ## 開発環境での利用
 
-**開発用ログイン (認証バイパス)**
+### 開発用ログイン (認証バイパス)
 
 開発環境においては、GitHub連携を行わずにワンクリックでログインできる開発者ツールが実装されています。
 
@@ -99,23 +99,23 @@ $ bundle exec rspec
 
 ## 技術スタック
 
-#### バックエンド
+### バックエンド
 
 - Ruby 3.4.7
 - Ruby on Rails 8.1.1
 - SQLite 3.51.1
 
-#### フロントエンド
+### フロントエンド
 
 - Hotwire (Turbo / Stimulus)
 - ViewComponent
 - Tailwind CSS
 
-#### データベース
+### データベース
 
 - SQLite
 
-##### テスト
+### テスト
 
 - RSpec
 - FactoryBot
