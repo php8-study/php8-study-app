@@ -33,16 +33,13 @@ class Admin::QuestionsController < AdminController
   end
 
   def destroy
-    if @question.safe_destroy # 使用中であれば論理削除、そうでなければ物理削除するメソッド
-      flash.now[:notice] = "問題を削除しました"
-      render turbo_stream: [
-        turbo_stream.remove(@question),
-        turbo_stream.update("flash", Common::Flash::Component.new(flash: flash))
+    @question.safe_destroy!
+
+    flash.now[:notice] = "問題を削除しました"
+    render turbo_stream: [
+      turbo_stream.remove(@question),
+      turbo_stream.update("flash", Common::Flash::Component.new(flash: flash))
       ]
-    else
-      flash.now[:alert] = "削除できません：#{@question.errors.full_messages.join(', ')}"
-      render turbo_stream: turbo_stream.update("flash", Common::Flash::Component.new(flash: flash)), status: :unprocessable_entity
-    end
   end
 
   private

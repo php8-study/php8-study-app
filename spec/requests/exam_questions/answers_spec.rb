@@ -73,6 +73,16 @@ RSpec.describe "ExamQuestions::Answers", type: :request do
         expect(response).to have_http_status(:redirect)
       end
 
+      it "最後の問題を回答した場合は、レビュー画面へリダイレクトされる" do
+        last_exam_question = exam.exam_questions.order(:position).last
+        choice = last_exam_question.question.question_choices.first
+
+        post exam_exam_question_answer_path(exam, last_exam_question),
+             params: { question_choice_ids: [choice.id] }
+
+        expect(response).to redirect_to(exam_review_path(exam))
+      end
+
       it "複数の選択肢を同時に送信できる" do
         choice1, choice2 = exam_question.question.question_choices.first(2)
 
