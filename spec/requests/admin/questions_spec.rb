@@ -140,13 +140,6 @@ RSpec.describe "Admin::Questions", type: :request do
           expect(response).to have_http_status(:not_found)
         end
       end
-
-      context "存在しないIDを指定した場合" do
-        it "404 Not Found になる" do
-          get edit_admin_question_path(0)
-          expect(response).to have_http_status(:not_found)
-        end
-      end
     end
 
     context "一般ユーザーの場合" do

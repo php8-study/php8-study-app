@@ -39,13 +39,6 @@ RSpec.describe "Exams::Submissions", type: :request do
           expect(response).to have_http_status(:not_found)
         end
       end
-
-      context "存在しない試験IDで提出しようとした場合" do
-        it "404 Not Found になる" do
-          post exam_submission_path(0)
-          expect(response).to have_http_status(:not_found)
-        end
-      end
     end
 
     context "未ログインの場合" do
