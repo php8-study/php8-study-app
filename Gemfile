@@ -21,7 +21,7 @@ gem "omniauth-github"
 gem "omniauth-rails_csrf_protection"
 gem "rails-i18n"
 gem "meta-tags"
-gem 'sitemap_generator'
+gem "sitemap_generator"
 
 group :development, :test do
   gem "debug", platforms: %i[mri windows]
