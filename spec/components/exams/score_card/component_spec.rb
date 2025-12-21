@@ -61,7 +61,7 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
       circle = page.find("#result-chart-bar")
       expected_offset = (CIRCUMFERENCE * (1 - 0.8)).to_i
 
-      expect(circle[:style]).to include("stroke-dashoffset: #{expected_offset}") 
+      expect(circle[:style]).to include("stroke-dashoffset: #{expected_offset}")
     end
   end
 
@@ -125,7 +125,7 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
       circle = page.find("#result-chart-bar")
 
       expect(circle[:style]).to include("stroke-dasharray: #{CIRCUMFERENCE}, #{CIRCUMFERENCE}")
-      expect(circle[:style]).to include("stroke-dashoffset: #{CIRCUMFERENCE}") 
+      expect(circle[:style]).to include("stroke-dashoffset: #{CIRCUMFERENCE}")
     end
   end
 end

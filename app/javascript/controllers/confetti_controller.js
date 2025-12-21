@@ -4,7 +4,7 @@ import confetti from "canvas-confetti";
 export default class extends Controller {
   fire() {
     if (this.frameId) cancelAnimationFrame(this.frameId);
-    
+
     const duration = 3000;
     const end = Date.now() + duration;
 

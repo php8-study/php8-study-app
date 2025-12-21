@@ -28,7 +28,7 @@ export default class extends Controller {
     setTimeout(() => this.element.classList.remove("scale-105"), 200);
   }
 
-    disconnect() {
+  disconnect() {
     if (this.pulseTimer) clearTimeout(this.pulseTimer);
   }
 }
