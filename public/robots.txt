@@ -1,8 +1,8 @@
 User-agent: *
 
 Allow: /$
-Allow: /question/*/solution$
-Allow: /question/*$
+Allow: /questions/*/solution$
+Allow: /questions/*$
 
 Disallow: /
 
