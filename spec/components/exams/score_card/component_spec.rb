@@ -51,19 +51,12 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
     end
 
     it "スコアのパーセンテージが表示されること" do
-      expect(page).to have_selector("[data-result-reveal-target='scoreText']", text: "80")
+      expect(page).to have_selector("#result-score-text", text: "80")
     end
 
     it "円グラフのスタイル（stroke-dashoffset）が正しく計算されていること" do
-      circle = page.find("[data-result-reveal-target='bar']")
-      style = circle[:style]
-
-      actual_offset = style[/stroke-dashoffset:\s*([\d.]+)/, 1].to_f
-
-      circumference = described_class::CIRCUMFERENCE
-      expected_offset = circumference - (80.0 / 100.0 * circumference)
-
-      expect(actual_offset).to be_within(0.1).of(expected_offset)
+      circle = page.find("#result-chart-bar")
+      expect(circle[:style]).to include("stroke-dashoffset: 56")
     end
   end
 
@@ -74,10 +67,8 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
       before { render_inline(described_class.new(exam: exam)) }
 
       it "円グラフが完全に塗りつぶされること（オフセットが0に近いこと）" do
-        circle = page.find("[data-result-reveal-target='bar']")
-        actual_offset = circle[:style][/stroke-dashoffset:\s*([\d.]+)/, 1].to_f
-
-        expect(actual_offset).to be_within(0.1).of(0)
+        circle = page.find("#result-chart-bar")
+        expect(circle[:style]).to include("stroke-dashoffset: 0")
       end
     end
 
@@ -87,10 +78,8 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
       before { render_inline(described_class.new(exam: exam)) }
 
       it "円グラフが完全に空であること（オフセットが円周と同じであること）" do
-        circle = page.find("[data-result-reveal-target='bar']")
-        actual_offset = circle[:style][/stroke-dashoffset:\s*([\d.]+)/, 1].to_f
-
-        expect(actual_offset).to be_within(0.1).of(described_class::CIRCUMFERENCE)
+        circle = page.find("#result-chart-bar")
+        expect(circle[:style]).to include("stroke-dashoffset: 283")
       end
     end
   end
@@ -110,7 +99,11 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
     end
 
     it "初期状態ではスコアが0表示であること" do
-      expect(page).to have_selector("[data-result-reveal-target='scoreText']", text: "0")
+      expect(page).to have_selector("#result-score-text", text: "0")
+    end
+
+    it "最終的なスコアがデータ属性として保持されていること" do
+      expect(page).to have_selector("[data-number-animation-end-value='100.0']")
     end
 
     it "初期状態では透明かつ位置がずれていること" do
@@ -121,10 +114,10 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
     end
 
     it "円グラフが初期状態（空）になっていること" do
-      circle = page.find("[data-result-reveal-target='bar']")
-      actual_offset = circle[:style][/stroke-dashoffset:\s*([\d.]+)/, 1].to_f
+      circle = page.find("#result-chart-bar")
 
-      expect(actual_offset).to be_within(0.1).of(described_class::CIRCUMFERENCE)
+      expect(circle[:style]).to include("stroke-dasharray: 283, 283")
+      expect(circle[:style]).to include("stroke-dashoffset: 283")
     end
   end
 end
