@@ -193,7 +193,7 @@ graph TD
             direction TB
             Thruster["Thruster (Accelerator)"] -->|Proxy| Puma["Puma (App Server)"]
             Puma -->|"Read/Write"| SQLite[("SQLite3 (Production DB)")]
-            
+
             Litestream["Litestream (Sidecar process)"] -.->|Watch| SQLite
         end
     end
@@ -205,7 +205,7 @@ graph TD
     Litestream -->|"Real-time Replication (S3 API)"| R2
 
     Dev((Developer)) -.->|"Git Push"| GitHub["GitHub Actions"]
-    GitHub -.->|"Build & Push"| Registry["Docker Registry"]
+    GitHub -.->|"Build & Push"| Registry["GitHub Container Registry"]
     Registry -.->|"Kamal Pull"| VPS
 
     class R2 cloud
