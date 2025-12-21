@@ -3,6 +3,9 @@
 require "rails_helper"
 
 RSpec.describe Exams::ScoreCard::Component, type: :component do
+  # 円グラフの円周 (2 * PI * 45 ≈ 282.7)
+  CIRCUMFERENCE = 283
+
   context "合格の場合" do
     let(:passed_exam) { create(:exam, :passed) }
 
@@ -56,7 +59,9 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
 
     it "円グラフのスタイル（stroke-dashoffset）が正しく計算されていること" do
       circle = page.find("#result-chart-bar")
-      expect(circle[:style]).to include("stroke-dashoffset: 56")
+      expected_offset = (CIRCUMFERENCE * (1 - 0.8)).to_i
+
+      expect(circle[:style]).to include("stroke-dashoffset: #{expected_offset}") 
     end
   end
 
@@ -68,6 +73,7 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
 
       it "円グラフが完全に塗りつぶされること（オフセットが0に近いこと）" do
         circle = page.find("#result-chart-bar")
+        # 100% なので offset は 0
         expect(circle[:style]).to include("stroke-dashoffset: 0")
       end
     end
@@ -79,7 +85,8 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
 
       it "円グラフが完全に空であること（オフセットが円周と同じであること）" do
         circle = page.find("#result-chart-bar")
-        expect(circle[:style]).to include("stroke-dashoffset: 283")
+        # 0% なので offset は円周(CIRCUMFERENCE)と同じ
+        expect(circle[:style]).to include("stroke-dashoffset: #{CIRCUMFERENCE}")
       end
     end
   end

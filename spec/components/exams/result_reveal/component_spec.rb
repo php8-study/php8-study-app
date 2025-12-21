@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Exams::ResultReveal::Component, type: :component do
-  # テストデータ (80点で合格)
   let(:exam) { create(:exam, :with_score, question_count: 10, correct_count: 8) }
 
   context "アニメーションが有効な場合" do
