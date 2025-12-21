@@ -38,17 +38,7 @@ https://php8-study.jp
 
 ## デモ
 
-### ランダム問題
-
-https://github.com/user-attachments/assets/1b05f476-4551-42c1-b7f9-85b920c3c249
-
-### 模擬試験
-
-https://github.com/user-attachments/assets/2051db71-0492-4c33-b9a7-061a5f78372e
-
-### 管理者画面
-
-https://github.com/user-attachments/assets/9986f016-1afd-4219-b778-0e33c8a8ce4a
+https://github.com/user-attachments/assets/fb7f8155-8dd8-4c31-b06c-114b6220fb6a
 
 ## 環境構築
 
