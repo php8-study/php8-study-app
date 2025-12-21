@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: "home#index"
-    resources :questions
+    resources :questions, except: [:show]
     resources :categories
   end
 
@@ -30,9 +30,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions, only: [:show] do
-    scope module: :questions do
-      resource :solution, only: [:show]
-    end
+    resource :solution, only: [:show], module: :questions
   end
 
   resources :exams, only: [:index, :show, :create] do
