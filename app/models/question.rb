@@ -22,9 +22,9 @@ class Question < ApplicationRecord
     end
   end
 
-  def safe_destroy
-    return update(deleted_at: Time.current) if in_use?
-    destroy
+  def safe_destroy!
+    return update!(deleted_at: Time.current) if in_use?
+    destroy!
   end
 
   def build_default_choices
