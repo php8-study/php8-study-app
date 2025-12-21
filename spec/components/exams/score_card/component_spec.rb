@@ -110,6 +110,7 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
     end
 
     it "最終的なスコアがデータ属性として保持されていること" do
+      # passed_examは全問正解のデータを作る
       expect(page).to have_selector("[data-number-animation-end-value='100.0']")
     end
 
@@ -123,8 +124,8 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
     it "円グラフが初期状態（空）になっていること" do
       circle = page.find("#result-chart-bar")
 
-      expect(circle[:style]).to include("stroke-dasharray: 283, 283")
-      expect(circle[:style]).to include("stroke-dashoffset: 283")
+      expect(circle[:style]).to include("stroke-dasharray: #{CIRCUMFERENCE}, #{CIRCUMFERENCE}")
+      expect(circle[:style]).to include("stroke-dashoffset: #{CIRCUMFERENCE}") 
     end
   end
 end
