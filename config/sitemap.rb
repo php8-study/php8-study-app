@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://php-study.jp"
+SitemapGenerator::Sitemap.default_host = "https://php-study.jp"
 
 SitemapGenerator::Sitemap.create do
   Question.find_each do |question|
-   add "/questions/#{question.id}", lastmod: question.updated_at, priority: 0.8
-   add "/questions/#{question.id}/solution", lastmod: question.updated_at, priority: 0.8
+    add "/questions/#{question.id}", lastmod: question.updated_at, priority: 0.8
+    add "/questions/#{question.id}/solution", lastmod: question.updated_at, priority: 0.8
  end
   # Put links creation logic here.
   #
