@@ -67,8 +67,8 @@ $ bin/setup
    `.env` ファイルを作成し、GitHub Developer Settings で取得した以下のキーを設定してください。
 
 ```bash
-GITHUB_KEY=your_client_id
-GITHUB_SECRET=your_client_secret
+GITHUB_CLIENT_ID=your_client_id
+GITHUB_CLIENT_SECRET=your_client_secret
 ```
 
 3.アプリケーションの起動
@@ -222,7 +222,7 @@ graph TD
         Cloudflare{{"Cloudflare (WAF / CDN)"}}:::cf
     end
 
-    Cloudflare -->|"HTTPS (Origin Traffic)"| Traefik
+    Cloudflare -->|"HTTPS (Origin Traffic)"| KamalProxy
 
     subgraph VPS ["VPS (Ubuntu / Docker)"]
         direction TB
