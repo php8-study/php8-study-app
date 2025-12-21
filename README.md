@@ -149,7 +149,7 @@ erDiagram
         boolean correct "正解フラグ"
     }
 
-    exam_questions ||--o| exam_answers : "回答を持つ"
+    exam_questions ||--o{ exam_answers : "回答を持つ"
 
     exam_questions {
         bigint id PK
@@ -167,20 +167,47 @@ erDiagram
 
 ## インフラ構成
 Kamalを使用し、VPS上にコンテナベースでデプロイしています。
-Rails 8の強みであるSQLiteを用いたシングルサーバー構成にすることで、低コスト・低遅延・運用容易性を重視しました。
+Rails 8 の標準機能を活用した、SQLiteベースのシングルサーバー構成です。
+低価格で信頼性のある構成を目指しました。
+
+### 技術スタック
+* **Deployment**: Kamal (Docker on Ubuntu VPS)
+* **Web Server**: Puma + Thruster (HTTP/2, Caching)
+* **Database**: SQLite3
+* **Backup**: Litestream + Cloudflare R2 (リアルタイムレプリケーション)
+* **Reverse Proxy**: Traefik (SSL自動化)
 
 ```mermaid
 graph TD
-    User((User)) -->|HTTPS| VPS["VPS (Ubuntu)"]
+    classDef cloud fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    classDef storage fill:#e1f5fe,stroke:#0277bd,stroke-width:2px;
+    classDef app fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
 
-    subgraph VPS
-        Traefik["Traefik (Reverse Proxy)"] -->|Routing| AppContainer["Rails App Container"]
+    User((User)) -->|"HTTPS / SSL"| Traefik
 
-        subgraph AppContainer
-            Rails["Rails 8"]
-            SQLite[("SQLite3")]
+    subgraph VPS ["VPS (Ubuntu / Docker)"]
+        direction TB
+        Traefik["Traefik (Reverse Proxy)"] -->|HTTP| Thruster
+
+        subgraph AppContainer ["Rails 8 Container"]
+            direction TB
+            Thruster["Thruster (Accelerator)"] -->|Proxy| Puma["Puma (App Server)"]
+            Puma -->|"Read/Write"| SQLite[("SQLite3 (Production DB)")]
+            
+            Litestream["Litestream (Sidecar process)"] -.->|Watch| SQLite
         end
     end
 
-    Dev((Developer)) -->|kamal deploy| VPS
+    subgraph Cloud ["Cloud Infrastructure"]
+        R2[("Cloudflare R2 (Object Storage)")]:::storage
+    end
+
+    Litestream -->|"Real-time Replication (S3 API)"| R2
+
+    Dev((Developer)) -.->|"Git Push"| GitHub["GitHub Actions"]
+    GitHub -.->|"Build & Push"| Registry["Docker Registry"]
+    Registry -.->|"Kamal Pull"| VPS
+
+    class R2 cloud
+    class AppContainer app
 ```
