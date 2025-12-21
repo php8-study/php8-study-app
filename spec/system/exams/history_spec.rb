@@ -17,7 +17,7 @@ RSpec.describe "Exam History (試験履歴一覧)", type: :system do
         expect(page).to have_content "模擬試験の履歴"
         expect(page).to have_content "まだ履歴がありません"
 
-        expect(page).to have_link "模擬試験を受ける", href: check_exams_path
+        expect(page).to have_link "模擬試験を受ける", href: new_exam_path
       end
     end
 
