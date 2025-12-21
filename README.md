@@ -226,7 +226,7 @@ graph TD
 
     subgraph VPS ["VPS (Ubuntu / Docker)"]
         direction TB
-        Traefik["Kamal Proxy (Reverse Proxy)"] -->|HTTP| Thruster
+        KamalProxy["Kamal Proxy (Reverse Proxy)"] -->|HTTP| Thruster
 
         subgraph AppContainer ["Rails 8 Container"]
             direction TB
@@ -245,7 +245,7 @@ graph TD
 
     Dev((Developer)) -.->|"Git Push"| GitHub["GitHub Actions"]
     GitHub -.->|"Build & Push"| Registry["GitHub Container Registry"]
-    Registry -.->|"Kamal Pull"| VPS
+    Registry -.->|"Image Pull"| VPS
 
     class R2 cloud
     class AppContainer app
