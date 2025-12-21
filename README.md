@@ -31,7 +31,7 @@ PHP8技術者認定初級試験の公式認定教材である 独習PHP 第4版 
 - **オリジナル問題の作成**: 掲載されている200問以上の問題文は、公式認定教材（独習PHP 第4版）の掲載内容に基づき、作者が独自に作成したものです。教材の文章をそのまま転載・複写したものは含まれません。
 - **引用・参照の範囲**: 学習の利便性を高めるため、各問題には公式テキストの該当ページ番号を記載していますが、これは学習者の参照を助けるための索引（インデックス）としての利用に留めています。
 - **非公式ツール**: 本アプリは個人が開発した非公式の学習支援ツールであり、試験主催団体および出版社とは一切関係ありません。
--
+
 ## URL
 
 https://php8-study.jp
@@ -134,7 +134,7 @@ erDiagram
     users ||--o{ exams : "受験する"
 
     users {
-        bigint id PK
+        integer id PK
         bigint github_id "GitHub ID"
         boolean admin "管理者フラグ"
     }
@@ -142,7 +142,7 @@ erDiagram
     exams ||--o{ exam_questions : "含む"
 
     exams {
-        bigint id PK
+        integer id PK
         integer user_id FK
         datetime completed_at "完了日時"
     }
@@ -150,7 +150,7 @@ erDiagram
     categories ||--o{ questions : "分類する"
 
     categories {
-        bigint id PK
+        integer id PK
         integer chapter_number "章番号"
         string name "カテゴリ名"
         float weight "重み付け"
@@ -160,7 +160,7 @@ erDiagram
     questions ||--o{ question_choices : "持つ"
 
     questions {
-        bigint id PK
+        integer id PK
         integer category_id FK
         text content "問題文"
         text explanation "解説"
@@ -171,7 +171,7 @@ erDiagram
     question_choices ||--o{ exam_answers : "選択される"
 
     question_choices {
-        bigint id PK
+        integer id PK
         integer question_id FK
         string content "選択肢内容"
         boolean correct "正解フラグ"
@@ -180,14 +180,14 @@ erDiagram
     exam_questions ||--o{ exam_answers : "回答を持つ"
 
     exam_questions {
-        bigint id PK
+        integer id PK
         integer exam_id FK
         integer question_id FK
         integer position "出題順"
     }
 
     exam_answers {
-        bigint id PK
+        integer id PK
         integer exam_question_id FK
         integer question_choice_id FK
     }
