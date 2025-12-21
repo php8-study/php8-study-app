@@ -9,7 +9,7 @@ class Question::Versioner
   def create_version!
     Question.transaction do
       @old_question.update_columns(deleted_at: Time.current)
-      
+
       # .to_h でActionController::Parametersを標準ハッシュに変換
       new_params = params_for_new_version(@raw_params.to_h)
 
