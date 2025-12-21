@@ -11,6 +11,10 @@ class ExamsController < ApplicationController
                          .order(completed_at: :desc)
   end
 
+  def new
+    render :resume_confirmation if (@active_exam = current_user.active_exam)
+  end
+
   def show
     @exam_questions = @exam.exam_questions
     @needs_reveal_animation = params[:reveal].present?
