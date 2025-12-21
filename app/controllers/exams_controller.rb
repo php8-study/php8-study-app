@@ -12,7 +12,7 @@ class ExamsController < ApplicationController
   end
 
   def new
-    return render :resume_confirmation if (@active_exam = current_user.active_exam)
+    render :resume_confirmation if (@active_exam = current_user.active_exam)
   end
 
   def show
