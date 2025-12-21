@@ -195,6 +195,7 @@ Rails 8 の標準機能を活用した、SQLiteベースのシングルサーバ
 
 ### 技術スタック
 
+- **CDN/Security**: Cloudflare (WAF,DDoS Protection,CND)
 - **Deployment**: Kamal (Docker on Ubuntu VPS)
 - **Web Server**: Puma + Thruster (HTTP/2, Caching)
 - **Database**: SQLite
@@ -204,10 +205,18 @@ Rails 8 の標準機能を活用した、SQLiteベースのシングルサーバ
 ```mermaid
 graph TD
     classDef cloud fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    classDef cf fill:#ffeb3b,stroke:#fbc02d,stroke-width:2px;
     classDef storage fill:#e1f5fe,stroke:#0277bd,stroke-width:2px;
     classDef app fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
 
-    User((User)) -->|"HTTPS / SSL"| Traefik
+    User((User)) -->|"HTTPS (Global CDN)"| Cloudflare
+
+    subgraph Security ["Cloudflare Network"]
+        direction TB
+        Cloudflare{{"Cloudflare (WAF / CDN)"}}:::cf
+    end
+
+    Cloudflare -->|"HTTPS (Origin Traffic)"| Traefik
 
     subgraph VPS ["VPS (Ubuntu / Docker)"]
         direction TB
@@ -216,8 +225,8 @@ graph TD
         subgraph AppContainer ["Rails 8 Container"]
             direction TB
             Thruster["Thruster (Accelerator)"] -->|Proxy| Puma["Puma (App Server)"]
-            Puma -->|"Read/Write"| SQLite[("SQLite (Production DB)")]
-
+            Puma -->|"Read/Write"| SQLite[("SQLite3 (Production DB)")]
+            
             Litestream["Litestream (Sidecar process)"] -.->|Watch| SQLite
         end
     end
