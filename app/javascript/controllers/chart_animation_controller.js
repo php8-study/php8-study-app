@@ -22,7 +22,13 @@ export default class extends Controller {
   }
 
   pulse() {
+    if (this.pulseTimer) clearTimeout(this.pulseTimer);
+
     this.element.classList.add("scale-105");
     setTimeout(() => this.element.classList.remove("scale-105"), 200);
+  }
+
+    disconnect() {
+    if (this.pulseTimer) clearTimeout(this.pulseTimer);
   }
 }
