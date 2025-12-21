@@ -8,7 +8,9 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" focusable="false" class="w-full h-full transform -rotate-90" aria-hidden="true">
         <circle cx="50" cy="50" r="45" fill="none" stroke="#f1f5f9" stroke-width="8"></circle>
 
-        <circle data-result-reveal-target="bar"
+        <circle id="result-chart-bar"
+                data-controller="chart-animation"
+                data-chart-animation-score-value="<%= score_percentage %>"
                 cx="50" cy="50" r="45" fill="none"
                 stroke="currentColor" stroke-width="8" stroke-linecap="round"
                 class="transition-all duration-1000 ease-out <%= chart_color_class %>"
@@ -18,9 +20,14 @@
       <figcaption class="absolute inset-0 flex flex-col items-center justify-center">
         <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Score</span>
         <div class="flex items-baseline">
-          <span data-result-reveal-target="scoreText" class="text-5xl md:text-6xl font-black text-slate-800">
+
+          <span id="result-score-text"
+                data-controller="number-animation"
+                data-number-animation-end-value="<%= score_percentage %>"
+                class="text-5xl md:text-6xl font-black text-slate-800">
             <%= initial_score_display %>
           </span>
+
           <span class="text-2xl font-bold text-slate-400 ml-1">%</span>
         </div>
       </figcaption>
