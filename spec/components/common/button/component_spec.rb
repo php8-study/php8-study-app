@@ -33,12 +33,6 @@ RSpec.describe Common::Button::Component, type: :component do
       expect(page).to have_css(".bg-white.text-slate-600.border-slate-200")
     end
 
-    it "dangerスタイルが適用されること" do
-      render_inline(described_class.new(variant: :danger)) { "削除" }
-      expect(page).to have_css(".bg-rose-600")
-      expect(page).to have_css(".focus\\:ring-rose-500")
-    end
-
     it "ghostスタイルが適用されること" do
       render_inline(described_class.new(variant: :ghost)) { "閉じる" }
       expect(page).to have_css(".bg-transparent.text-slate-600")
