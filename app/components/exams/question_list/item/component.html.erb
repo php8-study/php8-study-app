@@ -13,11 +13,9 @@
       <div class="flex-1 min-w-0">
         <div class="flex items-center gap-2 mb-1">
           <span class="text-xs font-bold text-slate-400 uppercase">Q.<%= @exam_question.position %></span>
-          <% if has_category? %>
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
-              <%= category_name %>
-            </span>
-          <% end %>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
+            <%= category_name %>
+          </span>
         </div>
         <p class="text-sm text-slate-700 font-medium line-clamp-2 leading-relaxed">
           <%= question_summary %>

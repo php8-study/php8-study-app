@@ -20,11 +20,9 @@
           </div>
           <h2 id="modal-title" class="text-lg font-bold text-slate-800"><%= header_data[:title] %></h2>
 
-          <% if @question.category %>
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 border border-slate-200">
-              <%= @question.category.name %>
-            </span>
-          <% end %>
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 border border-slate-200">
+            <%= @question.category.name %>
+          </span>
         </div>
 
         <button type="button"
