@@ -22,11 +22,11 @@ module Common
 
       def call
         if @href
-          helpers.link_to(@href, class: merged_classes, title: @title, aria: { label: @title }, data: link_data_attributes) do
+          helpers.link_to(@href, class: merged_classes, title: @title, aria: { label: @title }, data: build_data_attributes) do
             render_icon
           end
         else
-          helpers.button_tag(type: @type, class: merged_classes, title: @title, aria: { label: @title }, data: @data) do
+          helpers.button_tag(type: @type, class: merged_classes, title: @title, aria: { label: @title }, data: build_data_attributes) do
             render_icon
           end
         end
@@ -37,18 +37,24 @@ module Common
           helpers.inline_svg_tag("icons/#{@icon}.svg", class: "w-5 h-5", aria_hidden: true)
         end
 
-        def link_data_attributes
-          attributes = @data.dup
-          attributes[:turbo_method] = @method if @method != :get
-          attributes[:turbo_confirm] = @confirm if @confirm.present?
-          attributes
-        end
-
         def merged_classes
           class_names(
             "p-2 rounded-lg transition-colors inline-flex items-center justify-center",
             @variant
           )
+        end
+
+        def build_data_attributes
+          attributes = @data.dup
+
+          attributes[:testid] = @test_id if @test_id.present?
+
+          if @href
+            attributes[:turbo_method] = @method if @method != :get
+            attributes[:turbo_confirm] = @confirm if @confirm.present?
+          end
+
+          attributes
         end
     end
   end
