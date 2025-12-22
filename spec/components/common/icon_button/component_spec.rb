@@ -86,4 +86,5 @@ RSpec.describe Common::IconButton::Component, type: :component do
       expected_class = Common::IconButton::Component::VARIANTS[:danger]
       expect(page.find("button")[:class]).to include(expected_class)
     end
+  end
 end
