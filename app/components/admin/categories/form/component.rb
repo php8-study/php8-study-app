@@ -21,10 +21,6 @@ module Admin
             classes.join(" ")
           end
 
-          def input_with_suffix_classes
-            "#{input_classes} pr-8"
-          end
-
           def label_classes
             "block text-sm font-bold text-slate-600 mb-2"
           end
