@@ -4,12 +4,12 @@
       <table class="min-w-full divide-y divide-slate-200">
         <thead class="bg-slate-50">
           <tr>
-            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-xs font-bold uppercase tracking-wider text-slate-500 sm:pl-6">ID</th>
-            <th scope="col" class="py-3.5 px-3 text-left text-xs font-bold uppercase tracking-wider text-slate-500">問題文</th>
-            <th scope="col" class="py-3.5 px-3 text-left text-xs font-bold uppercase tracking-wider text-slate-500">カテゴリー</th>
-            <th scope="col" class="py-3.5 px-3 text-center text-xs font-bold uppercase tracking-wider text-slate-500">参照</th>
-            <th scope="col" class="py-3.5 px-3 text-center text-xs font-bold uppercase tracking-wider text-slate-500">解説</th>
-            <th scope="col" class="py-3.5 px-3 text-right text-xs font-bold uppercase tracking-wider text-slate-500 pr-6">操作</th>
+            <%= header_th "ID", classes: "pl-4 pr-3 sm:pl-6" %>
+            <%= header_th "問題文" %>
+            <%= header_th "カテゴリー" %>
+            <%= header_th "参照", align: :center %>
+            <%= header_th "解説", align: :center %>
+            <%= header_th "操作", align: :right, classes: "pr-6" %>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-200 bg-white">
