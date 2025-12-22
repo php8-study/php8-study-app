@@ -222,7 +222,7 @@ graph TD
         subgraph AppContainer ["Rails 8 Container"]
             direction TB
             Thruster["Thruster (Accelerator)"] -->|Proxy| Puma["Puma (App Server)"]
-            Puma -->|"Read/Write"| SQLite[("SQLite3 (Production DB)")]
+            Puma -->|"Read/Write"| SQLite[("SQLite (Production DB)")]
 
             Litestream["Litestream (Sidecar process)"] -.->|Watch| SQLite
         end
