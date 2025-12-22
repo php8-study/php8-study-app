@@ -64,7 +64,7 @@ RSpec.describe "Admin (問題管理)", type: :system do
     fill_in "問題文", with: "編集後の問題文"
     select "テストカテゴリー", from: "カテゴリー"
 
-    click_button "保存"
+    click_button "保存する"
 
     expect(page).to have_content "問題を保存しました"
     expect(page).to have_field "問題文", with: "編集後の問題文"
