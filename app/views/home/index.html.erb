@@ -41,7 +41,7 @@
     <% if current_user.admin? %>
       <%= render Common::MenuCard::Component.new(
             title: "管理画面",
-            description: "問題データの追加・編集、ユーザー管理を行います。",
+            description: "問題データの追加・編集を行います。",
             url: admin_root_path,
             theme: :orange,
             icon: "cog"
