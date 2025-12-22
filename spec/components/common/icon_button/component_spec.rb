@@ -29,7 +29,7 @@ RSpec.describe Common::IconButton::Component, type: :component do
         method: :delete,
         confirm: "削除しますか？"
       ))
-      
+
       expect(page).to have_selector("a[data-turbo-method='delete']")
       expect(page).to have_selector("a[data-turbo-confirm='削除しますか？']")
     end
@@ -62,14 +62,14 @@ RSpec.describe Common::IconButton::Component, type: :component do
   context "スタイルのバリアント" do
     it "primaryバリアントが適用されること" do
       render_inline(described_class.new(href: "#", icon: "edit"))
-      
+
       expected_class = Common::IconButton::Component::VARIANTS[:primary]
       expect(page.find("a")[:class]).to include(expected_class)
     end
 
     it "dangerバリアントが適用されること" do
       render_inline(described_class.new(href: "#", icon: "trash", variant: :danger))
-      
+
       expected_class = Common::IconButton::Component::VARIANTS[:danger]
       expect(page.find("a")[:class]).to include(expected_class)
     end

@@ -27,7 +27,7 @@ RSpec.describe Admin::Categories::List::Row::Form::Component, type: :component d
     expect(page).to have_selector("button[type='submit']")
 
     expect(page).to have_link(href: admin_category_path(category))
-    
+
     expect(page).to have_selector("a[data-turbo-frame='#{dom_id(category)}']")
   end
 end

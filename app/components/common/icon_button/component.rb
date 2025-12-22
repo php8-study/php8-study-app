@@ -33,7 +33,6 @@ module Common
       end
 
       private
-
         def render_icon
           helpers.inline_svg_tag("icons/#{@icon}.svg", class: "w-5 h-5", aria_hidden: true)
         end

@@ -26,7 +26,7 @@
           type: :submit,
           variant: :primary,
           title: "保存"
-      ) %>
+        ) %>
 
         <%= render Common::IconButton::Component.new(
           href: admin_category_path(@category),
@@ -34,7 +34,7 @@
           variant: :secondary,
           title: "キャンセル",
           data: { turbo_frame: dom_id(@category) }
-      ) %>
+        ) %>
       </div>
 
     </div>
