@@ -51,35 +51,33 @@ RSpec.describe "Admin (問題管理)", type: :system do
   end
 
   it "既存の問題を編集できる" do
-    target_row = "#question_#{question.id}"
+    question_row = find("tr", text: "##{question.id}")
 
-    within target_row do
-      find("a[aria-label='問題ID:#{question.id}を編集']").click
+    within question_row do
+      click_on "ID:#{question.id}を編集"
     end
 
     expect(page).to have_content "問題文"
 
     fill_in "問題文", with: "編集後の問題文"
-
     select "テストカテゴリー", from: "カテゴリー"
 
-    click_button "保存する"
+    click_button "保存" 
 
     expect(page).to have_content "問題を保存しました"
     expect(page).to have_field "問題文", with: "編集後の問題文"
   end
 
   it "問題を削除できる" do
-    target_row = "#question_#{question.id}"
+    question_row = find("tr", text: "##{question.id}")
 
     page.accept_confirm do
-      within target_row do
-        find("a[aria-label='問題ID:#{question.id}を削除']").click
+      within question_row do
+        click_on "ID:#{question.id}を削除"
       end
     end
 
     expect(page).to have_content "問題を削除しました"
-
-    expect(page).to have_no_selector target_row
+    expect(page).to have_no_content "##{question.id}"
   end
 end
