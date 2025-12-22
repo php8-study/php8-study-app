@@ -36,16 +36,16 @@
             icon: "edit",
             variant: :primary,
             method: :get,
-            title: "問題ID:#{@question.id}を編集"
+            title: "ID:#{@question.id}を編集"
           ) %>
 
       <%= render Common::IconButton::Component.new(
             href: admin_question_path(@question),
             icon: "trash",
             variant: :danger,
-            title: "問題ID:#{@question.id}を削除",
+            title: "ID:#{@question.id}を削除",
             method: :delete,
-            confirm: "問題ID:#{@question.id} を本当に削除しますか？"
+            confirm: "ID:#{@question.id} を本当に削除しますか？"
           ) %>
 
     </div>
