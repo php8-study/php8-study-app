@@ -47,8 +47,6 @@ module Common
         def build_data_attributes
           attributes = @data.dup
 
-          attributes[:testid] = @test_id if @test_id.present?
-
           if @href
             attributes[:turbo_method] = @method if @method != :get
             attributes[:turbo_confirm] = @confirm if @confirm.present?
