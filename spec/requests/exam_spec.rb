@@ -9,7 +9,6 @@ RSpec.describe "Exams", type: :request do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
 
-  # let! なのでテスト開始時点でDBに保存されます
   let!(:completed_exam) { create(:exam, :completed, :with_questions, user: user) }
   let!(:active_exam) { create(:exam, :with_questions, user: user) }
 
