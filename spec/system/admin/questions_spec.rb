@@ -54,7 +54,7 @@ RSpec.describe "Admin (問題管理)", type: :system do
     question_row = find("tr", text: "##{question.id}")
 
     within question_row do
-      click_on "ID:#{question.id}を編集"
+      click_on "##{question.id}を編集"
     end
 
     expect(page).to have_content "問題文"
@@ -73,7 +73,7 @@ RSpec.describe "Admin (問題管理)", type: :system do
 
     page.accept_confirm do
       within question_row do
-        click_on "ID:#{question.id}を削除"
+        click_on "##{question.id}を削除"
       end
     end
 
