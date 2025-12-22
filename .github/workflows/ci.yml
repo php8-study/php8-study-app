@@ -28,7 +28,7 @@ jobs:
       run: yarn install --immutable
 
     - name: Set up Chrome
-      uses: browser-actions/setup-chrome@v1
+      uses: browser-actions/setup-chrome@v2
 
     - name: Prepare DB
       run: bin/rails db:prepare
