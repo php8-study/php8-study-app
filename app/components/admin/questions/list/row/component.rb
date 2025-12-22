@@ -35,7 +35,7 @@ module Admin
             end
 
             def display_id
-              "##{@question.id}" 
+              "##{@question.id}"
             end
         end
       end
