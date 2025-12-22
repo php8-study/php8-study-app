@@ -33,6 +33,10 @@ module Admin
                 }
               end
             end
+
+            def display_id
+              "##{@question.id}"
+            end
         end
       end
     end

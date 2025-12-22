@@ -19,7 +19,7 @@
         <div>
           <%= f.label :weight, "出題割合 (%)", class: label_classes %>
           <div class="relative">
-            <%= f.number_field :weight, class: input_with_suffix_classes, required: true, step: 0.1, min: 0, max: 100, placeholder: "0.0" %>
+            <%= f.number_field :weight, class: input_classes(suffix: true), required: true, step: 0.1, min: 0, max: 100, placeholder: "0.0" %>
 
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3" aria-hidden="true">
               <span class="text-slate-400 font-bold">%</span>

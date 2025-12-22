@@ -9,13 +9,17 @@ module Admin
         end
 
         private
-          def input_classes
-            "w-full rounded-lg border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 shadow-sm transition-shadow placeholder-slate-300"
-          end
+          def input_classes(suffix: false)
+            classes = %w[
+              w-full rounded-lg border-slate-300 px-4 py-3
+              focus:border-indigo-500 focus:ring-indigo-500
+              text-slate-700 shadow-sm transition-shadow placeholder-slate-300
+            ]
 
-          def input_with_suffix_classes
-            "#{input_classes} pr-8"
-          end
+            classes << "pr-8" if suffix
+
+            classes.join(" ")
+        end
 
           def label_classes
             "block text-sm font-bold text-slate-600 mb-2"

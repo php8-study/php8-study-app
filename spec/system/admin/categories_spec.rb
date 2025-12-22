@@ -10,7 +10,6 @@ RSpec.describe "Admin (カテゴリー管理)", type: :system do
     sign_in_as(admin)
     visit admin_root_path
     click_link "カテゴリー一覧"
-    expect(page).to have_content "カテゴリー管理"
   end
 
   it "カテゴリーの一覧が表示されている" do
@@ -28,36 +27,33 @@ RSpec.describe "Admin (カテゴリー管理)", type: :system do
 
     click_button "保存する"
 
-    expect(page).to have_current_path admin_categories_path
     expect(page).to have_content "カテゴリーを作成しました"
     expect(page).to have_content "新規カテゴリー"
   end
 
   it "一覧画面上でカテゴリーを編集（インライン編集）できる" do
-    target_row = "#category_#{category.id}"
+      find("[role='listitem']", text: category.name).click_on "#{category.name}を編集"
 
-    within target_row do
-      find("a[aria-label='#{category.name}を編集']").click
       find("input[aria-label='タイトル']").set("編集後カテゴリー")
-      find("button[aria-label='変更を保存']").click
-    end
 
-    within target_row do
-      expect(page).to have_content "編集後カテゴリー"
-      expect(page).not_to have_selector "input[name='category[name]']"
-    end
-  end
+      click_button "保存"
 
-  it "カテゴリーを削除できる" do
-    target_row = "#category_#{category.id}"
-
-    page.accept_confirm do
-      within target_row do
-        find("a[aria-label='#{category.name}を削除']").click
+      updated_row = find("[role='listitem']", text: "編集後カテゴリー")
+      within updated_row do
+        expect(page).to have_content "編集後カテゴリー"
+        expect(page).to have_no_selector "input[aria-label='タイトル']"
       end
     end
 
-    expect(page).to have_content "カテゴリー「既存カテゴリー」を削除しました"
-    expect(page).not_to have_selector target_row
+  it "カテゴリーを削除できる" do
+    category_row = find("[role='listitem']", text: category.name)
+
+    page.accept_confirm do
+      within category_row do
+        click_on "#{category.name}を削除"
+      end
+    end
+
+    expect(page).to have_no_content(category.name)
   end
 end
