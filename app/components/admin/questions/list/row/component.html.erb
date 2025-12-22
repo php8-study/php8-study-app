@@ -1,7 +1,7 @@
 <tr class="hover:bg-slate-50 transition-colors group" id="<%= dom_id(@question) %>">
 
   <th scope="row" class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-900 sm:pl-6 text-left">
-    #<%= @question.id %>
+    <%= display_id %>
   </th>
 
   <td class="px-3 py-4 text-sm text-slate-600 max-w-xs truncate" title="<%= @question.content %>">
@@ -36,16 +36,16 @@
             icon: "edit",
             variant: :primary,
             method: :get,
-            title: "ID:#{@question.id}を編集"
+            title: "#{display_id}を編集"
           ) %>
 
       <%= render Common::IconButton::Component.new(
             href: admin_question_path(@question),
             icon: "trash",
             variant: :danger,
-            title: "ID:#{@question.id}を削除",
+            title: "#{display_id}を削除",
             method: :delete,
-            confirm: "ID:#{@question.id} を本当に削除しますか？"
+            confirm: "#{display_id}を本当に削除しますか？"
           ) %>
 
     </div>
