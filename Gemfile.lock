@@ -468,7 +468,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   prosopite
   puma
-  rails (~> 8.1.1)
+  rails (= 8.1.1)
   rails-i18n
   rspec-rails
   rubocop
