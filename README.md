@@ -34,7 +34,7 @@ PHP8技術者認定初級試験の公式認定教材である 独習PHP 第4版 
 
 ## URL
 
-https://php8-study.jp
+https://php-study.jp
 
 ## デモ
 
