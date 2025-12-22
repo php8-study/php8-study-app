@@ -15,7 +15,8 @@ RSpec.describe "Admin (問題管理)", type: :system do
   it "登録されている問題が一覧表示されている" do
     expect(page).to have_content "問題管理"
 
-    target_row = "#question_#{question.id}"
+    target_row = find("tr", text: "##{question.id}")
+      
     within target_row do
       expect(page).to have_content "既存の問題文"
       expect(page).to have_content "テストカテゴリー"
@@ -42,9 +43,10 @@ RSpec.describe "Admin (問題管理)", type: :system do
 
     choice_inputs[3].set("選択肢D")
 
-    click_button "保存する"
-
     expect(choice_inputs.size).to be >= 4
+
+    click_button "保存する"
+    
     expect(page).to have_current_path admin_questions_path
     expect(page).to have_content "問題を作成しました"
     expect(page).to have_content "新しい問題の本文です"
