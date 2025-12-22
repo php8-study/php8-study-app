@@ -21,24 +21,20 @@
       </div>
 
       <div class="flex items-center gap-2 justify-center">
-        <%= render Common::Button::Component.new(
-              type: :submit,
-              variant: :primary,
-              class: "!p-2 shadow-sm",
-              title: "保存",
-              aria: { label: "変更を保存" }
-            ) do %>
-          <%= helpers.inline_svg_tag "icons/check.svg", class: "w-5 h-5", aria_hidden: true %>
-        <% end %>
+        <%= render Common::IconButton::Component.new(
+          icon: "check",
+          type: :submit,
+          variant: :primary,
+          title: "保存"
+      ) %>
 
         <%= render Common::IconButton::Component.new(
-              href: admin_category_path(@category),
-              icon: "x",
-              variant: :secondary,
-              title: "キャンセル",
-              data: { turbo_frame: dom_id(@category) }
-            ) %>
-            
+          href: admin_category_path(@category),
+          icon: "x",
+          variant: :secondary,
+          title: "キャンセル",
+          data: { turbo_frame: dom_id(@category) }
+      ) %>
       </div>
 
     </div>
