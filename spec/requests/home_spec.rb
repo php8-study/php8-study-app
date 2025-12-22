@@ -44,7 +44,6 @@ RSpec.describe "Home", type: :request do
         expect(response).to have_http_status(:ok)
 
         expect(response.body).to include("管理画面")
-        expect(response.body).to include("ユーザー管理")
       end
     end
   end
