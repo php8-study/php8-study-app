@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# エラー(終了コードが0以外)が出た時点で即座に処理を中断する設定
 set -e
 
 echo "Running linters with auto-fix..."
