@@ -23,11 +23,7 @@ module Exams
           end
 
           def category_name
-            @question.category&.name
-          end
-
-          def has_category?
-            @question.category.present?
+            @question.category.name
           end
 
           def question_summary

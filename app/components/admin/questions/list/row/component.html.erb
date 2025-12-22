@@ -9,13 +9,9 @@
   </td>
 
   <td class="whitespace-nowrap px-3 py-4 text-sm text-slate-600">
-    <% if @question.category %>
-      <span class="inline-flex items-center rounded-md bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600 ring-1 ring-inset ring-slate-500/10">
-        <%= category_name %>
-      </span>
-    <% else %>
-      <span class="text-slate-400" aria-label="なし"><%= category_name %></span>
-    <% end %>
+    <span class="inline-flex items-center rounded-md bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600 ring-1 ring-inset ring-slate-500/10">
+      <%= category_name %>
+    </span>
   </td>
 
   <td class="whitespace-nowrap px-3 py-4 text-sm text-center">

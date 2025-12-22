@@ -17,7 +17,7 @@ module Admin
             end
 
             def category_name
-              @question.category&.name || "-"
+              @question.category.name
             end
 
             def badge(present)
