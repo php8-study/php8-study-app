@@ -20,9 +20,13 @@
             <%= image_tag avatar_url, alt: "#{nickname}のアバター", class: "w-9 h-9 rounded-full border border-slate-200 shadow-sm" %>
           <% end %>
 
-          <%= link_to session_path, data: { turbo_method: :delete }, class: "text-slate-400 hover:text-red-500 transition-colors p-1", title: "ログアウト", aria: { label: "ログアウト" } do %>
-             <%= helpers.inline_svg_tag "icons/logout.svg", class: "w-5 h-5", aria_hidden: true %>
-          <% end %>
+          <%= render Common::IconButton::Component.new(
+            href: session_path,
+            icon: "logout",
+            method: :delete,
+            variant: :secondary,
+            title: "ログアウト"
+        ) %>
 
         <% else %>
           <%= link_to "GitHubでログイン", "/auth/github", class: "text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors" %>

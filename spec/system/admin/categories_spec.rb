@@ -31,19 +31,19 @@ RSpec.describe "Admin (カテゴリー管理)", type: :system do
     expect(page).to have_content "新規カテゴリー"
   end
 
-it "一覧画面上でカテゴリーを編集（インライン編集）できる" do
-    find("[role='listitem']", text: category.name).click_on "#{category.name}を編集"
+  it "一覧画面上でカテゴリーを編集（インライン編集）できる" do
+      find("[role='listitem']", text: category.name).click_on "#{category.name}を編集"
 
-    find("input[aria-label='タイトル']").set("編集後カテゴリー")
+      find("input[aria-label='タイトル']").set("編集後カテゴリー")
 
-    click_button "保存" 
+      click_button "保存"
 
-    updated_row = find("[role='listitem']", text: "編集後カテゴリー")
-    within updated_row do
-      expect(page).to have_content "編集後カテゴリー"
-      expect(page).to have_no_selector "input[aria-label='タイトル']"
+      updated_row = find("[role='listitem']", text: "編集後カテゴリー")
+      within updated_row do
+        expect(page).to have_content "編集後カテゴリー"
+        expect(page).to have_no_selector "input[aria-label='タイトル']"
+      end
     end
-  end
 
   it "カテゴリーを削除できる" do
     category_row = find("[role='listitem']", text: category.name)
