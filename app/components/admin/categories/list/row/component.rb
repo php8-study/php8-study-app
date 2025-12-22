@@ -13,6 +13,11 @@ module Admin
           end
 
           private
+          
+            def weight_percentage
+              "#{category.weight}%"
+            end
+
             def progress_bar_style
               "width: #{@category.weight}%"
             end
