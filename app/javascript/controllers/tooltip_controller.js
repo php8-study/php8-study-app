@@ -10,9 +10,13 @@ export default class extends Controller {
       position: "fixed",
       top: "0",
       left: "0",
-      transform: "translate3d(-9999px, -9999px, 0)",
+      transform: "translate3d(-9999px, -9999px, 0)"
     });
     this.contentTarget.classList.add("invisible", "opacity-0");
+  }
+
+  disconnect() {
+    if (this.hideTimeout) clearTimeout(this.hideTimeout);
   }
 
   show() {
@@ -31,7 +35,7 @@ export default class extends Controller {
     this.contentTarget.classList.add("opacity-0");
 
     this.hideTimeout = setTimeout(() => {
-      if (this.contentTarget.classList.contains("opacity-0")) {
+      if (this.contentTarget && this.contentTarget.classList.contains("opacity-0")) {
         this.contentTarget.classList.add("invisible");
         this.contentTarget.style.transform = "translate3d(-9999px, -9999px, 0)";
       }
@@ -41,9 +45,9 @@ export default class extends Controller {
   updatePosition() {
     const triggerRect = this.triggerTarget.getBoundingClientRect();
     const contentRect = this.contentTarget.getBoundingClientRect();
-
+    
     let top = triggerRect.top - contentRect.height - OFFSET;
-    let left = triggerRect.left + triggerRect.width / 2 - contentRect.width / 2;
+    let left = triggerRect.left + (triggerRect.width / 2) - (contentRect.width / 2);
 
     if (left < OFFSET) left = OFFSET;
 
@@ -57,7 +61,7 @@ export default class extends Controller {
     Object.assign(this.contentTarget.style, {
       transform: "none",
       top: `${top}px`,
-      left: `${left}px`,
+      left: `${left}px`
     });
   }
 }
