@@ -8,11 +8,16 @@ RSpec.describe Common::Tooltip::Component, type: :component do
   end
 
   it "トリガーボタンが表示され、適切な属性を持っていること" do
-    button = page.find("button[data-tooltip-target='trigger']")
+    trigger_wrapper = page.find("div[data-tooltip-target='trigger']")
 
-    expect(button).to be_present
-    expect(button[:class]).to include("cursor-help")
-    expect(button["aria-label"]).to eq "公式テキスト参照箇所"
+    expect(trigger_wrapper[:class]).to include("cursor-help")
+
+    within(trigger_wrapper) do
+      button = find("button")
+      expect(button).to be_present
+
+      expect(button["aria-label"]).to eq "詳細情報"
+    end
   end
 
   it "ツールチップ本体が表示され（DOMに存在し）、Stimulusのターゲット設定があること" do

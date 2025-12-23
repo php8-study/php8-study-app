@@ -1,8 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
 const OFFSET = 10;
-const ANIMATION_DURATION = 200;
-const HOVER_DELAY = 100;
 
 export default class extends Controller {
   static targets = ["trigger", "content"];
@@ -10,63 +8,56 @@ export default class extends Controller {
   connect() {
     Object.assign(this.contentTarget.style, {
       position: "fixed",
-      top: "-9999px",
-      left: "-9999px",
-      zIndex: "1000",
-      width: "auto",
+      top: "0",
+      left: "0",
+      transform: "translate3d(-9999px, -9999px, 0)",
     });
-
-    this.hide();
-  }
-
-  disconnect() {
-    if (this.resetPositionTimeout) clearTimeout(this.resetPositionTimeout);
-    if (this.hideTimeout) clearTimeout(this.hideTimeout);
+    this.contentTarget.classList.add("invisible", "opacity-0");
   }
 
   show() {
     if (this.hideTimeout) clearTimeout(this.hideTimeout);
 
-    const { top, left } = this.calculatePosition();
+    this.contentTarget.classList.remove("invisible");
 
-    Object.assign(this.contentTarget.style, {
-      top: `${top}px`,
-      left: `${left}px`,
+    this.updatePosition();
+
+    requestAnimationFrame(() => {
+      this.contentTarget.classList.remove("opacity-0");
     });
-
-    this.contentTarget.classList.remove("invisible", "opacity-0");
   }
 
   hide() {
-    this.hideTimeout = setTimeout(() => {
-      this.contentTarget.classList.add("invisible", "opacity-0");
+    this.contentTarget.classList.add("opacity-0");
 
-      this.resetPositionTimeout = setTimeout(() => {
-        if (this.contentTarget.classList.contains("invisible")) {
-          this.contentTarget.style.top = "-9999px";
-          this.contentTarget.style.left = "-9999px";
-        }
-      }, ANIMATION_DURATION);
-    }, HOVER_DELAY);
+    this.hideTimeout = setTimeout(() => {
+      if (this.contentTarget.classList.contains("opacity-0")) {
+        this.contentTarget.classList.add("invisible");
+        this.contentTarget.style.transform = "translate3d(-9999px, -9999px, 0)";
+      }
+    }, 200);
   }
 
-  calculatePosition() {
+  updatePosition() {
     const triggerRect = this.triggerTarget.getBoundingClientRect();
     const contentRect = this.contentTarget.getBoundingClientRect();
-    const viewportWidth = window.innerWidth;
 
     let top = triggerRect.top - contentRect.height - OFFSET;
     let left = triggerRect.left + triggerRect.width / 2 - contentRect.width / 2;
 
-    left = Math.max(OFFSET, left);
+    if (left < OFFSET) left = OFFSET;
 
-    const maxLeft = viewportWidth - contentRect.width - OFFSET;
-    left = Math.min(left, maxLeft);
+    const maxLeft = window.innerWidth - contentRect.width - OFFSET;
+    if (left > maxLeft) left = maxLeft;
 
     if (top < OFFSET) {
       top = triggerRect.bottom + OFFSET;
     }
 
-    return { top, left };
+    Object.assign(this.contentTarget.style, {
+      transform: "none",
+      top: `${top}px`,
+      left: `${left}px`,
+    });
   }
 }
