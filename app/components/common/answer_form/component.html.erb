@@ -12,8 +12,8 @@
       <%= render Common::Button::Component.new(
             type: :submit,
             variant: :primary,
-            size: :xl,
-            class: "group shadow-lg cursor-pointer hover:shadow-xl hover:-translate-y-0.5",
+            size: :lg,
+            class: "shadow-lg cursor-pointer hover:shadow-xl hover:-translate-y-0.5",
             data: { action: "click->answer-guard#submit" }
           ) do %>
         <span><%= @button_text %></span>
