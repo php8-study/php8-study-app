@@ -15,17 +15,19 @@ export default class extends Controller {
 
       if (type === "incorrect" && isCorrect) {
         element.classList.add("hidden");
+        element.setAttribute("aria-hidden", "true");
       } else {
         element.classList.remove("hidden");
+        element.setAttribute("aria-hidden", "false");
       }
     });
 
     if (event.currentTarget) {
-      this.updateactiveButton(event.currentTarget);
+      this.updateActiveButton(event.currentTarget);
     }
   }
 
-  updateactiveButton(clickedButton) {
+  updateActiveButton(clickedButton) {
     this.buttonTargets.forEach((btn) => {
       if (btn === clickedButton) {
         btn.classList.add("bg-indigo-600", "text-white", "border-transparent");
@@ -35,6 +37,7 @@ export default class extends Controller {
           "border-slate-200",
           "hover:text-indigo-600",
         );
+        btn.setAttribute("aria-pressed", "true");
       } else {
         btn.classList.remove(
           "bg-indigo-600",
@@ -47,6 +50,7 @@ export default class extends Controller {
           "border-slate-200",
           "hover:text-indigo-600",
         );
+        btn.setAttribute("aria-pressed", "false");
       }
     });
   }
