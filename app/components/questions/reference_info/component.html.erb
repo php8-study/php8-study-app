@@ -5,22 +5,27 @@
   </div>
 
   <% if present? %>
-    <div class="flex items-center justify-between bg-slate-50 p-4 rounded-lg border border-slate-100 relative">
-      <span class="text-slate-600 font-medium">公式テキスト参照箇所</span>
+    <div class="flex items-center justify-center bg-slate-50 p-4 rounded-lg border border-slate-100 relative">
 
-      <%= render Common::Tooltip::Component.new(classes: "relative inline-block group cursor-help") do %>
+      <div class="flex items-center gap-4">
+        <span class="text-slate-600 font-medium">公式テキスト参照箇所</span>
 
-        <div class="flex items-center gap-2">
-          <span class="text-xs text-slate-400 group-hover:text-indigo-600 transition-colors">PAGE</span>
+        <%= helpers.inline_svg_tag "icons/arrow_long_right.svg", class: "w-6 h-6 text-indigo-400", aria_hidden: true %>
 
-          <span class="text-xl font-black text-indigo-600"><%= official_page %></span>
+        <%= render Common::Tooltip::Component.new(classes: "relative inline-block group cursor-help") do %>
 
-          <span class="text-slate-400 group-hover:text-indigo-600 transition-all duration-200 group-hover:scale-110 bg-slate-200/50 rounded-full p-0.5 flex items-center justify-center">
-            <%= helpers.inline_svg_tag "icons/info_circle.svg", class: "w-5 h-5", aria_hidden: true %>
-          </span>
-        </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-slate-400 group-hover:text-indigo-600 transition-colors">PAGE</span>
 
-      <% end %>
+            <span class="text-xl font-black text-indigo-600"><%= official_page %></span>
+
+            <span class="ml-1 text-slate-400 group-hover:text-indigo-600 transition-all duration-200 group-hover:scale-110 bg-slate-200/50 rounded-full p-0.5 flex items-center justify-center">
+              <%= helpers.inline_svg_tag "icons/info_circle.svg", class: "w-5 h-5", aria_hidden: true %>
+            </span>
+          </div>
+
+        <% end %>
+      </div>
 
     </div>
   <% else %>
