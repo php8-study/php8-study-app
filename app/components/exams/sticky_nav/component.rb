@@ -9,7 +9,7 @@ module Exams
 
       private
         def nav_classes
-          classes = %w[sticky bottom-0 left-0 w-full z-50 transition-transform duration-500 pointer-events-none]
+          classes = %w[sticky bottom-0 left-0 w-full z-50 mt-12 pointer-events-none transition-transform duration-500]
 
           if @animation
             classes << "translate-y-full opacity-0"
