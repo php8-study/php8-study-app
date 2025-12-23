@@ -9,8 +9,6 @@ RSpec.describe Questions::StickyNav::Component, type: :component do
     end
 
     it "トップへ戻るボタンと次の問題へボタンの両方が表示されること" do
-      expect(page).to have_selector("[data-controller='sticky-nav']")
-
       expect(page).to have_link("トップへ戻る", href: "/")
       expect(page).to have_link("次の問題へ", href: "/next/question/path")
     end

@@ -1,14 +1,12 @@
-<div data-controller="sticky-nav"
-     data-sticky-nav-footer-selector-value="#global-footer"
-     class="fixed bottom-0 left-0 w-full z-50 pb-6 pointer-events-none transition-transform duration-300">
+<div class="sticky bottom-0 left-0 w-full z-50 pointer-events-none transition-transform duration-300">
 
-  <div class="max-w-3xl mx-auto px-4 sm:px-6">
+  <div class="max-w-xl mx-auto px-4 sm:px-6">
 
-    <nav class="pointer-events-auto flex flex-col sm:flex-row gap-4 pt-4 border-t border-slate-200">
+    <nav class="pointer-events-auto flex flex-col sm:flex-row gap-4 pt-8 max-width-480">
 
       <%= render Common::Button::Component.new(
             href: root_path,
-            variant: :ghost,
+            variant: :secondary,
             size: :md,
             class: "flex-1 border-slate-300 text-slate-700 shadow-sm"
           ) do %>

@@ -24,7 +24,7 @@
     <% if content_for?(:full_width) %>
       <%= yield %>
     <% else %>
-      <div class="max-w-screen-xl mx-auto w-full flex-1">
+      <div class="max-w-screen-xl mx-auto w-full flex-1 flex flex-col">
         <%= yield %>
       </div>
     <% end %>

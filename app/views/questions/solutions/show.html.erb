@@ -2,9 +2,9 @@
 <% summary = @question.explanation.tr("\n", " ").truncate(80) %>
 <% set_meta_tags description: summary %>
 
-<main class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 relative pb-24">
+<main class="bg-slate-50 py-12 relative">
 
-  <div class="max-w-3xl mx-auto space-y-8">
+  <div class="max-w-3xl mx-auto space-y-8 px-4 sm:px-6">
 
     <% if current_user %>
       <%= render Questions::ResultStatus::Component.new(is_correct: @is_correct) %>

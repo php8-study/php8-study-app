@@ -24,7 +24,7 @@ module Exams
         tag.div(
           id: "reveal-wrapper",
           data: data_attributes,
-          class: "relative pb-24"
+          class: "relative"
         ) do
           content
         end
