@@ -11,11 +11,12 @@
       <span>回答詳細</span>
     </h3>
 
-    <div class="flex bg-slate-100 p-1 rounded-lg self-start sm:self-auto">
+    <div class="flex bg-slate-100 p-1 rounded-lg self-start sm:self-auto" role="group" aria-label="回答フィルター">
       <button type="button"
               data-answer-filter-target="button"
               data-action="answer-filter#filter"
               data-answer-filter-type-param="all"
+              aria-pressed="true" 
               class="px-4 py-1.5 rounded-md text-sm font-bold transition-all duration-200 bg-indigo-600 text-white border-transparent shadow-sm">
         すべて
       </button>
@@ -23,6 +24,7 @@
               data-answer-filter-target="button"
               data-action="answer-filter#filter"
               data-answer-filter-type-param="incorrect"
+              aria-pressed="false"
               class="px-4 py-1.5 rounded-md text-sm font-bold transition-all duration-200 bg-white text-slate-600 border-slate-200 hover:text-indigo-600">
         不正解のみ
       </button>
