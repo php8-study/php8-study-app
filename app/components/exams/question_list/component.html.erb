@@ -1,13 +1,35 @@
 <section aria-labelledby="detail-heading"
          data-result-reveal-target="detailTable"
+         data-controller="answer-filter"
          class="transition-opacity duration-700 delay-1000 <%= animation_class %>">
 
-  <h3 id="detail-heading" class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
-    <div class="flex-shrink-0 p-1 bg-indigo-50 rounded-lg">
-      <%= helpers.inline_svg_tag "icons/check_board.svg", class: "w-6 h-6 text-indigo-500", aria_hidden: true %>
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+    <h3 id="detail-heading" class="text-xl font-bold text-slate-800 flex items-center gap-3">
+      <div class="flex-shrink-0 p-1 bg-indigo-50 rounded-lg">
+        <%= helpers.inline_svg_tag "icons/check_board.svg", class: "w-6 h-6 text-indigo-500", aria_hidden: true %>
+      </div>
+      <span>回答詳細</span>
+    </h3>
+
+    <div class="flex bg-slate-100 p-1 rounded-lg self-start sm:self-auto" role="group" aria-label="回答フィルター">
+      <button type="button"
+              data-answer-filter-target="button"
+              data-action="answer-filter#filter"
+              data-answer-filter-type-param="all"
+              aria-pressed="true"
+              class="px-4 py-1.5 rounded-md text-sm font-bold transition-all duration-200 bg-indigo-600 text-white border-transparent shadow-sm">
+        すべて
+      </button>
+      <button type="button"
+              data-answer-filter-target="button"
+              data-action="answer-filter#filter"
+              data-answer-filter-type-param="incorrect"
+              aria-pressed="false"
+              class="px-4 py-1.5 rounded-md text-sm font-bold transition-all duration-200 bg-white text-slate-600 border-slate-200 hover:text-indigo-600">
+        不正解のみ
+      </button>
     </div>
-    <span>回答詳細</span>
-  </h3>
+  </div>
 
   <ul class="space-y-4">
     <% @questions.each do |exam_question| %>
