@@ -20,7 +20,6 @@ RSpec.describe Exams::StickyNav::Component, type: :component do
 
       expect(page).to have_css(".opacity-0")
       expect(page).to have_css(".translate-y-full")
-
     end
 
     it "animation: falseの場合、非表示クラスが付与されないこと" do
