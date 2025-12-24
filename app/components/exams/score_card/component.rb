@@ -16,6 +16,7 @@ module Exams
       end
 
       private
+      
         def wrapper_animation_class
           @animation ? "opacity-0 translate-y-4" : ""
         end
@@ -27,8 +28,6 @@ module Exams
         def chart_style
           "stroke-dasharray: #{CIRCUMFERENCE}; stroke-dashoffset: #{stroke_offset};"
         end
-
-        private
 
         def stroke_offset
           return CIRCUMFERENCE if @animation
