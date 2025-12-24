@@ -36,7 +36,11 @@ RSpec.describe MarkdownRenderer, type: :model do
       let(:text) do
         <<~MARKDOWN
           ```php
-          def hello; end
+          <?php
+          function hello() {
+            return "world";
+          }
+          ?>
           ```
         MARKDOWN
       end
