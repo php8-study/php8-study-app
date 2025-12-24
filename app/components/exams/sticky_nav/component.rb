@@ -9,7 +9,7 @@ module Exams
 
       private
         def nav_classes
-          [*base_nav_classes *animation_classes].join(" ")
+          [*base_nav_classes, *animation_classes].join(" ")
         end
 
         def base_nav_classes
