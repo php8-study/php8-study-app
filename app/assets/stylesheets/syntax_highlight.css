@@ -1,0 +1,33 @@
+/* 文字以外の装飾（背景や枠）をすべて無効化して、透明にする */
+.highlight {
+  background-color: transparent;
+  color: inherit;
+}
+.highlight pre {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto
+}
+
+/* --- 配色テーマ --- */
+.highlight .c, .highlight .cm, .highlight .c1 { color: #75715e; font-style: italic; } /* コメント */
+.highlight .k, .highlight .kc, .highlight .kd { color: #66d9ef; font-weight: bold; } /* キーワード */
+.highlight .s, .highlight .s1, .highlight .s2 { color: #e6db74; } /* 文字列 */
+.highlight .nb, .highlight .nf { color: #a6e22e; } /* 関数名 */
+.highlight .kt, .highlight .nv { color: #f8f8f2; } /* 変数 */
+.highlight .o { color: #f92672; } /* 演算子 */
+.highlight .mi, .highlight .mf { color: #ae81ff; } /* 数字 */
+
+/* --- Markdownの文章部分の調整 --- */
+.markdown-body p {
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+
+/* コードブロックの上下に余白を空ける */
+.markdown-body pre {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
