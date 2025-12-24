@@ -14,20 +14,29 @@ module Exams
         @exam.present?
       end
 
+      private
+
       def created_month
         created_at.strftime("%b") # 英表記にしたいのでstrftimeを採用
       end
 
       def link_classes
-        "group block bg-white rounded-xl p-5 border shadow-sm hover:shadow-md transition-all duration-200 border-l-[6px] #{accent_border_class} #{wrapper_class} hover:-translate-y-0.5"
+        [*base_classes, *status_classes, @accent_border_class].join(" ")
       end
 
-      def wrapper_class
-        base = "border-slate-100"
+      def base_classes
+        %w[
+          group block bg-white rounded-xl p-5 border shadow-sm 
+          hover:shadow-md transition-all duration-200 border-l-[6px] 
+          hover:-translate-y-0.5
+        ]
+      end
+
+      def status_classes
         if passed?
-          "#{base} hover:border-emerald-200 hover:bg-emerald-50/30"
+          %w[border-slate-100 hover:border-emerald-200 hover:bg-emerald-50/30]
         else
-          "#{base} hover:border-red-200 hover:bg-red-50/30"
+          %w[border-slate-100 hover:border-red-200 hover:bg-red-50/30]
         end
       end
 

@@ -20,9 +20,11 @@ module Common
         end
 
         def text_classes
-          classes = "block text-base text-slate-700 group-hover:text-indigo-900 transition-colors"
-          classes += " peer-checked:font-bold" unless @disabled
-          classes
+          classes = %w[
+          block text-base text-slate-700 group-hover:text-indigo-900 transition-colors
+          ]
+          classes << "peer-checked:font-bold" unless @disabled
+          classes.join(" ")
         end
     end
   end

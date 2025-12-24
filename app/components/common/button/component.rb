@@ -26,7 +26,7 @@ module Common
 
       def call
         @system_arguments[:class] = class_names(
-          default_classes,
+          *default_classes,
           VARIANTS[@variant],
           SIZES[@size],
           @system_arguments[:class]
@@ -42,7 +42,9 @@ module Common
 
       private
         def default_classes
-          "inline-flex items-center justify-center font-bold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          %w[
+          inline-flex items-center justify-center font-bold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed
+          ]
         end
     end
   end

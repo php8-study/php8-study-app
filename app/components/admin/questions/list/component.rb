@@ -10,10 +10,10 @@ module Admin
 
         private
           def header_th(text, align: :left, classes: "px-3")
-            base_classes = "py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500"
-            alignment_class = "text-#{align}"
+            base = %w[py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500]
+            all_classes = [*base, "text-#{align}", classes]
 
-            content_tag :th, text, scope: "col", class: "#{base_classes} #{alignment_class} #{classes}"
+            content_tag :th, text, scope: "col", class: all_classes.join(" ")
           end
       end
     end
