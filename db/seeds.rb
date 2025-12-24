@@ -57,7 +57,7 @@ categories.each do |category|
 
     question = Question.create!(
       category: category,
-      content: "【#{category.name}】問#{i + 1}\n#{Faker::Lorem.sentence(word_count: 10)}?\n\nコード例:\n#{dummy_code}",
+      content: "【#{category.name}】問#{i + 1}\n#{Faker::Lorem.sentence(word_count: 10)}?\n\nコード例:\n\n```php\n#{dummy_code}\n```",
       explanation: "【解説】\n#{Faker::Lorem.paragraph(sentence_count: 3)}\n\n詳しくは公式ドキュメント「#{category.name}」の章を参照してください。",
       official_page: rand(1..500)
     )
