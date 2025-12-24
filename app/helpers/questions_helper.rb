@@ -37,22 +37,27 @@ module QuestionsHelper
       "@context": "https://schema.org",
       "@type": "Quiz",
       "name": "PHP8演習問題 No.#{question.id} 解説",
-      "mainEntity": {
-        "@type": "Question",
-        "name": "#{question.category.name}の問題",
-        "text": content,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": explanation.presence || "正解と解説はサイト内で確認してください。"
+      "hasPart": [
+        {
+          "@type": "Question",
+          "name": "#{question.category.name}の問題",
+          "text": content,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": explanation.presence || "正解と解説はサイト内で確認してください。"
+          }
         }
-      }
+      ]
     }
-    tag.script(json_ld.to_json.html_safe, type: "application/ld+json")
+
+    tag.script(json_escape(json_ld.to_json).html_safe, type: "application/ld+json")
   end
 
   private
-    def format_for_seo(text)
-      return "" if text.blank?
-      strip_tags(text).gsub(/[#*`>\[\]]/, "").squish
-    end
+
+  def format_for_seo(text)
+    return "" if text.blank?
+    strip_tags(text).gsub(/[#*`>\[\]]/, "").squish
+  end
+end
 end
