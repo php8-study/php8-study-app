@@ -23,6 +23,7 @@ Bundler.require(*Rails.groups)
 
 # Rouge Redcarpetプラグインの事前ロード
 # MarkdownRendererのシンタックスハイライト機能に必要
+# 無いとEagerLoadでCIが落ちる
 require "rouge/plugins/redcarpet"
 
 module Php8Study
