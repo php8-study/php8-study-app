@@ -40,6 +40,8 @@ module QuestionsHelper
       "hasPart": [
         {
           "@type": "Question",
+          "eduQuestionType": "Multiple choice",
+          "learningResourceType": "Practice Problem",
           "name": "#{question.category.name}の問題",
           "text": content,
           "acceptedAnswer": {
