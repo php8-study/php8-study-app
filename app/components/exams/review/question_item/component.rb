@@ -17,15 +17,27 @@ module Exams
 
         private
           def classes
-            base_classes = "flex flex-col items-center justify-center h-20 rounded-2xl transition-all duration-200 relative group"
+            [*base_classes, *status_styles].join(" ")
+          end
 
-            status_classes = if @question.answered?
-              "bg-indigo-50 border border-indigo-100 text-indigo-700 hover:bg-indigo-100 hover:border-indigo-200 hover:-translate-y-1 shadow-sm"
+          def base_classes
+            %w[flex flex-col items-center justify-center h-20 rounded-2xl relative group transition-all duration-200
+            ]
+          end
+
+          def status_styles
+            if @question.answered?
+              %w[
+                bg-indigo-50 border border-indigo-100 text-indigo-700
+                hover:bg-indigo-100 hover:border-indigo-200 hover:-translate-y-1
+                shadow-sm
+              ]
             else
-              "bg-white border-2 border-slate-300 border-dashed text-slate-400 hover:border-slate-400 hover:text-slate-600 hover:bg-slate-50"
+              %w[
+                bg-white border-2 border-slate-300 border-dashed text-slate-400
+                hover:border-slate-400 hover:text-slate-600 hover:bg-slate-50
+              ]
             end
-
-            "#{base_classes} #{status_classes}"
           end
       end
     end

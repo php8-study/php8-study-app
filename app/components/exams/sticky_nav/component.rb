@@ -9,13 +9,16 @@ module Exams
 
       private
         def nav_classes
-          classes = %w[sticky bottom-0 left-0 w-full z-1 mt-12 pointer-events-none transition-transform duration-500]
+          [*base_nav_classes, *animation_classes].join(" ")
+        end
 
-          if @animation
-            classes << "translate-y-full opacity-0"
-          end
+        def base_nav_classes
+          %w[sticky bottom-0 left-0 w-full z-1 mt-12 pointer-events-none transition-transform duration-500]
+        end
 
-          classes.join(" ")
+        def animation_classes
+          return [] unless @animation
+          %w[translate-y-full opacity-0]
         end
     end
   end
