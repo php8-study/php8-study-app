@@ -20,7 +20,7 @@ module Exams
         end
 
         def link_classes
-          [*base_classes, *status_classes, @accent_border_class].join(" ")
+          [*base_classes, *status_classes, accent_border_class].join(" ")
         end
 
         def base_classes
