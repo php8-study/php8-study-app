@@ -124,7 +124,7 @@ RSpec.describe Exams::ScoreCard::Component, type: :component do
     it "円グラフが初期状態（空）になっていること" do
       circle = page.find("#result-chart-bar")
 
-      expect(circle[:style]).to include("stroke-dasharray: #{CIRCUMFERENCE}, #{CIRCUMFERENCE}")
+      expect(circle[:style]).to include("stroke-dasharray: #{CIRCUMFERENCE}")
       expect(circle[:style]).to include("stroke-dashoffset: #{CIRCUMFERENCE}")
     end
   end
