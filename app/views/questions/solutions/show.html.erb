@@ -1,6 +1,5 @@
-<% title "No.#{@question.id} の解説" %>
-<% summary = @question.explanation.tr("\n", " ").truncate(80) %>
-<% set_meta_tags description: summary %>
+<% set_question_explanation_seo_tags(@question) %>
+<%= question_json_ld(@question) %>
 
 <main class="bg-slate-50 py-12 relative">
 
