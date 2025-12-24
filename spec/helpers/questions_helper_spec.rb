@@ -22,7 +22,7 @@ RSpec.describe QuestionsHelper, type: :helper do
   describe "構造化データ出力" do
     it "JSON-LDがscriptタグとして出力され、中身に問題内容が含まれること" do
       result = helper.question_json_ld(question)
-      
+
       expect(result).to start_with('<script type="application/ld+json">')
       expect(result).to include('"@type":"Quiz"')
       expect(result).to include("echo 'hello';")
@@ -32,7 +32,7 @@ RSpec.describe QuestionsHelper, type: :helper do
     it "解説が空の場合でも、デフォルトのテキストがセットされてエラーにならないこと" do
       question.explanation = nil
       result = helper.question_json_ld(question)
-      
+
       expect(result).to include("正解と解説はサイト内で確認してください。")
     end
   end
