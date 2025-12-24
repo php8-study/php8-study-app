@@ -7,6 +7,11 @@ module Common
         @body = body
         @label = label
       end
+
+      private
+        def formatted_body
+          MarkdownRenderer.render(@body)
+        end
     end
   end
 end

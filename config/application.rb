@@ -21,6 +21,11 @@ require "action_view/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Rouge Redcarpetプラグインの事前ロード
+# MarkdownRendererのシンタックスハイライト機能に必要
+# 無いとEagerLoadでCIが落ちる
+require "rouge/plugins/redcarpet"
+
 module Php8Study
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

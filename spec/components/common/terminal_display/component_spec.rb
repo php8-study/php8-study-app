@@ -3,27 +3,28 @@
 require "rails_helper"
 
 RSpec.describe Common::TerminalDisplay::Component, type: :component do
-  let(:sample_code) { "<?php echo 'Hello World'; ?>" }
+  let(:code) { "<?php echo 'Hello World'; ?>" }
+  let(:markdown_body) { "```php\n#{code}\n```" }
 
-  it "渡されたコンテンツが表示されること" do
-    render_inline(described_class.new(body: sample_code))
+  it "コードがシンタックスハイライトされて表示されること" do
+    render_inline(described_class.new(body: markdown_body))
 
-    expect(page).to have_css "pre", text: sample_code
+    expect(page).to have_css "pre.highlight"
+
+    expect(page).to have_text "echo"
   end
 
-  context "ラベルが指定されていない場合" do
+  context "ラベルの表示" do
     it "デフォルトのラベル(Question.php)が表示されること" do
-      render_inline(described_class.new(body: sample_code))
+      render_inline(described_class.new(body: markdown_body))
 
       expect(page).to have_text "Question.php"
     end
-  end
 
-  context "ラベルが指定されている場合" do
     it "指定したラベルが表示されること" do
-      render_inline(described_class.new(body: sample_code, label: "RandomQuestion.php"))
+      render_inline(described_class.new(body: markdown_body, label: "Custom.php"))
 
-      expect(page).to have_text "RandomQuestion.php"
+      expect(page).to have_text "Custom.php"
     end
   end
 end

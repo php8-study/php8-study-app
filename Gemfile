@@ -45,3 +45,6 @@ group :test do
   gem "selenium-webdriver"
   gem "simplecov", require: false
 end
+
+gem "redcarpet", "~> 3.6"
+gem "rouge", "~> 4.6"
