@@ -29,7 +29,7 @@ module QuestionsHelper
   end
 
   # JSON-LD出力（Quiz構造化データ）
-  def render_question_json_ld(question)
+  def question_json_ld(question)
     content = format_for_seo(question.content)
     explanation = format_for_seo(question.explanation)
 
