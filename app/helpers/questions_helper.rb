@@ -54,10 +54,8 @@ module QuestionsHelper
   end
 
   private
-
-  def format_for_seo(text)
-    return "" if text.blank?
-    strip_tags(text).gsub(/[#*`>\[\]]/, "").squish
-  end
-end
+    def format_for_seo(text)
+      return "" if text.blank?
+      strip_tags(text).gsub(/[#*`>\[\]]/, "").squish
+    end
 end
