@@ -9,41 +9,40 @@ module Questions
       end
 
       private
-
-      def choices
-        @question.question_choices
-      end
-
-      def container_classes(choice)
-        [
-          %w[relative flex items-start p-4 rounded-xl border-2 transition-all],
-          container_status_styles(choice)
-        ].flatten.join(" ")
-      end
-
-      def text_classes(choice)
-        classes = %w[text-slate-700 font-medium leading-relaxed]
-        classes.concat %w[text-emerald-900 font-bold] if correct?(choice)
-        classes.join(" ")
-      end
-
-      def container_status_styles(choice)
-        if correct?(choice)
-          %w[bg-emerald-50 border-emerald-500 ring-1 ring-emerald-500]
-        elsif selected?(choice)
-          %w[bg-red-50 border-red-400 border-dashed]
-        else
-          %w[bg-white border-slate-200 opacity-70]
+        def choices
+          @question.question_choices
         end
-      end
 
-      def selected?(choice)
-        @user_choice_ids.include?(choice.id)
-      end
+        def container_classes(choice)
+          [
+            %w[relative flex items-start p-4 rounded-xl border-2 transition-all],
+            container_status_styles(choice)
+          ].flatten.join(" ")
+        end
 
-      def correct?(choice)
-        choice.correct
-      end
+        def text_classes(choice)
+          classes = %w[text-slate-700 font-medium leading-relaxed]
+          classes.concat %w[text-emerald-900 font-bold] if correct?(choice)
+          classes.join(" ")
+        end
+
+        def container_status_styles(choice)
+          if correct?(choice)
+            %w[bg-emerald-50 border-emerald-500 ring-1 ring-emerald-500]
+          elsif selected?(choice)
+            %w[bg-red-50 border-red-400 border-dashed]
+          else
+            %w[bg-white border-slate-200 opacity-70]
+          end
+        end
+
+        def selected?(choice)
+          @user_choice_ids.include?(choice.id)
+        end
+
+        def correct?(choice)
+          choice.correct
+        end
     end
   end
 end
