@@ -1,5 +1,7 @@
-<% title "No.#{@question.id} の解説" %>
-<% summary = @question.explanation.tr("\n", " ").truncate(80) %>
+<% plain_content = strip_tags(MarkdownRenderer.render(@question.content)).squish %>
+<% title "[解説] #{@question.category.name}: #{plain_content.truncate(30)}" %>
+<% explanation_text = @question.explanation.presence || "正解の確認と、詳細な解説を確認しましょう。" %>
+<% summary = "PHP8試験対策：#{plain_content.truncate(80)} ... #{explanation_text.tr("\n", " ").truncate(50)}" %>
 <% set_meta_tags description: summary %>
 
 <main class="bg-slate-50 py-12 relative">

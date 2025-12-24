@@ -1,5 +1,6 @@
-<% title "#{@question.category.name} の演習問題 (No.#{@question.id})" %>
-<% summary = strip_tags(@question.content.to_s).squish.truncate(80) %>
+<% plain_content = strip_tags(MarkdownRenderer.render(@question.content)).squish %>
+<% title "[#{@question.category.name}] #{plain_content.truncate(30)}" %>
+<% summary = "#{plain_content.truncate(110)} ... PHP8技術者認定試験対策の演習問題No.#{@question.id}に挑戦しましょう。" %>
 <% set_meta_tags description: summary %>
 
 <main class="bg-slate-50 py-12 px-4 sm:px-6">
