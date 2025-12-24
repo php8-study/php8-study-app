@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MarkdownRenderer
   OPTIONS = {
     filter_html: true,

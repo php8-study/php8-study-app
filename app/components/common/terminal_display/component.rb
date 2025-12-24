@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Common
   module TerminalDisplay
     class Component < ViewComponent::Base
