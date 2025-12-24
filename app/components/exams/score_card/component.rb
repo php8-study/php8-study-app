@@ -25,12 +25,19 @@ module Exams
         end
 
         def chart_style
-          if @animation
-            "stroke-dasharray: #{CIRCUMFERENCE}, #{CIRCUMFERENCE}; stroke-dashoffset: #{CIRCUMFERENCE};"
-          else
-            offset = CIRCUMFERENCE - (score_percentage / 100.0 * CIRCUMFERENCE)
-            "stroke-dasharray: #{CIRCUMFERENCE}, #{CIRCUMFERENCE}; stroke-dashoffset: #{offset};"
-          end
+          "stroke-dasharray: #{CIRCUMFERENCE}; stroke-dashoffset: #{stroke_offset};"
+        end
+
+        private
+
+        def stroke_offset
+          return CIRCUMFERENCE if @animation
+
+          CIRCUMFERENCE * (1 - score_ratio)
+        end
+
+        def score_ratio
+          score_percentage / 100.0
         end
 
         def chart_color_class
