@@ -18,6 +18,8 @@
       user_choice_ids: @user_answer_ids
     ) %>
 
+    <%= render Common::Explanation::Component.new(question: @question) %>
+
     <%= render Questions::ReferenceInfo::Component.new(question: @question) %>
 
     <% unless current_user %>

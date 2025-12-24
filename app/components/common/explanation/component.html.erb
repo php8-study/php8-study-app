@@ -1,0 +1,22 @@
+<div class="bg-white border border-slate-200 rounded-xl shadow-sm">
+  <div class="p-6 sm:p-8">
+
+    <header class="flex items-center gap-2 mb-6 select-none">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <h2 class="text-sm font-bold text-indigo-400 uppercase">
+        Explanation
+      </h2>
+    </header>
+
+    <div class="prose prose-slate max-w-none 
+                text-slate-700 leading-relaxed text-[15px] sm:text-base
+                prose-strong:text-slate-900 prose-strong:font-bold
+                prose-code:text-indigo-600 prose-code:bg-indigo-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none font-sans">
+
+      <%= MarkdownRenderer.render(@question.explanation) %>
+    </div>
+
+  </div>
+</div>
