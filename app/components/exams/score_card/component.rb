@@ -16,7 +16,6 @@ module Exams
       end
 
       private
-      
         def wrapper_animation_class
           @animation ? "opacity-0 translate-y-4" : ""
         end
