@@ -2,18 +2,14 @@
   <div class="p-6 sm:p-8">
 
     <header class="flex items-center gap-2 mb-4 select-none">
-      <%= helpers.inline_svg_tag "icons/message-square.svg", class: "w-4 h-4 text-slate-400  aria_hidden: true" %>
-      <h2 class="text-ms font-bold text-indigo-400 uppercase">
+      <%= helpers.inline_svg_tag "icons/message-square.svg", class: "w-4 h-4 text-slate-400", 'aria-hidden': true %>
+      <h3 class="text-sm font-bold text-indigo-500 uppercase tracking-wider">
         Explanation
-      </h2>
+      </h3>
     </header>
 
-    <div class="prose prose-slate max-w-none
-                text-slate-700 leading-relaxed text-[15px] sm:text-base
-                prose-strong:text-slate-900 prose-strong:font-bold
-                prose-code:text-indigo-600 prose-code:bg-indigo-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none font-sans">
-
-      <%= MarkdownRenderer.render(@question.explanation) %>
+    <div class="text-slate-700 leading-relaxed">
+      <%= @question.explanation %>
     </div>
 
   </div>
