@@ -30,6 +30,8 @@ Rails.application.configure do
 
   config.active_record.attributes_for_inspect = [ :id ]
 
+  config.action_view.preload_links_header = false
+
   cloudflare_ips = %w[
     103.21.244.0/22
     103.22.200.0/22
