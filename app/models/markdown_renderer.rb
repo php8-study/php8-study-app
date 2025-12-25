@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module MarkdownRenderer
+class MarkdownRenderer
   OPTIONS = {
     filter_html: true,
     hard_wrap: true,
@@ -14,10 +14,12 @@ module MarkdownRenderer
     strikethrough: true
   }.freeze
 
-  def self.render(text)
+  # スタイルのデフォルト値は持ちません。
+  # 呼び出し側が必ず指定する設計です（Viewに関するロジックをModelに持ち込まないため）。
+  def self.render(text, inline_code_style: nil)
     return "" if text.blank?
 
-    renderer = HTMLWithRouge.new(OPTIONS)
+    renderer = HTMLWithRouge.new(OPTIONS.merge(inline_code_style: inline_code_style))
     markdown = Redcarpet::Markdown.new(renderer, EXTENSIONS)
     markdown.render(text).html_safe
   end
@@ -25,8 +27,17 @@ module MarkdownRenderer
   class HTMLWithRouge < Redcarpet::Render::HTML
     include Rouge::Plugins::Redcarpet
 
+    def initialize(extensions = {})
+      @inline_code_style = extensions.delete(:inline_code_style)
+      super(extensions)
+    end
+
     def codespan(code)
-      "<code class=\"font-mono text-sm text-red-400 bg-slate-800 rounded px-1.5 py-0.5\">#{code}</code>"
+      if @inline_code_style
+        "<code class=\"#{@inline_code_style}\">#{code}</code>"
+      else
+        "<code>#{code}</code>"
+      end
     end
   end
 end
