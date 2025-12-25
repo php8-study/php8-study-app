@@ -30,10 +30,6 @@ Rails.application.configure do
 
   config.active_record.attributes_for_inspect = [ :id ]
 
-  # Rails 8 / Propshaft で発生する "preloaded but not used" 警告を回避するための設定
-  # ブラウザ標準の読み込みで十分な速度が出るため、自動プリロードをオフにしています。
-  config.assets.preloading = false
-
   cloudflare_ips = %w[
     103.21.244.0/22
     103.22.200.0/22
