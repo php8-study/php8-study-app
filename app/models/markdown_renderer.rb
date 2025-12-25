@@ -24,5 +24,9 @@ module MarkdownRenderer
 
   class HTMLWithRouge < Redcarpet::Render::HTML
     include Rouge::Plugins::Redcarpet
+
+    def codespan(code)
+      "<code class=\"font-mono text-sm text-red-400 bg-slate-800 rounded px-1.5 py-0.5\">#{code}</code>"
+    end
   end
 end
