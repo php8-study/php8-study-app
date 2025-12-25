@@ -1,11 +1,9 @@
 <div class="bg-white border border-slate-200 rounded-xl shadow-sm">
   <div class="p-6 sm:p-8">
 
-    <header class="flex items-center gap-2 mb-6 select-none">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-      </svg>
-      <h2 class="text-sm font-bold text-indigo-400 uppercase">
+    <header class="flex items-center gap-2 mb-4 select-none">
+      <%= helpers.inline_svg_tag "icons/message-square.svg", class: "w-4 h-4 text-slate-400  aria_hidden: true" %>
+      <h2 class="text-ms font-bold text-indigo-400 uppercase">
         Explanation
       </h2>
     </header>
