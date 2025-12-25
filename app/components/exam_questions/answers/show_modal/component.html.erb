@@ -48,6 +48,8 @@
               user_choice_ids: @exam_question.user_choice_ids
             ) %>
 
+        <%= render Common::Explanation::Component.new(question: @question) %>
+
         <%= render Questions::ReferenceInfo::Component.new(question: @question) %>
 
       </div>
