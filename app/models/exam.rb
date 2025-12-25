@@ -10,15 +10,18 @@ class Exam < ApplicationRecord
   PASSING_SCORE_PERCENTAGE = 70.0
 
   def attach_questions!(question_ids)
-    exam_questions_data = question_ids.each_with_index.map do |q_id, index|
+    now = Time.current
+
+    exam_questions_data = question_ids.each_with_index.map do |question_id, index|
       {
         exam_id: id,
-        question_id: q_id,
+        question_id:,
         position: index + 1,
-        created_at: Time.current,
-        updated_at: Time.current
+        created_at: now,
+        updated_at: now
       }
     end
+
     ExamQuestion.insert_all(exam_questions_data)
   end
 

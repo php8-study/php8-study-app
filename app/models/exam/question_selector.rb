@@ -70,6 +70,6 @@ class Exam::QuestionSelector
     end
 
     def build_data(id, chapter)
-      ExamQuestionData.new(id: id, chapter: chapter)
+      ExamQuestionData.new(id:, chapter:)
     end
 end
