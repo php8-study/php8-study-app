@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Questions::ChoicesFeedback::Component, type: :component do
+RSpec.describe Common::ChoicesFeedback::Component, type: :component do
   let(:question) { create(:question) }
   let!(:correct_choice) { create(:question_choice, question: question, correct: true, content: "正解の選択肢") }
   let!(:wrong_choice) { create(:question_choice, question: question, correct: false, content: "不正解の選択肢") }

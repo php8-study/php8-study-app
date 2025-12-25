@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Questions
+module Common
   module ReferenceInfo
     class Component < ViewComponent::Base
       def initialize(question:)

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Questions::ReferenceInfo::Component, type: :component do
+RSpec.describe Common::ReferenceInfo::Component, type: :component do
   context "参照ページが存在する場合" do
     let(:question) { create(:question, official_page: 123) }
 
