@@ -42,6 +42,14 @@ class Question < ApplicationRecord
     user_ids == correct_choice_ids
   end
 
+  def content_html
+    MarkdownContent.new(self.content).to_html
+  end
+
+  def explanation_html
+    MarkdownContent.new(self.explanation).to_html
+  end
+
   private
     def in_use?
       exam_questions.exists?
