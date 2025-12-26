@@ -14,15 +14,30 @@ module MarkdownRenderer
     strikethrough: true
   }.freeze
 
-  def self.render(text)
+  def render(text, inline_code_style: nil)
     return "" if text.blank?
 
-    renderer = HTMLWithRouge.new(OPTIONS)
+    renderer = HTMLWithRouge.new(OPTIONS.merge(inline_code_style: inline_code_style))
     markdown = Redcarpet::Markdown.new(renderer, EXTENSIONS)
     markdown.render(text).html_safe
   end
 
+  module_function :render
+
   class HTMLWithRouge < Redcarpet::Render::HTML
     include Rouge::Plugins::Redcarpet
+
+    def initialize(extensions = {})
+      @inline_code_style = extensions.delete(:inline_code_style)
+      super(extensions)
+    end
+
+    def codespan(code)
+      if @inline_code_style
+        "<code class=\"#{@inline_code_style}\">#{code}</code>"
+      else
+        "<code>#{code}</code>"
+      end
+    end
   end
 end
