@@ -12,7 +12,7 @@ module Common
 
       private
         def formatted_body
-          MarkdownRenderer.render(@body,inline_code_style: INLINE_CODE_STYLE)
+          MarkdownRenderer.render(@body, inline_code_style: INLINE_CODE_STYLE)
         end
     end
   end
