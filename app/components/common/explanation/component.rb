@@ -15,10 +15,7 @@ module Common
 
       private
         def formatted_explanation
-          MarkdownRenderer.render(
-            @question.explanation,
-            inline_code_style: INLINE_CODE_STYLE
-          )
+          MarkdownRenderer.render(@question.explanation, inline_code_style: INLINE_CODE_STYLE)
         end
     end
   end
