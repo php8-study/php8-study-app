@@ -23,10 +23,9 @@ module Common
       end
 
       private
-
-      def explanation_html
-        MarkdownContent.new(@question.explanation).to_html
-      end
+        def explanation_html
+          MarkdownContent.new(@question.explanation).to_html
+        end
     end
   end
 end
