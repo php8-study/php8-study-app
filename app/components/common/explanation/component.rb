@@ -3,7 +3,16 @@
 module Common
   module Explanation
     class Component < ViewComponent::Base
-      INLINE_CODE_STYLE = "font-mono text-sm text-red-400 bg-slate-100 rounded px-1.5 py-0.5"
+      WRAPPER_STYLE = %w(
+        [&_code]:font-mono
+        [&_code]:text-sm
+        [&_code]:text-slate-700
+        [&_code]:bg-slate-100
+        [&_code]:rounded
+        [&_code]:leading-relaxed
+        [&_code]:px-1.5
+        [&_code]:py-0.5
+      ).join(" ").freeze
 
       def initialize(question:)
         @question = question
@@ -14,9 +23,10 @@ module Common
       end
 
       private
-        def formatted_explanation
-          MarkdownRenderer.render(@question.explanation, inline_code_style: INLINE_CODE_STYLE)
-        end
+
+      def explanation_html
+        MarkdownContent.new(@question.explanation).to_html
+      end
     end
   end
 end
