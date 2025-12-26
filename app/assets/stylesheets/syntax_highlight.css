@@ -1,7 +1,11 @@
-/* 文字以外の装飾（背景や枠）をすべて無効化して、透明にする */
+/* =========================================
+   Code Highlight Theme (VS Code Dark+ Style)
+   ========================================= */
+
+/* --- 基本設定 --- */
 .highlight {
   background-color: transparent;
-  color: inherit;
+  color: #d4d4d4;
 }
 .highlight pre {
   background-color: transparent;
@@ -9,49 +13,105 @@
   margin: 0;
   padding: 0;
   overflow-x: auto;
+  font-family: "Menlo", "Monaco", "Consolas", "Courier New", monospace;
+  font-size: 0.95em;
 }
 
-/* --- 配色テーマ --- */
+/* --- 配色設定 --- */
+
+/* 1. コメント (Comment) - 深緑 */
 .highlight .c,
 .highlight .cm,
 .highlight .c1 {
-  color: #75715e;
-  font-style: italic;
-} /* コメント */
+  color: #6a9955;
+  font-style: normal;
+}
+
+/* 2. キーワード (Keyword: function, class, var) - 青 */
 .highlight .k,
-.highlight .kc,
-.highlight .kd {
-  color: #66d9ef;
-  font-weight: bold;
-} /* キーワード */
+.highlight .kd,
+.highlight .kt,
+.highlight .kp,
+.highlight .kr {
+  color: #569cd6;
+  font-weight: normal;
+}
+/* 制御構文 (return, if, else) - 紫 */
+.highlight .kc {
+  color: #c586c0;
+}
+
+/* 3. 文字列 (String) - 落ち着いたオレンジ/赤茶色 */
 .highlight .s,
 .highlight .s1,
-.highlight .s2 {
-  color: #e6db74;
-} /* 文字列 */
-.highlight .nb,
-.highlight .nf {
-  color: #a6e22e;
-} /* 関数名 */
-.highlight .kt,
-.highlight .nv {
-  color: #f8f8f2;
-} /* 変数 */
-.highlight .o {
-  color: #f92672;
-} /* 演算子 */
-.highlight .mi,
-.highlight .mf {
-  color: #ae81ff;
-} /* 数字 */
+.highlight .s2,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .se,
+.highlight .sh,
+.highlight .si,
+.highlight .sx,
+.highlight .sr,
+.highlight .ss {
+  color: #ce9178;
+}
 
-/* --- Markdownの文章部分の調整 --- */
+/* 4. 関数名 (Function) - 淡いクリームイエロー */
+.highlight .nb,
+.highlight .nf,
+.highlight .nc,
+.highlight .n {
+  color: #dcdcaa;
+}
+
+/* 5. 変数 (Variable) - 水色 */
+.highlight .nv,
+.highlight .vc,
+.highlight .vg,
+.highlight .vi {
+  color: #9cdcfe;
+  font-style: normal;
+}
+
+/* 6. 演算子 (Operator: =, *, +) - 白 */
+.highlight .o,
+.highlight .ow {
+  color: #d4d4d4;
+}
+
+/* 7. PHPタグ (<?php, ?>) - 青*/
+.highlight .cp,
+.highlight .cs {
+  color: #569cd6;
+  font-weight: normal;
+}
+
+/* 8. 数値 (Number) - 薄い緑 */
+.highlight .mi,
+.highlight .mf,
+.highlight .mh,
+.highlight .il {
+  color: #b5cea8;
+}
+
+/* 9. 記号 (Punctuation: ; { } ( ) )*/
+.highlight .p {
+  color: #ffd700;
+}
+
+/* 10. その他・エラーなど */
+.highlight .err {
+  color: #f44747;
+}
+
+/* =========================================
+   Markdown Body Context
+   ========================================= */
 .markdown-body p {
   margin-bottom: 1rem;
   line-height: 1.75;
 }
-
-/* コードブロックの上下に余白を空ける */
 .markdown-body pre {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
