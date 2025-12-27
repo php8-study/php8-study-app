@@ -13,7 +13,7 @@ module Exams
         end
 
         def base_nav_classes
-          %w[sticky bottom-0 left-0 w-full z-1 mt-12 pointer-events-none transition-transform duration-500]
+          %w[sticky bottom-0 left-0 w-full mt-12 pointer-events-none transition-transform duration-500]
         end
 
         def animation_classes
