@@ -7,6 +7,6 @@ class User < ApplicationRecord
 
 
   def active_exam
-    exams.find_by(completed_at: nil)
+    exams.in_progress.first
   end
 end
