@@ -2,7 +2,7 @@
 
 class ExamsController < ApplicationController
   before_action :set_exam, only: %i[show]
-  
+
   def index
     @exams = current_user.exams
                          .completed
