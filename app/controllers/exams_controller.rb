@@ -6,7 +6,7 @@ class ExamsController < ApplicationController
 
   def index
     @exams = current_user.exams
-                         .where.not(completed_at: nil)
+                         .completed
                          .preload(exam_questions: [{ question: :question_choices }, :exam_answers])
                          .order(completed_at: :desc)
   end
@@ -30,11 +30,8 @@ class ExamsController < ApplicationController
     # 使用アクションが増えたら関連読み込みが適切か確認する事
     def set_exam
       @exam = current_user.exams
+                          .completed
                           .preload(exam_questions: [{ question: [:question_choices, :category] }, :exam_answers])
                           .find(params[:id])
-    end
-
-    def ensure_completed
-      raise ActiveRecord::RecordNotFound unless @exam.completed_at
     end
 end

@@ -2,9 +2,8 @@
 
 module ExamQuestions
   class AnswersController < ApplicationController
-    before_action :set_exam_question
-    before_action :ensure_exam_completed, only: %i[show]
-    before_action :ensure_exam_in_progress, only: %i[create]
+    before_action :set_completed_exam_question, only: %i[show]
+    before_action :set_in_progress_exam_question, only: %i[create]
 
     def show
       respond_to do |format|
@@ -23,17 +22,15 @@ module ExamQuestions
     end
 
     private
-      def set_exam_question
-        @exam = current_user.exams.find(params[:exam_id])
+
+      def set_in_progress_exam_question
+        @exam = current_user.exams.in_progress.find(params[:exam_id])
         @exam_question = @exam.exam_questions.find(params[:exam_question_id])
       end
 
-      def ensure_exam_in_progress
-        raise ActiveRecord::RecordNotFound if @exam.completed_at
-      end
-
-      def ensure_exam_completed
-        raise ActiveRecord::RecordNotFound unless @exam.completed_at
+      def set_completed_exam_question
+        @exam = current_user.exams.completed.find(params[:exam_id])
+        @exam_question = @exam.exam_questions.find(params[:exam_question_id])
       end
 
       def answer_params
