@@ -9,6 +9,31 @@ RSpec.describe Exam, type: :model do
     end
   end
 
+  describe "スコープ" do
+    let!(:in_progress_exam) { create(:exam, completed_at: nil) }
+    let!(:completed_exam) { create(:exam, completed_at: Time.current) }
+
+    describe ".in_progress" do
+      it "完了していない試験のみが含まれること" do
+        expect(Exam.in_progress).to include(in_progress_exam)
+      end
+
+      it "完了済みの試験が含まれないこと" do
+        expect(Exam.in_progress).not_to include(completed_exam)
+      end
+    end
+
+    describe ".completed" do
+      it "完了済みの試験のみが含まれること" do
+        expect(Exam.completed).to include(completed_exam)
+      end
+
+      it "完了していない試験が含まれないこと" do
+        expect(Exam.completed).not_to include(in_progress_exam)
+      end
+    end
+  end
+
   describe "ドメインメソッド" do
     let(:user) { create(:user) }
     let(:exam) { create(:exam, user: user) }
