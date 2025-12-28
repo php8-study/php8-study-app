@@ -22,7 +22,6 @@ module ExamQuestions
     end
 
     private
-
       def set_in_progress_exam_question
         @exam = current_user.exams.in_progress.find(params[:exam_id])
         @exam_question = @exam.exam_questions.find(params[:exam_question_id])
