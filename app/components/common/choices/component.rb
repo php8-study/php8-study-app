@@ -21,10 +21,6 @@ module Common
         @disabled = disabled
       end
 
-      def formatted_content(content)
-        MarkdownContent.new(content).to_html
-      end
-
       private
         def checkbox_name(choice)
           @input_name.presence || "choice_#{choice.id}_disabled"
@@ -43,6 +39,10 @@ module Common
 
           classes << "peer-checked:font-bold" unless @disabled
           classes.join(" ")
+        end
+
+        def formatted_content(content)
+          MarkdownContent.new(content).to_html
         end
     end
   end

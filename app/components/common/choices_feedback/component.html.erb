@@ -33,9 +33,9 @@
             <% end %>
           </div>
 
-          <p class="<%= text_classes(choice) %>">
-            <%= choice.content %>
-          </p>
+          <div class="<%= text_classes(choice) %>">
+            <%= formatted_content(choice.content) %>
+          </div>
         </div>
       </li>
     <% end %>
