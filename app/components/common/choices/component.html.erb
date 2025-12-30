@@ -14,9 +14,9 @@
       </div>
 
       <div class="ml-4 flex-1">
-        <span class="<%= text_classes %>">
-          <%= choice.content %>
-        </span>
+        <div class="<%= text_classes %>">
+          <%= formatted_content(choice.content) %>
+        </div>
       </div>
 
       <div class="absolute inset-0 rounded-xl border-2 border-indigo-500 opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity duration-200"></div>
