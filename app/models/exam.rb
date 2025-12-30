@@ -9,6 +9,10 @@ class Exam < ApplicationRecord
 
   PASSING_SCORE_PERCENTAGE = 70.0
 
+  scope :in_progress, -> { where(completed_at: nil) }
+
+  scope :completed, -> { where.not(completed_at: nil) }
+
   def attach_questions!(question_ids)
     now = Time.current
 

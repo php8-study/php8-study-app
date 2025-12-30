@@ -3,7 +3,6 @@
 module Exams
   class SubmissionsController < ApplicationController
     before_action :set_exam
-    before_action :ensure_in_progress
 
     def create
       @exam.finish!
@@ -12,11 +11,7 @@ module Exams
 
     private
       def set_exam
-        @exam = current_user.exams.find(params[:exam_id])
-      end
-
-      def ensure_in_progress
-        raise ActiveRecord::RecordNotFound if @exam.completed_at
+        @exam = current_user.exams.in_progress.find(params[:exam_id])
       end
   end
 end
