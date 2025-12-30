@@ -23,7 +23,7 @@ class MarkdownContent
 
     renderer = HTMLWithRouge.new(OPTIONS)
     markdown = Redcarpet::Markdown.new(renderer, EXTENSIONS)
-    
+
     markdown.render(@raw_text).html_safe
   end
 
