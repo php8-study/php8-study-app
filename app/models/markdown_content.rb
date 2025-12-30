@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module MarkdownRenderer
+class MarkdownContent
   OPTIONS = {
     filter_html: true,
     hard_wrap: true,
@@ -14,15 +14,22 @@ module MarkdownRenderer
     strikethrough: true
   }.freeze
 
-  def self.render(text)
-    return "" if text.blank?
+  def initialize(raw_text)
+    @raw_text = raw_text
+  end
+
+  def to_html
+    return "" if @raw_text.blank?
 
     renderer = HTMLWithRouge.new(OPTIONS)
     markdown = Redcarpet::Markdown.new(renderer, EXTENSIONS)
-    markdown.render(text).html_safe
+
+    markdown.render(@raw_text).html_safe
   end
 
   class HTMLWithRouge < Redcarpet::Render::HTML
     include Rouge::Plugins::Redcarpet
   end
+
+  private_constant :HTMLWithRouge
 end
