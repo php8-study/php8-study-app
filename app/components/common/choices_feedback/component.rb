@@ -11,6 +11,7 @@ module Common
         [&_code]:leading-relaxed
         [&_code]:px-1.5
         [&_code]:py-0.5
+        [&_code]:text-slate-700
       ].join(" ").freeze
 
       def initialize(question:, user_choice_ids: [])
