@@ -46,6 +46,6 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
   # 負荷テスト用（検証が終わったら必ず消すこと！）
-  get  '/load_test/read',  to: 'load_test#read'
-  post '/load_test/write', to: 'load_test#write'
+  get  "/load_test/read",  to: "load_test#read"
+  post "/load_test/write", to: "load_test#write"
 end

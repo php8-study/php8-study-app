@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LoadTestController < ApplicationController
   # セキュリティ無効化
   skip_before_action :require_login, raise: false
@@ -13,9 +15,9 @@ class LoadTestController < ApplicationController
     question = Question.includes(:question_choices).order("RANDOM()").first
 
     if question
-      render json: { 
-        id: question.id, 
-        choices: question.question_choices.size 
+      render json: {
+        id: question.id,
+        choices: question.question_choices.size
       }
     else
       render json: { status: "no data" }
@@ -38,10 +40,9 @@ class LoadTestController < ApplicationController
   end
 
   private
-
-  def set_no_cache
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
-  end
+    def set_no_cache
+      response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+      response.headers["Pragma"] = "no-cache"
+      response.headers["Expires"] = "0"
+    end
 end
