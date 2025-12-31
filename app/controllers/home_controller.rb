@@ -4,7 +4,11 @@ class HomeController < ApplicationController
   skip_before_action :require_login, only: [:index]
 
   def index
-    @questions_count = Question.active.count
-    render :landing unless current_user
+    if current_user
+    # デフォルトの index ビューをレンダリング
+    else
+      @questions_count = Question.active.count
+      render :landing
+    end
   end
 end
