@@ -205,34 +205,43 @@ graph TD
     classDef cf fill:#ffeb3b,stroke:#fbc02d,stroke-width:2px;
     classDef storage fill:#e1f5fe,stroke:#0277bd,stroke-width:2px;
     classDef app fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    classDef monitor fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
 
-    User((User)) -->|"HTTPS (Global CDN)"| Cloudflare
+    subgraph Access ["Access Sources"]
+        direction LR
+        style Access fill:transparent,stroke:none
+        User((User))
+        BetterStack{{"Better Stack"}}:::monitor
+    end
 
     subgraph Security ["Cloudflare Network"]
         direction TB
         Cloudflare{{"Cloudflare (WAF / CDN)"}}:::cf
     end
 
+    User -->|"HTTPS (Global CDN)"| Cloudflare
+    BetterStack -.->|"Health Check (5min)"| Cloudflare
+
     Cloudflare -->|"HTTPS (Origin Traffic)"| KamalProxy
 
     subgraph VPS ["VPS (Ubuntu / Docker)"]
         direction TB
-        KamalProxy["Kamal Proxy (Reverse Proxy)"] -->|HTTP| Thruster
+        KamalProxy["Kamal Proxy"] -->|HTTP| Thruster
 
         subgraph AppContainer ["Rails 8 Container"]
             direction TB
-            Thruster["Thruster (Accelerator)"] -->|Proxy| Puma["Puma (App Server)"]
-            Puma -->|"Read/Write"| SQLite[("SQLite (Production DB)")]
+            Thruster["Thruster"] -->|Proxy| Puma["Puma"]
+            Puma -->|"Read/Write"| SQLite[("SQLite")]
 
-            Litestream["Litestream (Sidecar process)"] -.->|Watch| SQLite
+            Litestream["Litestream"] -.->|Watch| SQLite
         end
     end
 
-    subgraph Cloud ["Cloud Infrastructure"]
-        R2[("Cloudflare R2 (Object Storage)")]:::storage
+    subgraph Storage ["Cloud Storage"]
+        R2[("Cloudflare R2")]:::storage
     end
 
-    Litestream -->|"Real-time Replication (S3 API)"| R2
+    Litestream -->|"Real-time Replication"| R2
 
     Dev((Developer)) -.->|"Git Push"| GitHub["GitHub Actions"]
     GitHub -.->|"Build & Push"| Registry["GitHub Container Registry"]
