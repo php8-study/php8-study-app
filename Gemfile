@@ -22,10 +22,6 @@ gem "omniauth-rails_csrf_protection"
 gem "rails-i18n"
 gem "meta-tags"
 gem "sitemap_generator"
-gem "redcarpet", "~> 3.6"
-gem "rouge", "~> 4.6"
-gem "sentry-ruby", "~> 6.2"
-gem "sentry-rails", "~> 6.2"
 
 group :development, :test do
   gem "debug", platforms: %i[mri windows]
@@ -49,3 +45,6 @@ group :test do
   gem "selenium-webdriver"
   gem "simplecov", require: false
 end
+
+gem "redcarpet", "~> 3.6"
+gem "rouge", "~> 4.6"
