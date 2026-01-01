@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LoadTestController < ApplicationController
   # セキュリティ制限を全解除（検証用）
   skip_before_action :require_login, raise: false # 認証スキップ
@@ -31,10 +33,9 @@ class LoadTestController < ApplicationController
   end
 
   private
-
-  def set_no_cache
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
-  end
+    def set_no_cache
+      response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+      response.headers["Pragma"] = "no-cache"
+      response.headers["Expires"] = "0"
+    end
 end
