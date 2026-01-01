@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LoadTestController < ApplicationController
   skip_before_action :require_login, raise: false # 認証スキップ
   skip_forgery_protection                         # CSRFスキップ
@@ -18,7 +20,7 @@ class LoadTestController < ApplicationController
     ActiveRecord::Base.transaction do
       sleep(0.05)
 
-      
+
       question = Question.first
       question.touch if question
     end
@@ -27,10 +29,9 @@ class LoadTestController < ApplicationController
   end
 
   private
-
-  def set_no_cache
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
-  end
+    def set_no_cache
+      response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+      response.headers["Pragma"] = "no-cache"
+      response.headers["Expires"] = "0"
+    end
 end
