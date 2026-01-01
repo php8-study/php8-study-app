@@ -30,6 +30,7 @@ env:
     - LITESTREAM_ACCESS_KEY_ID
     - LITESTREAM_SECRET_ACCESS_KEY
     - LITESTREAM_ENDPOINT
+    - SENTRY_DSN
 
 ssh:
   user: ubuntu
