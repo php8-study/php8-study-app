@@ -40,6 +40,7 @@ jobs:
           echo "LITESTREAM_ACCESS_KEY_ID=${{ secrets.LITESTREAM_ACCESS_KEY_ID }}" >> .kamal/secrets
           echo "LITESTREAM_SECRET_ACCESS_KEY=${{ secrets.LITESTREAM_SECRET_ACCESS_KEY }}" >> .kamal/secrets
           echo "LITESTREAM_ENDPOINT=${{ secrets.LITESTREAM_ENDPOINT }}" >> .kamal/secrets
+          echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> .kamal/secrets
           
       - name: Add known hosts
         run: |
