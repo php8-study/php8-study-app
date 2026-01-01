@@ -45,6 +45,4 @@ Rails.application.routes.draw do
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
-  get  "load_test/read",  to: "load_test#read"
-  post "load_test/write", to: "load_test#write"
 end
