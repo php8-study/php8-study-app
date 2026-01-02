@@ -14,11 +14,6 @@ Rails.application.routes.draw do
     end
   end
 
-  with_options only: :show do
-    resource :terms, controller: :terms
-    resource :privacy, controller: :privacy
-  end
-
   namespace :admin do
     root to: "home#index"
     resources :questions, except: [:show]
@@ -45,4 +40,6 @@ Rails.application.routes.draw do
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
+  get 'terms', to: 'terms#show'
+  get 'privacy', to: 'privacy#show'
 end
