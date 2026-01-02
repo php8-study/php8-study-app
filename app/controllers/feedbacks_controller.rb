@@ -14,7 +14,7 @@ class FeedbacksController < ApplicationController
         message: @message,
         question_id: question_id,
         user: (current_user if defined?(current_user))
-      ).deliver_later
+      ).deliver_now
 
       flash.now[:notice] = "フィードバックを送信しました"
     else
