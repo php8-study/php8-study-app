@@ -18,7 +18,7 @@ class FeedbackMailer < ApplicationMailer
   private
     def body_text
       <<~TEXT
-      ユーザー: #{@user&.id | 'ゲスト'}
+      ユーザー: #{@user&.id || 'ゲスト'}
 
       #{@question_id ? "対象問題ID: #{@question_id}" : "全体フィードバック"}
       --------------------------------------------------
