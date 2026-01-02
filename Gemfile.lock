@@ -467,15 +467,15 @@ DEPENDENCIES
   puma
   rails (= 8.1.1)
   rails-i18n
-  redcarpet (~> 3.6)
-  rouge (~> 4.6)
+  redcarpet
+  rouge
   rspec-rails
   rubocop
   rubocop-rails
   rubocop-rails_config
   selenium-webdriver
-  sentry-rails (~> 6.2)
-  sentry-ruby (~> 6.2)
+  sentry-rails
+  sentry-ruby
   simplecov
   sitemap_generator
   sprockets-rails
