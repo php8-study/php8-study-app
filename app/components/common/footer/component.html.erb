@@ -12,6 +12,7 @@
       <%= link_to "プライバシーポリシー", privacy_path, class: "text-slate-500 hover:text-indigo-600 transition-colors duration-200" %>
       <%= link_to "GitHub", "https://github.com/php8-study/php8-study-app", target: "_blank", rel: "noopener noreferrer", "aria-describedby": "github-link-desc", class: "text-slate-500 hover:text-indigo-600 transition-colors duration-200" %>
       <span id="github-link-desc" hidden>新しいタブで開きます</span>
+      <%= render Feedbacks::Form::Component.new(title: "ご意見・ご要望はこちら") %>
     </nav>
 
   </div>
