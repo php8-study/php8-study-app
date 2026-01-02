@@ -40,6 +40,6 @@ Rails.application.routes.draw do
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
-  get 'terms', to: 'terms#show'
-  get 'privacy', to: 'privacy#show'
+  get "terms", to: "terms#show"
+  get "privacy", to: "privacy#show"
 end
