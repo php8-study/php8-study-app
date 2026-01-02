@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "Feedbacks", type: :request do
@@ -6,7 +8,7 @@ RSpec.describe "Feedbacks", type: :request do
       get new_feedback_path, as: :turbo_stream
       expect(response).to have_http_status(:ok)
       expect(response.body).to include('turbo-stream action="append" target="modal-frame"')
-      expect(response.body).to include('フィードバック送信')
+      expect(response.body).to include("フィードバック送信")
     end
   end
 
@@ -17,22 +19,22 @@ RSpec.describe "Feedbacks", type: :request do
       it "ログインユーザーとしてメールを送信できること" do
         user = create(:user)
         sign_in_as(user)
-        
+
         expect {
           post feedbacks_path, params: valid_params, as: :turbo_stream
         }.to change { ActionMailer::Base.deliveries.size }.by(1)
-        
+
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include('送信しました')
+        expect(response.body).to include("送信しました")
       end
 
       it "未ログイン（ゲスト）としてメールを送信できること" do
         expect {
           post feedbacks_path, params: valid_params, as: :turbo_stream
         }.to change { ActionMailer::Base.deliveries.size }.by(1)
-        
+
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include('送信しました')
+        expect(response.body).to include("送信しました")
       end
     end
 
@@ -45,7 +47,7 @@ RSpec.describe "Feedbacks", type: :request do
         }.not_to change { ActionMailer::Base.deliveries.size }
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include('入力してください')
+        expect(response.body).to include("入力してください")
       end
     end
   end
