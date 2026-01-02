@@ -39,6 +39,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :feedbacks, only: [:new, :create]
+
   get "up" => "rails/health#show", as: :rails_health_check
   get "terms", to: "terms#show"
   get "privacy", to: "privacy#show"
