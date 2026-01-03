@@ -3,6 +3,10 @@
 require "rails_helper"
 
 RSpec.describe "Feedbacks", type: :request do
+  before do
+    allow(Rails.application.credentials).to receive(:dig).with(:feedback, :admin_email).and_return("admin@example.com")
+  end
+
   describe "GET /feedbacks/new" do
     it "ログイン・未ログインにかかわらず、モーダル表示用のTurbo Streamを返すこと" do
       get new_feedback_path, as: :turbo_stream
@@ -41,12 +45,12 @@ RSpec.describe "Feedbacks", type: :request do
     context "異常系：メッセージが空の場合" do
       let(:invalid_params) { { message: "", question_id: "123" } }
 
-      it "メールを送信せず、バリデーションエラー（422）を返すこと" do
+      it "メールを送信せず、バリデーションエラーを返すこと" do
         expect {
           post feedbacks_path, params: invalid_params, as: :turbo_stream
         }.not_to change { ActionMailer::Base.deliveries.size }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.body).to include("入力してください")
       end
     end

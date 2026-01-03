@@ -5,6 +5,11 @@ require "rails_helper"
 RSpec.describe FeedbackMailer, type: :mailer do
   describe "send_feedback" do
     let(:message) { "テストメッセージです" }
+    let(:admin_email) { "admin@example.com" }
+
+    before do
+      allow(Rails.application.credentials).to receive(:dig).with(:feedback, :admin_email).and_return(admin_email)
+    end
 
     context "問題IDがある場合（解説フィードバック）" do
       let(:question_id) { "123" }
@@ -41,7 +46,6 @@ RSpec.describe FeedbackMailer, type: :mailer do
     describe "送信先" do
       it "credentialsで設定された管理者メールアドレスに送信されること" do
         mail = FeedbackMailer.send_feedback(message: message)
-        admin_email = Rails.application.credentials.dig(:feedback, :admin_email)
         expect(mail.to).to eq [admin_email]
       end
     end
