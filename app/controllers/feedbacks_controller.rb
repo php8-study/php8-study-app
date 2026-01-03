@@ -26,8 +26,7 @@ class FeedbacksController < ApplicationController
   end
 
   private
-
-  def feedback_params
-    params.permit(:message, :question_id)
-  end
+    def feedback_params
+      params.permit(:message, :question_id)
+    end
 end
