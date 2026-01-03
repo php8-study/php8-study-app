@@ -3,8 +3,10 @@
 require "rails_helper"
 
 RSpec.describe "Feedbacks", type: :request do
+  let(:admin_email) { "admin@example.com" }
+
   before do
-    allow(Rails.application.credentials).to receive(:dig).with(:feedback, :admin_email).and_return("admin@example.com")
+    allow(Rails.application.credentials).to receive(:dig).with(:feedback, :admin_email).and_return(admin_email)
   end
 
   describe "GET /feedbacks/new" do

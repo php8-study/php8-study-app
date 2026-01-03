@@ -44,7 +44,7 @@ RSpec.describe FeedbackMailer, type: :mailer do
     end
 
     describe "送信先" do
-      it "credentialsで設定された管理者メールアドレスに送信されること" do
+      it "設定された管理者メールアドレスに送信されること" do
         mail = FeedbackMailer.send_feedback(message: message)
         expect(mail.to).to eq [admin_email]
       end
