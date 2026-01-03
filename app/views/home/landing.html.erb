@@ -29,10 +29,11 @@
     <div class="flex justify-center items-center gap-6 text-xs text-slate-400 font-medium">
       <%= link_to "利用規約", terms_path, class: "hover:text-blue-600 transition-colors" %>
       <%= link_to "プライバシーポリシー", privacy_path, class: "hover:text-blue-600 transition-colors" %>
-      <%= link_to "運営者情報", "https://x.com/sekito1107", target: "_blank", class: "hover:text-blue-600 transition-colors" %>
+      <%= link_to "運営者情報", "https://x.com/sekito1107", target: "_blank", rel: "noopener noreferrer", "aria-describedby": "operator-link-desc", class: "hover:text-blue-600 transition-colors" %>
+      <span id="operator-link-desc" hidden>新しいタブで開きます</span>
     </div>
     <p class="mt-2 text-[10px] text-slate-300 font-light">
-      © 2026 PHP8 Study
+       © <%= Time.current.year %> PHP8 Study
     </p>
   </footer>
 </div>
