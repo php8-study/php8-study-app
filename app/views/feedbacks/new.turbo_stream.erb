@@ -1,0 +1,57 @@
+<%= turbo_stream.append "modal-frame" do %>
+  <div id="feedback_modal" 
+       data-controller="modal" 
+       class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm pointer-events-auto p-4">
+    
+    <div class="absolute inset-0" data-action="click->modal#close"></div>
+
+    <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden" 
+         data-action="click->modal#stop">
+      
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-bold text-slate-800">フィードバック送信</h3>
+          <button type="button" 
+                  data-action="click->modal#close" 
+                  class="text-slate-400 hover:text-slate-600 transition-colors">
+          <%= inline_svg_tag "icons/x.svg", class: "w-6 h-6", 'aria-hidden': true %>
+          </button>
+        </div>
+
+        <%= form_with url: feedbacks_path, method: :post, id: "feedback_form_element" do |f| %>
+          <% if @question_id.present? %>
+            <%= f.hidden_field :question_id, value: @question_id %>
+            <div class="mb-4 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-600">
+              対象問題ID: <span class="font-mono font-bold"><%= @question_id %></span>
+            </div>
+          <% end %>
+
+          <div class="mb-6">
+            <%= f.label :message, "内容", class: "block text-sm font-bold text-slate-700 mb-2" %>
+            <%= f.text_area :message, 
+                rows: 6, 
+                class: "w-full border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all resize-none", 
+                placeholder: "ご意見・ご感想をお聞かせください",
+                required: true %>
+          </div>
+
+          <div class="flex justify-end gap-3">
+            <%= render Common::Button::Component.new(
+                  variant: :secondary, 
+                  data: { action: "click->modal#close" }
+                ) do %>
+              キャンセル
+            <% end %>
+            
+            <%= render Common::Button::Component.new(
+                  type: :submit, 
+                  variant: :primary
+                ) do %>
+              送信する
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

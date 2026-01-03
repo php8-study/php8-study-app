@@ -1,0 +1,8 @@
+<div class="<%= @classes %>">
+  <%= button_to @title,
+                new_feedback_path,
+                method: :get,
+                params: { question_id: @question_id },
+                class: "cursor-pointer text-indigo-600 hover:underline bg-transparent border-none p-0 inline",
+                form: { data: { turbo_stream: true } } %>
+</div>

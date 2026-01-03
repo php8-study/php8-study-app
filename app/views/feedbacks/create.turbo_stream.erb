@@ -1,0 +1,5 @@
+<%= turbo_stream.update "flash" do %>
+  <%= render Common::Flash::Component.new(flash: flash) %>
+<% end %>
+
+<%= turbo_stream.remove "feedback_modal" %>

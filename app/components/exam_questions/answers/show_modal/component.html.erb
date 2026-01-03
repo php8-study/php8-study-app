@@ -2,7 +2,7 @@
      role="dialog"
      aria-modal="true"
      aria-labelledby="modal-title"
-     class="fixed inset-0 z-[100] flex justify-center p-4 pointer-events-auto">
+     class="fixed inset-0 z-30 flex justify-center p-4 pointer-events-auto">
 
   <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
        data-action="click->modal#close"
@@ -51,6 +51,8 @@
         <%= render Common::Explanation::Component.new(question: @question) %>
 
         <%= render Common::ReferenceInfo::Component.new(question: @question) %>
+
+        <%= render Feedbacks::Form::Component.new(title: "この問題について報告する", question_id: @question.id, classes: "text-center mt-10") %>
 
       </div>
 
