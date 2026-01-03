@@ -18,7 +18,7 @@
           </button>
         </div>
 
-        <%= form_with url: feedbacks_path, method: :post, id: "feedback_form_element", local: false do |f| %>
+        <%= form_with url: feedbacks_path, method: :post, id: "feedback_form_element" do |f| %>
           <% if @question_id.present? %>
             <%= f.hidden_field :question_id, value: @question_id %>
             <div class="mb-4 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-600">
