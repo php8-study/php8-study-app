@@ -5,19 +5,17 @@ class FeedbacksController < ApplicationController
 
   def new
     @question_id = params[:question_id]
+    respond_to { |f| f.turbo_stream; f.html }
   end
 
   def create
-    @message = feedback_params[:message]
-    question_id = feedback_params[:question_id]
+    @feedback = Feedback.new(
+      message: feedback_params[:message],
+      question_id: feedback_params[:question_id],
+      user: current_user
+    )
 
-    if @message.present?
-      FeedbackMailer.send_feedback(
-        message: @message,
-        question_id: question_id,
-        user: current_user
-      ).deliver_now
-
+    if @feedback.save
       flash.now[:notice] = "フィードバックを送信しました"
     else
       flash.now[:alert] = "メッセージを入力してください"

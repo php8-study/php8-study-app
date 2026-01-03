@@ -41,10 +41,4 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
-
-  config.action_mailer.delivery_method = :test
-  config.action_mailer.perform_deliveries = true
-  config.before_initialize do
-    Rails.application.credentials.feedback = { admin_email: "admin@example.com" }
-  end
 end
