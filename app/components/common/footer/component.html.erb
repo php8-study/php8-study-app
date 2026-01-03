@@ -2,7 +2,9 @@
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 flex flex-col md:flex-row items-center justify-between text-sm gap-4">
 
     <div class="flex flex-col md:flex-row items-center gap-2 md:gap-6 text-slate-500">
-      <span class="font-bold text-slate-700">PHP8 Study</span>
+      <%= link_to root_path, class: "font-bold text-slate-700 hover:opacity-80 transition-opacity" do %>
+        PHP8 Study
+      <% end %>
       <span class="hidden md:inline text-slate-300" aria-hidden="true">|</span>
       <span>© <%= Time.current.year %> All rights reserved.</span>
     </div>
