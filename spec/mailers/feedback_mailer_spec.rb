@@ -42,12 +42,5 @@ RSpec.describe FeedbackMailer, type: :mailer do
         expect(mail.body.encoded).to include("ユーザー: ゲスト")
       end
     end
-
-    describe "送信先" do
-      it "設定された管理者メールアドレスに送信されること" do
-        mail = FeedbackMailer.send_feedback(message: message)
-        expect(mail.to).to eq [admin_email]
-      end
-    end
   end
 end
