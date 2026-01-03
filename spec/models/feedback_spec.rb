@@ -25,7 +25,7 @@ RSpec.describe Feedback, type: :model do
           "/api/webhooks/test_url",
           { content: expected_content }.to_json,
           { "Content-Type" => "application/json" }
-        ).and_return(double(value!: true))
+        ).and_return(double(value: true))
 
         expect(feedback.save).to be true
       end

@@ -44,7 +44,7 @@ class Feedback
     def post_to_discord(body)
       uri = URI(@webhook_url)
       Net::HTTP.start(uri.host, uri.port, use_ssl: true, open_timeout: 5, read_timeout: 10) do |http|
-        http.post(uri.path, body, { "Content-Type" => "application/json" }).value!
+        http.post(uri.path, body, { "Content-Type" => "application/json" }).value
       end
     end
 end
