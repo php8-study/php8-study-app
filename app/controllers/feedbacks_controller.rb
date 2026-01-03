@@ -15,7 +15,7 @@ class FeedbacksController < ApplicationController
       FeedbackMailer.send_feedback(
         message: @message,
         question_id: question_id,
-        user: (current_user if defined?(current_user))
+        user: current_user
       ).deliver_now
 
       flash.now[:notice] = "フィードバックを送信しました"
