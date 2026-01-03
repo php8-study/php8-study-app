@@ -96,27 +96,15 @@ $ bundle exec rspec
 
 ## 技術スタック
 
-### バックエンド
-
-- Ruby 4.0.0
-- Ruby on Rails 8.1.1
-- SQLite 3.51.1
-
-### フロントエンド
-
-- Hotwire (Turbo / Stimulus)
-- ViewComponent
-- Tailwind CSS
-
-### データベース
-
-- SQLite
-
-### テスト
-
-- RSpec
-- FactoryBot
-- Capybara
+| Category | Tech Stack |
+| -- | -- |
+| **Backend** | Ruby 4.0.0 / Rails 8.1.1 |
+| **Database** | SQLite 3.51.1 |
+| **Frontend** | Hotwire (Turbo / Stimulus) / ViewComponent / Tailwind CSS |
+| **Infrastructure** | Kamal / Docker / Cloudflare |
+| **Monitoring** | Sentry / Better Stack |
+| **Testing** | RSpec / FactoryBot / Capybara / SimpleCov |
+| **CI/CD** | GitHub Actions |
 
 ## ER図
 
@@ -236,6 +224,12 @@ graph TD
             Litestream["Litestream"] -.->|Watch| SQLite
         end
     end
+
+    subgraph Monitoring ["Monitoring"]
+        Sentry{{"Sentry"}}:::monitor
+    end
+
+    Puma -.->|"Capture Exceptions"| Sentry
 
     subgraph Storage ["Cloud Storage"]
         R2[("Cloudflare R2")]:::storage
