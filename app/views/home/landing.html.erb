@@ -18,10 +18,21 @@
     </div>
   </header>
 
-  <main class="container relative z-10 mx-auto px-6 lg:px-12 h-auto lg:h-[calc(100vh-80px)] flex items-center py-12 lg:py-0">
+  <main class="container relative z-10 mx-auto px-6 lg:px-12  flex-grow h-auto lg:h-[calc(100vh-80px)] flex items-center py-12 lg:py-0">
     <div class="flex flex-col lg:flex-row items-center justify-between w-full gap-12">
       <%= render Landing::HeroContent::Component.new(questions_count: @questions_count) %>
       <%= render Landing::HeroVisual::Component.new %>
     </div>
   </main>
+
+  <footer class="relative z-10 w-full py-4 text-center lg:absolute lg:bottom-2">
+    <div class="flex justify-center items-center gap-6 text-xs text-slate-400 font-medium">
+      <%= link_to "利用規約", terms_path, class: "hover:text-blue-600 transition-colors" %>
+      <%= link_to "プライバシーポリシー", privacy_path, class: "hover:text-blue-600 transition-colors" %>
+      <%= link_to "運営者情報", "https://x.com/sekito1107", target: "_blank", class: "hover:text-blue-600 transition-colors" %>
+    </div>
+    <p class="mt-2 text-[10px] text-slate-300 font-light">
+      © 2026 PHP8 Study
+    </p>
+  </footer>
 </div>
