@@ -25,12 +25,9 @@ registry:
 env:
   secret:
     - RAILS_MASTER_KEY
-    - GITHUB_CLIENT_ID
-    - GITHUB_CLIENT_SECRET
     - LITESTREAM_ACCESS_KEY_ID
     - LITESTREAM_SECRET_ACCESS_KEY
     - LITESTREAM_ENDPOINT
-    - SENTRY_DSN
 
 ssh:
   user: ubuntu
