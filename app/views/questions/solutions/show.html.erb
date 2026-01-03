@@ -1,6 +1,6 @@
 <% set_question_explanation_seo_tags(@question) %>
 
-<main class="bg-slate-50 py-12 relative">
+<main class="bg-slate-50 py-8 relative">
 
   <div class="max-w-3xl mx-auto space-y-8 px-4 sm:px-6">
 
@@ -41,5 +41,7 @@
   <% if current_user %>
     <%= render Questions::StickyNav::Component.new(next_path: questions_random_path) %>
   <% end %>
+
+  <%= render Feedbacks::Form::Component.new(title: "この問題について報告する", question_id: @question.id, classes: "text-center mt-10") %>
 
 </main>
