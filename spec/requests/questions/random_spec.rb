@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# 未ログインユーザーは全てLPにリダイレクト。
 # 権限違反・不正操作は一律で 404 を返す。
 
 require "rails_helper"
@@ -35,9 +34,11 @@ RSpec.describe "Questions::Random", type: :request do
     end
 
     context "未ログインの場合" do
-      it "ルートパスへリダイレクトされる" do
-        get questions_random_path
-        expect(response).to redirect_to(root_path)
+      context "利用可能な問題が存在する場合" do
+        it "問題詳細ページへリダイレクトする（お試し機能）" do
+          get questions_random_path
+          expect(response).to redirect_to(%r{/questions/\d+})
+        end
       end
     end
   end
