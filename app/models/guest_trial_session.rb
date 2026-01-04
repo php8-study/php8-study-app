@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/guest_trial_session.rb
 class GuestTrialSession
   LIMIT = 5
@@ -19,30 +21,29 @@ class GuestTrialSession
   end
 
   private
+    def exempt?(id)
+      authenticated? || visited?(id)
+    end
 
-  def exempt?(id)
-    authenticated? || visited?(id)
-  end
+    def authenticated?
+      @user.present?
+    end
 
-  def authenticated?
-    @user.present?
-  end
+    def visited?(id)
+      viewed_question_ids.include?(id)
+    end
 
-  def visited?(id)
-    viewed_question_ids.include?(id)
-  end
+    def limit_reached?
+      viewed_question_ids.count >= LIMIT
+    end
 
-  def limit_reached?
-    viewed_question_ids.count >= LIMIT
-  end
+    def mark_as_visited(id)
+      ids = viewed_question_ids
+      ids << id
+      @session[:guest_viewed_question_ids] = ids
+    end
 
-  def mark_as_visited(id)
-    ids = viewed_question_ids
-    ids << id
-    @session[:guest_viewed_question_ids] = ids
-  end
-
-  def viewed_question_ids
-    @session[:guest_viewed_question_ids] ||= []
-  end
+    def viewed_question_ids
+      @session[:guest_viewed_question_ids] ||= []
+    end
 end

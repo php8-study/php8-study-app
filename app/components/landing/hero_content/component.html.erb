@@ -31,4 +31,11 @@
       <%= helpers.inline_svg_tag "icons/right_arrow.svg", class: "w-5 h-5 ml-3 -mr-1 transition-transform group-hover:translate-x-1", aria_hidden: true %>
     <% end %>
   <% end %>
+
+  <div class="ml-1 mt-4">
+    <%= link_to questions_random_path, class: "text-sm text-slate-500 hover:text-blue-600 transition-colors flex items-center gap-1" do %>
+      <span>登録せずに<%= trial_limit %>問だけ試してみる</span>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+    <% end %>
+  </div>
 </div>
