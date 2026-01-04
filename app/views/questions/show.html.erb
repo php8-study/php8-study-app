@@ -22,7 +22,6 @@
       label: "RandomQuestion.php"
     ) %>
 
-    <% if current_user.present? %>
     <%= render Common::AnswerForm::Component.new(
       question: @question,
       url: question_solution_path(@question),
@@ -32,27 +31,6 @@
       selected_choice_ids: [],
       guard_answer: false
     ) %>
-    <% else %>
-      <div class="pt-8 border-t border-slate-200">
-        <%= render Common::Choices::Component.new(
-          question: @question,
-          input_name: nil,
-          selected_choice_ids: [],
-          disabled: true
-        ) %>
-
-        <div class="mt-6">
-          <%= render Common::Button::Component.new(
-            href: root_path,
-            variant: :primary,
-            size: :lg,
-            class: "w-full py-3"
-          ) do %>
-            ログインして学習をはじめる
-          <% end %>
-        </div>
-      </div>
-    <% end %>
 
   </div>
 </main>
