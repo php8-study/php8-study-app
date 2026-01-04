@@ -29,4 +29,23 @@ module ApplicationHelper
       }
     }
   end
+
+  def render_registration_wall_meta(css_selector: ".restricted-area")
+    json_data = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "isAccessibleForFree": "False",
+      "hasPart": {
+        "@type": "WebPageElement",
+        "isAccessibleForFree": "False",
+        "cssSelector": css_selector
+      }
+    }
+
+    content_for :head do
+      content_tag(:script, type: "application/ld+json") do
+        json_data.to_json.html_safe
+      end
+    end
+  end
 end
