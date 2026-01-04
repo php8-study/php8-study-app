@@ -44,7 +44,7 @@ RSpec.describe "Questions (ランダム出題)", type: :system do
     let!(:questions) { create_list(:question, 10, :with_choices) }
 
     it "ランダムに出題されるが、異なる問題を5問解いた時点で制限がかかる" do
-      visit root_path 
+      visit root_path
       click_link "登録せずに5問だけ試してみる"
 
       viewed_ids = Set.new

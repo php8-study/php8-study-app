@@ -36,7 +36,7 @@ RSpec.describe "Questions::Solutions", type: :request do
           questions.first(5).each do |q|
             get question_solution_path(q)
             expect(response).to have_http_status(:ok)
-            expect(response.body).to include 'restricted-area'
+            expect(response.body).to include "restricted-area"
           end
         end
 
