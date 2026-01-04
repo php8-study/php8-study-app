@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Questions::SolutionsController < ApplicationController
+  include GuestTrialLimitable
+
+  before_action :check_guest_trial_limit, only: [:show]
   before_action :set_question, only: [:show]
   skip_before_action :require_login, only: [:show]
 
