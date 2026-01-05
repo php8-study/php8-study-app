@@ -37,6 +37,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "foreman"
   gem "web-console"
   gem "rubocop", require: false
   gem "rubocop-rails", require: false

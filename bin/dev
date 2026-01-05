@@ -1,2 +1,8 @@
 #!/usr/bin/env ruby
-exec "./bin/rails", "server", *ARGV
+
+unless system("gem list -i foreman > /dev/null")
+  puts "Installing foreman..."
+  system("gem install foreman") || abort("Failed to install foreman")
+end
+
+exec "foreman", "start", "-f", "Procfile.dev", "-p", "3000"
