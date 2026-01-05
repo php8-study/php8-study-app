@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# app/models/guest_trial_session.rb
 class GuestTrialSession
   LIMIT = 5
 
