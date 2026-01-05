@@ -34,7 +34,7 @@ RSpec.describe Common::Header::Component, type: :component do
     end
 
     it "ログインボタンが表示されること" do
-      expect(page).to have_link("GitHubでログイン", href: "/auth/github")
+      expect(page).to have_button("GitHubでログイン")
     end
 
     it "ユーザー情報は表示されないこと" do

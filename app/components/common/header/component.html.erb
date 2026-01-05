@@ -29,7 +29,9 @@
           ) %>
 
         <% else %>
-          <%= link_to "GitHubでログイン", "/auth/github", class: "text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors" %>
+          <%= button_to "GitHubでログイン", "/auth/github",
+              data: { turbo: false },
+              class: "text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors bg-transparent border-none cursor-pointer" %>
         <% end %>
 
       </div>
