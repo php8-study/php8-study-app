@@ -34,10 +34,10 @@ module ApplicationHelper
     json_data = {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "isAccessibleForFree": "False",
+      "isAccessibleForFree": false,
       "hasPart": {
         "@type": "WebPageElement",
-        "isAccessibleForFree": "False",
+        "isAccessibleForFree": false,
         "cssSelector": css_selector
       }
     }
