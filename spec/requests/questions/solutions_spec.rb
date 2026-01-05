@@ -60,6 +60,8 @@ RSpec.describe "Questions::Solutions", type: :request do
     end
 
     context "異常系" do
+      before { sign_in_as(user) }
+      
       it "論理削除された問題の詳細にはアクセスできず404 Not Foundになる" do
         deleted_question = create(:question, deleted_at: Time.current)
 
