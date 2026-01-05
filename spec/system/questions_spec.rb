@@ -40,25 +40,30 @@ RSpec.describe "Questions (ランダム出題)", type: :system do
     end
   end
 
-  describe "未ログイン時の挙動（SEO/CV導線）" do
-    it "問題ページ: 回答フォームの代わりに、ログインへの誘導が表示される" do
-      visit question_path(question)
+  describe "未ログイン時の挙動（お試し5問制限）" do
+    let!(:questions) { create_list(:question, 10, :with_choices) }
 
-      expect(page).to have_content "RandomQuestion.php"
+    it "ランダムに出題されるが、異なる問題を5問解いた時点で制限がかかる" do
+      visit root_path
+      click_link "登録せずに5問だけ試してみる"
 
-      expect(page).not_to have_button "解答する"
-      expect(page).to have_link "ログインして学習をはじめる"
-    end
+      viewed_ids = Set.new
 
-    it "解説ページ: 直接アクセスしてもエラーにならず、ログイン誘導が表示される" do
-      visit question_solution_path(question)
+      # 無限ループ防止のリミッター (通常は5〜10回程度で抜けるはず)
+      20.times do
+        break if page.has_current_path?(root_path)
 
-      expect(page).to have_content "選択肢の正誤"
+        expect(page).to have_content("ランダム出題")
 
-      expect(page).not_to have_content "正解"
-      expect(page).not_to have_content "不正解"
+        viewed_ids << page.current_path.scan(/\d+/).last.to_i
 
-      expect(page).to have_link "ログインして学習をはじめる"
+        find("fieldset label", match: :first).click
+        click_button "解答する"
+        click_link "次の問題へ"
+      end
+
+      expect(page).to have_content "お試し版は5問までです"
+      expect(viewed_ids.size).to eq 5
     end
   end
 end

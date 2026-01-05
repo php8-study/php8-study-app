@@ -1,6 +1,8 @@
 <% set_question_explanation_seo_tags(@question) %>
 
-<main class="bg-slate-50 py-8 relative">
+<% render_registration_wall_meta %>
+
+<main class="bg-slate-50 py-8 relative restricted-area">
 
   <div class="max-w-3xl mx-auto space-y-8 px-4 sm:px-6">
 
@@ -22,26 +24,10 @@
 
     <%= render Common::ReferenceInfo::Component.new(question: @question) %>
 
-    <% unless current_user %>
-      <div class="mt-8 pt-8 border-t border-slate-200">
-        <%= render Common::Button::Component.new(
-              href: root_path,
-              variant: :primary,
-              size: :lg,
-              class: "w-full py-3"
-            ) do %>
-          <%= inline_svg_tag "icons/logout.svg", class: "w-5 h-5 mr-2", aria_hidden: true %>
-          ログインして学習をはじめる
-        <% end %>
-      </div>
-    <% end %>
+    <%= render Questions::StickyNav::Component.new(next_path: questions_random_path) %>
+
+    <%= render Feedbacks::Form::Component.new(title: "この問題について報告する", question_id: @question.id, classes: "text-center mt-10") %>
 
   </div>
-
-  <% if current_user %>
-    <%= render Questions::StickyNav::Component.new(next_path: questions_random_path) %>
-  <% end %>
-
-  <%= render Feedbacks::Form::Component.new(title: "この問題について報告する", question_id: @question.id, classes: "text-center mt-10") %>
 
 </main>
