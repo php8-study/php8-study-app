@@ -36,6 +36,12 @@ PHP8技術者認定初級試験の公式認定教材である 独習PHP 第4版 
 
 https://php-study.jp
 
+## リリースブログ
+
+開発における意思決定のプロセスについては以下のリリースブログで公開していますので、是非ご覧ください
+
+[リリースブログ](https://zenn.dev/sekito/articles/31c94dec1cc9a3)
+
 ## デモ
 
 https://github.com/user-attachments/assets/fb7f8155-8dd8-4c31-b06c-114b6220fb6a
