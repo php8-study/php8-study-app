@@ -347,8 +347,8 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.44.0, < 2.0)
-    rubocop-rails_config (1.17.2)
-      rubocop (>= 1.72.2)
+    rubocop-rails_config (1.17.4)
+      rubocop (>= 1.73.0)
       rubocop-ast (>= 1.38.0)
       rubocop-md
       rubocop-minitest (~> 0.37)
