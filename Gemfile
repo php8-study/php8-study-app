@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 ruby "4.0.0"
-gem "rails", "8.1.1"
+gem "rails", "8.1.2"
 gem "sqlite3"
 gem "puma"
 gem "thruster"
