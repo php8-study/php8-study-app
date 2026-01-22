@@ -1,0 +1,13 @@
+<div class="flex justify-center mt-8 mb-8" data-result-reveal-target="actionButtons">
+  <%= render Common::Button::Component.new(
+        href: twitter_share_url,
+        variant: :black,
+        size: :lg,
+        class: "flex items-center gap-2 px-8 py-4 transition-transform hover:-translate-y-0.5",
+        target: "_blank",
+        rel: "noopener noreferrer"
+      ) do %>
+    <%= helpers.inline_svg_tag "icons/x_logo.svg", class: "w-5 h-5 fill-current", aria_hidden: true %>
+    <span class="font-bold">Xで結果をシェアする</span>
+  <% end %>
+</div>

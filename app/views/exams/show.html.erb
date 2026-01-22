@@ -13,6 +13,8 @@
 
       <%= render Exams::ScoreCard::Component.new(exam: @exam, animation: @needs_reveal_animation) %>
 
+      <%= render Exams::XShare::Component.new(exam: @exam) %>
+
       <%= render Exams::QuestionList::Component.new(questions: @exam_questions, animation: @needs_reveal_animation) %>
 
       <%= render Exams::StickyNav::Component.new(animation: @needs_reveal_animation) %>
