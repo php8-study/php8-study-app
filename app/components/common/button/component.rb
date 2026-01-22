@@ -6,7 +6,8 @@ module Common
       VARIANTS = {
         primary: "bg-indigo-600 text-white hover:bg-indigo-700 shadow-md border-transparent focus:ring-indigo-500",
         secondary: "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:border-slate-300 shadow-sm border focus:ring-slate-200",
-        ghost: "bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-transparent focus:ring-slate-200"
+        ghost: "bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-transparent focus:ring-slate-200",
+        black: "bg-black text-white hover:bg-zinc-800 shadow-md border-transparent focus:ring-zinc-500"
       }.freeze
 
       SIZES = {
