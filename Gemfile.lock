@@ -236,7 +236,7 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     parallel (1.27.0)
-    parser (3.3.10.0)
+    parser (3.3.10.1)
       ast (~> 2.4.1)
       racc
     pp (0.6.3)
@@ -359,8 +359,8 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.44.0, < 2.0)
-    rubocop-rails_config (1.17.2)
-      rubocop (>= 1.72.2)
+    rubocop-rails_config (1.17.6)
+      rubocop (>= 1.74.0)
       rubocop-ast (>= 1.38.0)
       rubocop-md
       rubocop-minitest (~> 0.37)
