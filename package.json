@@ -9,7 +9,7 @@
     "prettier": "^3.8.0"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.18",
+    "@tailwindcss/cli": "^4.2.2",
     "tailwindcss": "^4.1.18"
   },
   "scripts": {
